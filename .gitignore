@@ -4,7 +4,8 @@
 node_modules/
 www/build/
 platforms/
-plugins/
+plugins
+.idea
 *.swp
 .DS_Store
 Thumbs.db
