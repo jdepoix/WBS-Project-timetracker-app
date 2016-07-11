@@ -1,0 +1,13 @@
+// import all component specific scss files here
+
+// login
+@import "../../components/login/login.component";
+
+// bookings
+@import "../../components/booking/overview/booking-overview.component";
+@import "../../components/booking/detail/booking-detail.component";
+@import "../../components/booking/workpackage-selection/booking-workpackage-selection.component";
+
+// workpackages
+@import "../../components/workpackages/detail/workpackage-detail.component";
+@import "../../components/workpackages/overview/workpackage-overview.component";
