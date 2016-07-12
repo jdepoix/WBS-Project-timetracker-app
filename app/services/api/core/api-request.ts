@@ -18,9 +18,8 @@ export abstract class ApiRequest {
    * performs a get request to the API
    *
    * @param path
-   * @returns {Promise<Response>}
    */
-  public get(path: string): Observable<Object[]> {
+  public get(path: string): Observable<Array<Object>> {
     return this._http.get(
       this.getUrlString(path),
       this.getOptions()
@@ -32,9 +31,8 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
-   * @returns {Promise<Response>}
    */
-  public post(path: string, data: Object): Observable<Object[]> {
+  public post(path: string, data: Object): Observable<Object> {
     return this._http.post(
       this.getUrlString(path),
       data,
@@ -47,9 +45,8 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
-   * @returns {Promise<Response>}
    */
-  public patch(path: string, data: Object): Observable<Object[]> {
+  public patch(path: string, data: Object): Observable<Object> {
     return this._http.patch(
       this.getUrlString(path),
       data,
@@ -62,9 +59,8 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
-   * @returns {Promise<Response>}
    */
-  public put(path: string, data: Object): Observable<Object[]> {
+  public put(path: string, data: Object): Observable<Object> {
     return this._http.put(
       this.getUrlString(path),
       data,
@@ -76,9 +72,8 @@ export abstract class ApiRequest {
    * performs a delete request to the API
    *
    * @param path
-   * @returns {Promise<Response>}
    */
-  public delete(path: string): Observable<Object[]> {
+  public delete(path: string): Observable<Object> {
     return this._http.delete(
       this.getUrlString(path),
       this.getOptions()
@@ -121,9 +116,9 @@ export abstract class ApiRequest {
    * brings the responses in the desired format
    *
    * @param response
-   * @returns {string|any|ArrayBuffer|Uint8ClampedArray|{}[]}
+   * @returns {any|{}[]}
    */
-  public formatResponse(response: Response): Object[] {
+  public formatResponse(response: Response): Array<Object> {
     return response.json() || [{}]
   }
 
