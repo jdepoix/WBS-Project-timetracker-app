@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map'
 
 import {Url} from '../../../core/url/url';
 
-
 /**
  * ABC which wraps the http module for actions specific to one API. Extend this and overwrite getApiBaseUrl() to make
  * this specific for a API module.
@@ -18,12 +17,14 @@ export abstract class ApiRequest {
    * performs a get request to the API
    *
    * @param path
-   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
-   * returned by the getBaseUrl() method
    */
-  public get(path: string, useFullPath: boolean = false): Observable<Array<Object>> {
+  public get(path: string): Observable<Array<Object>> {
+    return this.getWithFullUrl(this.getPathUrl(path));
+  }
+
+  public getWithFullUrl(url: Url): Observable<Array<Object>> {
     return this._http.get(
-      useFullPath ? path : this.getUrlString(path),
+      url.toString(),
       this.getOptions()
     ).map(this.formatResponse);
   }
@@ -33,12 +34,14 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
-   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
-   * returned by the getBaseUrl() method
    */
-  public post(path: string, data: Object, useFullPath: boolean = false): Observable<Object> {
+  public post(path: string, data: Object): Observable<Object> {
+    return this.postWithFullUrl(this.getPathUrl(path), data);
+  }
+
+  public postWithFullUrl(url: Url, data: Object): Observable<Object> {
     return this._http.post(
-      useFullPath ? path : this.getUrlString(path),
+      url.toString(),
       data,
       this.getOptions()
     ).map(this.formatResponse);
@@ -49,12 +52,14 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
-   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
-   * returned by the getBaseUrl() method
    */
-  public patch(path: string, data: Object, useFullPath: boolean = false): Observable<Object> {
+  public patch(path: string, data: Object): Observable<Object> {
+    return this.patchWithFullUrl(this.getPathUrl(path), data);
+  }
+
+  public patchWithFullUrl(url: Url, data: Object): Observable<Object> {
     return this._http.patch(
-      useFullPath ? path : this.getUrlString(path),
+      url.toString(),
       data,
       this.getOptions()
     ).map(this.formatResponse);
@@ -65,12 +70,14 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
-   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
-   * returned by the getBaseUrl() method
    */
-  public put(path: string, data: Object, useFullPath: boolean = false): Observable<Object> {
+  public put(path: string, data: Object): Observable<Object> {
+    return this.putWithFullUrl(this.getPathUrl(path), data);
+  }
+
+  public putWithFullUrl(url: Url, data: Object): Observable<Object> {
     return this._http.put(
-      useFullPath ? path : this.getUrlString(path),
+      url.toString(),
       data,
       this.getOptions()
     ).map(this.formatResponse);
@@ -80,12 +87,14 @@ export abstract class ApiRequest {
    * performs a delete request to the API
    *
    * @param path
-   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
-   * returned by the getBaseUrl() method
    */
-  public delete(path: string, useFullPath: boolean = false): Observable<Object> {
+  public delete(path: string): Observable<Object> {
+    return this.deleteWithFullUrl(this.getPathUrl(path));
+  }
+
+  public deleteWithFullUrl(url: Url): Observable<Object> {
     return this._http.delete(
-      useFullPath ? path : this.getUrlString(path),
+      url.toString(),
       this.getOptions()
     ).map(this.formatResponse);
   }
@@ -96,8 +105,8 @@ export abstract class ApiRequest {
    * @param path
    * @returns {String}
    */
-  public getUrlString(path: string): string {
-    return this.getBaseUrl().getRelativeUrl(path).toString();
+  public getPathUrl(path: string): Url {
+    return this.getBaseUrl().getRelativeUrl(path);
   }
 
   /**
