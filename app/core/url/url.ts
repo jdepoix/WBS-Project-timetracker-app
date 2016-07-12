@@ -2,26 +2,26 @@
  * simple wrapper for url strings to take care of beginning and trailing slashes
  */
 export class Url {
-  private _stringUrl: String;
+  private _stringUrl: string;
 
   /**
    * @param stringUrl
    */
-  constructor(stringUrl: String) {
+  constructor(stringUrl: string) {
     this._stringUrl = this._formatUrlString(stringUrl);
   }
 
   /**
-   * creates a new Url object from a given base url and path relative to the base Url
+   * creates a new Url object, from a path relative to this Url
    *
-   * @param baseUrl
    * @param path
+   * @returns {Url}
    */
-  constructor(baseUrl: Url, path: String) {
-    this(baseUrl.toString() + new Url(path).toString());
+  public getRelativeUrl(path: string): Url {
+    return new Url(this._stringUrl + this._formatUrlString(path));
   }
 
-  public toString(): String {
+  public toString(): string {
     return this._stringUrl;
   }
 
@@ -32,7 +32,7 @@ export class Url {
    * @returns {string}
    * @private
    */
-  private _removeBeginningSlashes(stringUrl: String): String {
+  private _removeBeginningSlashes(stringUrl: string): string {
     return stringUrl.replace(/^\/+/g, '');
   }
 
@@ -43,7 +43,7 @@ export class Url {
    * @returns {string}
    * @private
    */
-  private _addTrailingSlashes(stringUrl: String): String {
+  private _addTrailingSlashes(stringUrl: string): string {
     return stringUrl.charAt(stringUrl.length - 1) == '/' ? stringUrl : stringUrl + '/';
   }
 
@@ -54,7 +54,7 @@ export class Url {
    * @returns {String}
    * @private
    */
-  private _formatUrlString(stringUrl: String): String {
+  private _formatUrlString(stringUrl: string): string {
     return this._addTrailingSlashes(this._removeBeginningSlashes(stringUrl));
   }
 }
