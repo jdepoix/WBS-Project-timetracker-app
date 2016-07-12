@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
-import {SessionService} from '../../session/session.service';
+import {SessionService} from '../session/session.service';
 
-import {ApiRequest} from '../core/api-request';
-import {Url} from '../../../core/url/url';
+import {ApiRequest} from './core/api-request';
+import {Url} from '../../core/url/url';
 
 
 /**
