@@ -1,6 +1,7 @@
-import 'rxjs/add/operator/toPromise';
-
 import {Http, Response, Headers} from '@angular/http';
+
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map'
 
 import {Url} from '../../../core/url/url';
 
@@ -19,11 +20,11 @@ export abstract class ApiRequest {
    * @param path
    * @returns {Promise<Response>}
    */
-  public get(path: String): Promise<Response> {
+  public get(path: string): Observable<Object[]> {
     return this._http.get(
       this.getUrlString(path),
       this.getOptions()
-    ).toPromise();
+    ).map(this.formatResponse);
   }
 
   /**
@@ -33,12 +34,12 @@ export abstract class ApiRequest {
    * @param data
    * @returns {Promise<Response>}
    */
-  public post(path: String, data: Object): Promise<Response> {
+  public post(path: string, data: Object): Observable<Object[]> {
     return this._http.post(
       this.getUrlString(path),
       data,
       this.getOptions()
-    ).toPromise();
+    ).map(this.formatResponse);
   }
 
   /**
@@ -48,12 +49,12 @@ export abstract class ApiRequest {
    * @param data
    * @returns {Promise<Response>}
    */
-  public patch(path: String, data: Object): Promise<Response> {
+  public patch(path: string, data: Object): Observable<Object[]> {
     return this._http.patch(
       this.getUrlString(path),
       data,
       this.getOptions()
-    ).toPromise();
+    ).map(this.formatResponse);
   }
 
   /**
@@ -63,12 +64,12 @@ export abstract class ApiRequest {
    * @param data
    * @returns {Promise<Response>}
    */
-  public put(path: String, data: Object): Promise<Response> {
+  public put(path: string, data: Object): Observable<Object[]> {
     return this._http.put(
       this.getUrlString(path),
       data,
       this.getOptions()
-    ).toPromise();
+    ).map(this.formatResponse);
   }
 
   /**
@@ -77,11 +78,11 @@ export abstract class ApiRequest {
    * @param path
    * @returns {Promise<Response>}
    */
-  public delete(path: String): Promise<Response> {
+  public delete(path: string): Observable<Object[]> {
     return this._http.delete(
       this.getUrlString(path),
       this.getOptions()
-    ).toPromise();
+    ).map(this.formatResponse);
   }
 
   /**
@@ -90,8 +91,8 @@ export abstract class ApiRequest {
    * @param path
    * @returns {String}
    */
-  public getUrlString(path: String): String {
-    return new Url(this.getBaseUrl(), path).toString();
+  public getUrlString(path: string): string {
+    return this.getBaseUrl().getRelativeUrl(path).toString();
   }
 
   /**
@@ -100,7 +101,9 @@ export abstract class ApiRequest {
    * @returns {Headers}
    */
   public getHeaders(): Headers {
-    return new Headers();
+    return new Headers({
+      'Content-Type': 'application/json'
+    });
   }
 
   /**
@@ -112,6 +115,16 @@ export abstract class ApiRequest {
     return {
       headers: this.getHeaders()
     }
+  }
+
+  /**
+   * brings the responses in the desired format
+   *
+   * @param response
+   * @returns {string|any|ArrayBuffer|Uint8ClampedArray|{}[]}
+   */
+  public formatResponse(response: Response): Object[] {
+    return response.json() || [{}]
   }
 
   /**
