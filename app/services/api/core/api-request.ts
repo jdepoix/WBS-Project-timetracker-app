@@ -18,10 +18,12 @@ export abstract class ApiRequest {
    * performs a get request to the API
    *
    * @param path
+   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
+   * returned by the getBaseUrl() method
    */
-  public get(path: string): Observable<Array<Object>> {
+  public get(path: string, useFullPath: boolean = false): Observable<Array<Object>> {
     return this._http.get(
-      this.getUrlString(path),
+      useFullPath ? path : this.getUrlString(path),
       this.getOptions()
     ).map(this.formatResponse);
   }
@@ -31,10 +33,12 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
+   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
+   * returned by the getBaseUrl() method
    */
-  public post(path: string, data: Object): Observable<Object> {
+  public post(path: string, data: Object, useFullPath: boolean = false): Observable<Object> {
     return this._http.post(
-      this.getUrlString(path),
+      useFullPath ? path : this.getUrlString(path),
       data,
       this.getOptions()
     ).map(this.formatResponse);
@@ -45,10 +49,12 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
+   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
+   * returned by the getBaseUrl() method
    */
-  public patch(path: string, data: Object): Observable<Object> {
+  public patch(path: string, data: Object, useFullPath: boolean = false): Observable<Object> {
     return this._http.patch(
-      this.getUrlString(path),
+      useFullPath ? path : this.getUrlString(path),
       data,
       this.getOptions()
     ).map(this.formatResponse);
@@ -59,10 +65,12 @@ export abstract class ApiRequest {
    *
    * @param path
    * @param data
+   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
+   * returned by the getBaseUrl() method
    */
-  public put(path: string, data: Object): Observable<Object> {
+  public put(path: string, data: Object, useFullPath: boolean = false): Observable<Object> {
     return this._http.put(
-      this.getUrlString(path),
+      useFullPath ? path : this.getUrlString(path),
       data,
       this.getOptions()
     ).map(this.formatResponse);
@@ -72,10 +80,12 @@ export abstract class ApiRequest {
    * performs a delete request to the API
    *
    * @param path
+   * @param useFullPath if true the path is considered as a complete URL, if false it's relative to the base path
+   * returned by the getBaseUrl() method
    */
-  public delete(path: string): Observable<Object> {
+  public delete(path: string, useFullPath: boolean = false): Observable<Object> {
     return this._http.delete(
-      this.getUrlString(path),
+      useFullPath ? path : this.getUrlString(path),
       this.getOptions()
     ).map(this.formatResponse);
   }
