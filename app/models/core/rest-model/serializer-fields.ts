@@ -10,7 +10,7 @@ export abstract class RestModelDeserializerField<FieldType> {
    * @param _sourceObjectFieldName optionally the name of this field in the source plain object. Will be the same as
    * fieldName if not provided
    */
-  constructor(private _fieldName: string, private _sourceObjectFieldName?: string = undefined) {
+  constructor(private _fieldName: string, private _sourceObjectFieldName?: string) {
   }
 
   get fieldName(): string {
@@ -28,7 +28,8 @@ export abstract class RestModelDeserializerField<FieldType> {
    * @returns {FieldType}
    */
   public deserialize(plainObject: Object): FieldType {
-    return this.deserializeField(plainObject[this.sourceObjectFieldName]);
+    return plainObject[this.sourceObjectFieldName] === null || plainObject[this.sourceObjectFieldName] === undefined ?
+      null : this.deserializeField(plainObject[this.sourceObjectFieldName]);
   }
 
   /**
