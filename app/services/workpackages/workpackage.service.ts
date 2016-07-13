@@ -21,8 +21,12 @@ export class WorkpackageService implements GetOperation<Workpackage>, UpdateOper
     this._endpoint = this._sessionService.subProjetUrl.getRelativeUrl('workpackages');
   }
 
-  public get(params?: Map<string, Object>): Observable<Array<Workpackage>> {
-    let url: Url = params == null ? this._endpoint : this._endpoint.clone().addParams(params);
+  public get(isToplevelWorkpackage?: boolean): Observable<Array<Workpackage>> {
+    let url: Url = this._endpoint;
+
+    if (isToplevelWorkpackage != null) {
+      url = url.clone().addParam('toplevel_wp', isToplevelWorkpackage);
+    }
 
     return this._timetrackerApiService.getWithFullUrl(url).map((plainObjects) => {
       return new RestModelListDeserializer<Workpackage>(plainObjects, (plainObject: Object): Workpackage => {
