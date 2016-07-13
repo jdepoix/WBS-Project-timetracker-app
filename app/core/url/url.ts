@@ -3,12 +3,17 @@
  */
 export class Url {
   private _stringUrl: string;
+  private _params: Map<string, Object> = new Map<string, Object>();
 
   /**
    * @param stringUrl
+   * @param params url params
    */
-  constructor(stringUrl: string) {
+  constructor(stringUrl: string, params?: Map<string, Object>) {
     this._stringUrl = this._formatUrlString(stringUrl);
+    if (params != null) {
+      this.addParams(params);
+    }
   }
 
   /**
@@ -22,7 +27,50 @@ export class Url {
   }
 
   public toString(): string {
-    return this._stringUrl;
+    return this._stringUrl + this._paramsToString();
+  }
+
+  /**
+   * add a set of url params
+   *
+   * @param params
+   */
+  public addParams(params: Map<string, Object>) {
+    params.forEach((key: string) => {
+      this.addParam(key, params.get(key));
+    });
+  }
+
+  /**
+   * add one url param
+   *
+   * @param key
+   * @param value
+   */
+  public addParam(key: string, value: Object) {
+    this._params.set(key, value);
+  }
+
+  /**
+   * converts URL params to string
+   * @private
+   */
+  private _paramsToString(): string {
+    if (this._params.size) {
+      let paramString: string = '?';
+
+      this._params.forEach((key: string) => {
+        paramString += `${key}=${this._params.get(key).toString()}&`
+      });
+
+      return paramString.slice(0, -1);
+    }
+
+    return '';
+  }
+
+  public clone(): Url {
+    return new Url(this.toString(), this._params);
   }
 
   /**
@@ -48,6 +96,16 @@ export class Url {
   }
 
   /**
+   * removes params from a url
+   *
+   * @param stringUrl
+   * @private
+   */
+  private _removeParams(stringUrl: string): string {
+    return stringUrl.split('?')[0];
+  }
+
+  /**
    * formats the given url string
    *
    * @param stringUrl
@@ -55,6 +113,6 @@ export class Url {
    * @private
    */
   private _formatUrlString(stringUrl: string): string {
-    return this._addTrailingSlashes(this._removeBeginningSlashes(stringUrl));
+    return this._addTrailingSlashes(this._removeBeginningSlashes(this._removeParams(stringUrl)));
   }
 }
