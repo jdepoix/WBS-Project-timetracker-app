@@ -36,8 +36,8 @@ export class Url {
    * @param params
    */
   public addParams(params: Map<string, Object>): Url {
-    params.forEach((key: string) => {
-      this.addParam(key, params.get(key));
+    params.forEach((item: Object, key: string) => {
+      this.addParam(key, item);
     });
 
     return this;
@@ -63,8 +63,8 @@ export class Url {
     if (this._params.size) {
       let paramString: string = '?';
 
-      this._params.forEach((key: string) => {
-        paramString += `${key}=${this._params.get(key).toString()}&`
+      this._params.forEach((item: Object, key: string) => {
+        paramString += `${key}=${item.toString()}&`
       });
 
       return paramString.slice(0, -1);
