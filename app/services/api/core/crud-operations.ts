@@ -1,3 +1,5 @@
+import {Response} from '@angular/http';
+
 import {Observable} from 'rxjs/Rx';
 
 import {RestModel} from '../../../models/core/rest-model/rest-model';
@@ -16,5 +18,5 @@ export interface UpdateOperation<Model extends RestModel & Updateable> {
 }
 
 export interface DeleteOperation<Model extends RestModel> {
-  delete(element: Model): Observable<Model>;
+  delete(element: Model): Observable<Response>;
 }

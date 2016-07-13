@@ -88,15 +88,15 @@ export abstract class ApiRequest {
    *
    * @param path
    */
-  public delete(path: string): Observable<Object> {
+  public delete(path: string): Observable<Response> {
     return this.deleteWithFullUrl(this.getPathUrl(path));
   }
 
-  public deleteWithFullUrl(url: Url): Observable<Object> {
+  public deleteWithFullUrl(url: Url): Observable<Response> {
     return this._http.delete(
       url.toString(),
       this.getOptions()
-    ).map(this.formatResponse);
+    );
   }
 
   /**
