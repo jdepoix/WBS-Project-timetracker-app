@@ -23,7 +23,9 @@ export class TimetrackerApiReuqestService extends ApiRequest {
   public getHeaders(): Headers {
     let headers: Headers = super.getHeaders();
 
-    headers.append('Authorization', `Token ${this._sessionService.authenticationKey}`);
+    if (this._sessionService.authenticationKey) {
+      headers.append('Authorization', `Token ${this._sessionService.authenticationKey}`);
+    }
 
     return headers
   }

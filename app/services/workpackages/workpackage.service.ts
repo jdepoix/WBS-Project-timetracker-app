@@ -23,9 +23,9 @@ export class WorkpackageService implements GetOperation<Workpackage>, UpdateOper
 
   public get(): Observable<Array<Workpackage>> {
     return this._timetrackerApiService.getWithFullUrl(this._endpoint).map((plainObjects) => {
-      RestModelListDeserializer<Workpackage>(plainObjects, (plainObject: Object): Workpackage => {
+      return new RestModelListDeserializer<Workpackage>(plainObjects, (plainObject: Object): Workpackage => {
         return new WorkpackageDeserializer(plainObject).deserialize();
-      });
+      }).deserialize();
     });
   }
 

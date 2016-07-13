@@ -12,7 +12,10 @@ export class SessionService {
   // TODO remove assignments, only for testing purposes
   private _apiUrl: Url = new Url('http://localhost:8000');
   private _authenticationKey: string = '7b92d4f75aa4b149967d338d754f56101a330cf6';
-  private _selectedProject: Project = {self: new Url('http://localhost:8000/api/projects/21/')};
+  private _selectedProject: Project = {
+    self: new Url('http://localhost:8000/api/projects/21/'),
+    db: 'myProject'
+  };
 
   get apiUrl(): Url {
     return this._apiUrl;
