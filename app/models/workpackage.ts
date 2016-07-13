@@ -1,8 +1,10 @@
 import {RestModel} from './core/rest-model/rest-model';
 import {Updateable} from './core/rest-model/model-operations';
 import {
-  RestModelDeserializerField, UrlDeserializerField,
-  StringDeserializerField, BooleanDeserializerField, FloatDeserializerField
+  RestModelDeserializerField,
+  StringDeserializerField,
+  BooleanDeserializerField,
+  FloatDeserializerField
 } from './core/rest-model/serializer-fields';
 
 export class Workpackage extends RestModel implements Updateable {
@@ -18,8 +20,7 @@ export class Workpackage extends RestModel implements Updateable {
   public eac: number;
   public cpi: number;
 
-  public deserializerFields: Array<RestModelDeserializerField<Object>> = [
-    new UrlDeserializerField('self'),
+  protected _deserializerFields: Array<RestModelDeserializerField<Object>> = [
     new StringDeserializerField('stringId'),
     new StringDeserializerField('name'),
     new StringDeserializerField('description'),

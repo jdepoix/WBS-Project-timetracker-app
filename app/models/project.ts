@@ -1,8 +1,13 @@
 import {RestModel} from './core/rest-model/rest-model';
-import {RestModelDeserializerField} from './core/rest-model/serializer-fields';
+import {RestModelDeserializerField, StringDeserializerField} from './core/rest-model/serializer-fields';
 
 export class Project extends RestModel {
-  getDeserializerFields(): Array<RestModelDeserializerField<Object>> {
-    return this.deserializerFields;
+  protected _deserializerFields: Array<RestModelDeserializerField<Object>> = [
+    new StringDeserializerField('db')
+  ];
+
+  constructor(plainObject: Object) {
+    super(plainObject);
+    this._deserialize(plainObject);
   }
 }
