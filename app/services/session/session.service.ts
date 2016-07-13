@@ -19,6 +19,7 @@ export class SessionService {
   };
 
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService) {
+    this._timetrackerApiService.sessionService = this;
   }
 
   public login(username: string, password: string): EventEmitter<string> {

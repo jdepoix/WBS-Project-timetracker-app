@@ -21,8 +21,10 @@ export class WorkpackageService implements GetOperation<Workpackage>, UpdateOper
     this._endpoint = this._sessionService.subProjetUrl.getRelativeUrl('workpackages');
   }
 
-  public get(): Observable<Array<Workpackage>> {
-    return this._timetrackerApiService.getWithFullUrl(this._endpoint).map((plainObjects) => {
+  public get(params?: Map<string, Object>): Observable<Array<Workpackage>> {
+    let url: Url = params == null ? this._endpoint : this._endpoint.clone().addParams(params);
+
+    return this._timetrackerApiService.getWithFullUrl(url).map((plainObjects) => {
       return new RestModelListDeserializer<Workpackage>(plainObjects, (plainObject: Object): Workpackage => {
         return new WorkpackageDeserializer(plainObject).deserialize();
       }).deserialize();
