@@ -3,7 +3,6 @@ import {Observable} from 'rxjs/Rx';
 import {RestModel} from '../../../models/core/rest-model/rest-model';
 import {Createable, Updateable} from '../../../models/core/rest-model/model-operations';
 
-
 export interface GetOperation<Model extends RestModel> {
   get(): Observable<Array<Model>>;
 }
