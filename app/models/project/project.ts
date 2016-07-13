@@ -1,5 +1,5 @@
 import {RestModel} from '../core/rest-model/rest-model';
 
 export class Project extends RestModel {
-  private db: string;
+  public db: string;
 }
