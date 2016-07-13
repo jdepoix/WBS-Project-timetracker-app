@@ -90,6 +90,8 @@ export class UrlDeserializerField extends RestModelDeserializerField<Url> {
  */
 export class DateDeserializerField extends RestModelDeserializerField<Date> {
   deserializeField(plainObjectField: any): Date {
-    return new Date(plainObjectField);
+    let date: Date = new Date(plainObjectField);
+    date.setHours(0, 0, 0, 0);
+    return date;
   }
 }
