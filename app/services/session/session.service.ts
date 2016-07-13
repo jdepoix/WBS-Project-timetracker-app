@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 
 import {Url} from '../../core/url/url';
 
 import {Project} from '../../models/project/project';
+import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 
 /**
  * takes care of holding, saving and loading data, regarding the current session
@@ -16,6 +17,27 @@ export class SessionService {
     self: new Url('http://localhost:8000/api/projects/21/'),
     db: 'myProject'
   };
+
+  constructor(private _timetrackerApiService: TimetrackerApiReuqestService) {
+  }
+
+  public login(username: string, password: string): EventEmitter<string> {
+    let response: EventEmitter<string> = new EventEmitter<string>();
+
+    this._timetrackerApiService.post('login', {
+      username: username,
+      password: password
+    }).subscribe((plainObject: any) => {
+      this.authenticationKey = plainObject.token || null;
+      response.emit(this.authenticationKey);
+    });
+
+    return response;
+  }
+
+  public logout(): void {
+    this.authenticationKey = null;
+  }
 
   get apiUrl(): Url {
     return this._apiUrl;
