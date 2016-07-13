@@ -35,10 +35,12 @@ export class Url {
    *
    * @param params
    */
-  public addParams(params: Map<string, Object>) {
+  public addParams(params: Map<string, Object>): Url {
     params.forEach((key: string) => {
       this.addParam(key, params.get(key));
     });
+
+    return this;
   }
 
   /**
@@ -47,8 +49,10 @@ export class Url {
    * @param key
    * @param value
    */
-  public addParam(key: string, value: Object) {
+  public addParam(key: string, value: Object): Url {
     this._params.set(key, value);
+
+    return this;
   }
 
   /**
