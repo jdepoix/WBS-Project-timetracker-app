@@ -31,6 +31,15 @@ export class Url {
   }
 
   /**
+   * gets the string url without appending the params
+   *
+   * @returns {string}
+   */
+  public get stringUrl(): string {
+    return this._stringUrl
+  }
+
+  /**
    * add a set of url params
    *
    * @param params
@@ -118,5 +127,18 @@ export class Url {
    */
   private _formatUrlString(stringUrl: string): string {
     return this._addTrailingSlashes(this._removeBeginningSlashes(this._removeParams(stringUrl)));
+  }
+}
+
+export class RessourceUrl {
+  /**
+   * retrieves the primary key from a given Ressource Url
+   *
+   * @param url
+   * @returns {string}
+   */
+  public static getPrimaryKey(url: Url): string {
+    let splittedUrl: Array<string> = url.stringUrl.split('/');
+    return splittedUrl[splittedUrl.length - 2];
   }
 }
