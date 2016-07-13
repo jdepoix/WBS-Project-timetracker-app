@@ -84,3 +84,12 @@ export class UrlDeserializerField extends RestModelDeserializerField<Url> {
     return new Url(plainObjectField.toString());
   }
 }
+
+/**
+ * deserializer for dates. Excpect to receive dates as a string in the YYYY-MM-DD format.
+ */
+export class DateDeserializerField extends RestModelDeserializerField<Date> {
+  deserializeField(plainObjectField: any): Date {
+    return new Date(plainObjectField);
+  }
+}
