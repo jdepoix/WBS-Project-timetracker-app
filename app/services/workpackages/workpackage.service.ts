@@ -4,12 +4,14 @@ import {Observable} from 'rxjs/Rx';
 
 import {Url} from '../../core/url/url';
 
-import {Workpackage} from '../../models/workpackage';
+import {Workpackage} from '../../models/workpackage/workpackage';
 
 import {GetOperation, UpdateOperation} from '../api/core/crud-operations';
 
 import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 import {SessionService} from '../session/session.service';
+import {WorkpackageDeserializer} from '../../models/workpackage/workpackage-serializers';
+import {RestModelListDeserializer} from '../../models/core/rest-model/serializers';
 
 @Injectable()
 export class WorkpackageService implements GetOperation<Workpackage>, UpdateOperation<Workpackage> {
@@ -20,18 +22,17 @@ export class WorkpackageService implements GetOperation<Workpackage>, UpdateOper
   }
 
   public get(): Observable<Array<Workpackage>> {
-    return this._timetrackerApiService.getWithFullUrl(this._endpoint).map((elements) => {
-      let workpackages: Array<Workpackage> = [];
-
-      elements.forEach((element) => {
-        workpackages.push(new Workpackage(element));
+    return this._timetrackerApiService.getWithFullUrl(this._endpoint).map((plainObjects) => {
+      RestModelListDeserializer<Workpackage>(plainObjects, (plainObject: Object): Workpackage => {
+        return new WorkpackageDeserializer(plainObject).deserialize();
       });
-
-      return workpackages;
     });
   }
 
   public update(element: Workpackage): Observable<Workpackage> {
-    return undefined;
+    return this._timetrackerApiService.patchWithFullUrl(element.self, element.getUpdateRequestData())
+      .map((plainObject) => {
+        return new WorkpackageDeserializer(plainObject).deserialize();
+      });
   }
 }
