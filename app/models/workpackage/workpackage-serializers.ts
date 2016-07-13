@@ -1,18 +1,15 @@
 import {RestModelDeserializer} from '../core/rest-model/serializers';
 
+import {Workpackage} from './workpackage';
 import {
   RestModelDeserializerField,
   StringDeserializerField,
   BooleanDeserializerField,
-  FloatDeserializerField,
-  UrlDeserializerField
+  FloatDeserializerField
 } from '../core/rest-model/serializer-fields';
-
-import {Workpackage} from './workpackage';
 
 export class WorkpackageDeserializer extends RestModelDeserializer<Workpackage> {
   protected _deserializerFields: Array<RestModelDeserializerField<Object>> = [
-    new UrlDeserializerField('self'),
     new StringDeserializerField('stringId'),
     new StringDeserializerField('name'),
     new StringDeserializerField('description'),
