@@ -12,8 +12,14 @@ import {Url} from '../../../core/url/url';
  */
 @Injectable()
 export class TimetrackerApiReuqestService extends ApiRequest {
-  constructor(_http: Http, private _sessionService: SessionService) {
+  private _sessionService: SessionService;
+
+  constructor(_http: Http) {
     super(_http);
+  }
+
+  set sessionService(value: SessionService) {
+    this._sessionService = value;
   }
 
   public getBaseUrl(): Url {
