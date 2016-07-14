@@ -5,6 +5,7 @@ import {StatusBar} from 'ionic-native';
 
 import {BookingOverviewComponent} from '../booking/overview/booking-overview.component';
 import {WorkpackageOverviewComponent} from '../workpackage/overview/workpackage-overview.component';
+import {LoginComponent} from "../login/login.component";
 
 
 @Component({
@@ -25,6 +26,7 @@ export class AppComponent {
 
     // set our app's pages
     this.pages = [
+      { title: 'Login' , component: LoginComponent}, 
       { title: 'Bookings', component: BookingOverviewComponent },
       { title: 'Workpackages', component: WorkpackageOverviewComponent }
     ];
