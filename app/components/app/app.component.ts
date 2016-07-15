@@ -15,7 +15,7 @@ export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = BookingOverviewComponent;
+  rootPage: any = LoginComponent;
   pages: Array<{title: string, component: any}>;
 
   constructor(
