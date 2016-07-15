@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
 import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl} from '@angular/common';
+import {BookingOverviewComponent} from "../booking/overview/booking-overview.component";
+import {NavController} from "ionic-angular/index";
 
 
 
 @Component({
-    templateUrl: 'build/components/login/login.component.html'
+    templateUrl: 'build/components/login/login.component.html',
 })
 export class LoginComponent {
 
@@ -16,7 +18,7 @@ export class LoginComponent {
     usernameColor: string;
     passwordColor: string;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private nav: NavController) {
         this.authForm = fb.group({
             'server_address': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
             'username': ['', Validators.required],
@@ -51,6 +53,7 @@ export class LoginComponent {
             this.passwordColor = "grey";
         }
 
+        this.nav.setRoot(BookingOverviewComponent);
     }
 }
 
