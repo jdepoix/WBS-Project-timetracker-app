@@ -1,9 +1,9 @@
 .logo {
-  padding: 10px 0px 0px 0px;
   text-align: center;
-  font-size:160px;
+  font-size: 25vh;
   color: white;
-  margin: 0px;
+  margin: 0em;
+  padding: 0px;
 }
 
 .content{
@@ -12,23 +12,27 @@
 
 .login{
   text-align: center;
-  font-size: 40px;
+  font-size: 8vh;
   font-weight: bold;
 }
 
+.login p{
+  margin: 0em;
+}
+
 .top{
-  height:50%;
-  margin: 10px;
+  padding: 0em 0em 2em 0em;
+  height: 50%;
 }
 
 .bottom{
   width: 100%;
-  position: absolute;
-  bottom: 15px;
 }
 
 .login_button{
   font-weight: bold;
-  margin: 0px;
-  padding: 25px;
+  margin: 0em;
+}
+
+ion-item{
 }
