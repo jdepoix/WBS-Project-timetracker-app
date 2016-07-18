@@ -11,12 +11,9 @@ import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-r
 @Injectable()
 export class SessionService {
   // TODO remove assignments, only for testing purposes
-  private _apiUrl: Url = new Url('http://localhost:8000');
-  private _authenticationKey: string = '7b92d4f75aa4b149967d338d754f56101a330cf6';
-  private _selectedProject: Project = {
-    self: new Url('http://localhost:8000/api/projects/21/'),
-    db: 'myProject'
-  };
+  private _apiUrl: Url;
+  private _authenticationKey: string;
+  private _selectedProject: Project;
 
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService) {
     this._timetrackerApiService.sessionService = this;
