@@ -14,20 +14,23 @@ import {Url} from '../../../core/url/url';
 export class TimetrackerApiReuqestService extends ApiRequest {
   constructor(_http: Http, private _sessionService: SessionService) {
     super(_http);
-    this._sessionService.timetrackerApiService = this;
   }
 
   public getBaseUrl(): Url {
-    return this._sessionService.apiUrl.getRelativeUrl('api');
+    return this.sessionService.apiUrl.getRelativeUrl('api');
   }
 
   public getHeaders(): Headers {
     let headers: Headers = super.getHeaders();
 
-    if (this._sessionService.authenticationKey) {
-      headers.append('Authorization', `Token ${this._sessionService.authenticationKey}`);
+    if (this.sessionService.authenticationKey) {
+      headers.append('Authorization', `Token ${this.sessionService.authenticationKey}`);
     }
 
     return headers
+  }
+
+  get sessionService(): SessionService {
+    return this._sessionService;
   }
 }

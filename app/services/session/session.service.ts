@@ -1,11 +1,10 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {SqlStorage, Storage} from 'ionic-angular/index';
 
 import {Url} from '../../core/url/url';
 
 import {Project} from '../../models/project/project';
-import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 import {ProjectDeserializer} from '../../models/project/project-serializers';
 
 /**
@@ -13,12 +12,10 @@ import {ProjectDeserializer} from '../../models/project/project-serializers';
  */
 @Injectable()
 export class SessionService {
-  private _timetrackerApiService: TimetrackerApiReuqestService;
   
   private _apiUrl: Url;
   private _authenticationKey: string;
   private _selectedProject: Project;
-
 
   private _storage: Storage;
 
@@ -28,35 +25,13 @@ export class SessionService {
     // this._loadStoredVariables();
   }
 
-  public login(username: string, password: string): EventEmitter<string> {
-    let response: EventEmitter<string> = new EventEmitter<string>();
-
-    this._timetrackerApiService.post('login', {
-      username: username,
-      password: password
-    }).subscribe((plainObject: any) => {
-      this.authenticationKey = plainObject.token || null;
-      response.emit(this.authenticationKey);
-    });
-
-    return response;
-  }
-
-  public logout(): void {
-    this.authenticationKey = null;
-  }
-
-  set timetrackerApiService(value: TimetrackerApiReuqestService) {
-    this._timetrackerApiService = value;
-  }
-
   public get apiUrl(): Url {
     return this._apiUrl;
   }
 
   public set apiUrl(value: Url) {
     this._apiUrl = value;
-    this._storage.set('apiUrl', this._apiUrl);
+    // this._storage.set('apiUrl', this._apiUrl);
   }
 
   public get authenticationKey(): string {
