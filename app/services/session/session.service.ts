@@ -12,22 +12,30 @@ import {ProjectDeserializer} from '../../models/project/project-serializers';
  */
 @Injectable()
 export class SessionService {
-  // TODO remove assignments, only for testing purposes
-  private _apiUrl: Url = new Url('http://localhost:8000');
+  private _apiUrl: Url;
 
-  private _authenticationKey: string = '7b92d4f75aa4b149967d338d754f56101a330cf6';
+  private _authenticationKey: string;
 
-  private _selectedProject: Project = {
-    self: new Url('http://localhost:8000/api/projects/21/'),
-    db: 'myProject'
-  };
+  private _selectedProject: Project;
 
   private _storage: Storage;
 
   constructor() {
-    // this._storage = new Storage(SqlStorage);
+    this._storage = new Storage(SqlStorage);
 
-    // this._loadStoredVariables();
+    // use this to set params for testing purposes, if there haven't been any attributes set previously which could be
+    // loaded
+    //
+    // TODO remove assignments, only for testing purposes
+    //
+    // this.apiUrl = new Url('http://localhost:8000');
+    // this.authenticationKey = '7b92d4f75aa4b149967d338d754f56101a330cf6';
+    // this.selectedProject = {
+    //   self: new Url('http://localhost:8000/api/projects/21/'),
+    //   db: 'myProject'
+    // };
+
+    this._loadStoredVariables();
   }
 
   public get apiUrl(): Url {
@@ -36,7 +44,7 @@ export class SessionService {
 
   public set apiUrl(value: Url) {
     this._apiUrl = value;
-    // this._storage.set('apiUrl', this._apiUrl);
+    this._storage.set('apiUrl', this._apiUrl);
   }
 
   public get authenticationKey(): string {
@@ -69,6 +77,8 @@ export class SessionService {
       this._storage.get('apiUrl').then((apiUrl) => {
         this._apiUrl = apiUrl != null ? new Url(apiUrl) : null;
         resolve(this._apiUrl);
+      }).catch(() => {
+        this._apiUrl = null;
       });
     });
   }
@@ -78,6 +88,8 @@ export class SessionService {
       this._storage.get('authenticationKey').then((authenticationKey) => {
         this._authenticationKey = authenticationKey != null ? authenticationKey : null;
         resolve(this._authenticationKey);
+      }).catch(() => {
+        this._authenticationKey = null;
       });
     });
   }
@@ -89,6 +101,8 @@ export class SessionService {
         this._selectedProject =
           selectedProject != null ? new ProjectDeserializer(selectedProject).deserialize() : null;
         resolve(this._selectedProject);
+      }).catch(() => {
+        this._selectedProject = null;
       });
     });
   }
