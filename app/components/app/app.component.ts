@@ -3,8 +3,8 @@ import {Component, ViewChild} from '@angular/core';
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 
-import {BookingOverviewComponent} from '../booking/overview/booking-overview.component';
-import {WorkpackageOverviewComponent} from '../workpackage/overview/workpackage-overview.component';
+import {BookingOverviewComponent} from '../bookings/overview/booking-overview.component';
+import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage-overview.component';
 
 
 @Component({
