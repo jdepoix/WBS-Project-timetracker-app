@@ -20,7 +20,6 @@ export class WorkpackageOverviewComponent {
   }
 
   public openWorkpackageDetailComponent(workpackage: Workpackage): void {
-    console.log('clicked');
     this._navController.push(WorkpackageDetailComponent, {
       workpackage: workpackage
     });
