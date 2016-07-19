@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, Injectable} from '@angular/core';
 
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
@@ -10,7 +10,6 @@ import {ProjectService} from "../../services/projects/project.service";
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
 import {Project} from "../../models/project/project";
-import {NgIf} from "@angular/common";
 
 
 @Component({
@@ -61,10 +60,14 @@ export class AppComponent {
 
     if(page.title == 'Logout'){
       this.authService.logout();
+      this.sessionService.selectedProject = null;
+      this.selectedProject = '';
+      this.shownProjects = false;
+      this.projects = null;
     }
 
     if(this.sessionService.authenticationKey != '') {
-      this.projectService.get().subscribe((tmp:Array<Project>) => {
+      this.projectService.get().subscribe((tmp: Array<Project>) => {
         this.projects = tmp;
       });
     }
@@ -81,9 +84,10 @@ export class AppComponent {
     return this.shownProjects;
   }
 
-  selectProject(project){
+  selectProject(project: Project){
     if(this.selectedProject == project.db){
       this.selectedProject = '';
+      this.sessionService.selectedProject = null;
     }
     else {
       this.selectedProject = project.db;
