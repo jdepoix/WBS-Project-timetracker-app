@@ -40,7 +40,7 @@ export class SessionService {
 
   public set authenticationKey(value: string) {
     this._authenticationKey = value;
-    this._storage.set('authenticationKey', this._authenticationKey);
+    //this._storage.set('authenticationKey', this._authenticationKey);
   }
 
   public get selectedProject(): Project {
