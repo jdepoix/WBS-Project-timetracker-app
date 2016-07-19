@@ -1,5 +1,10 @@
 <ion-card>
     <ion-card-header>
-        {{ booking.effort }}
+        <ion-grid>
+            <ion-row>
+                <ion-col width-20>{{ booking.effort }}</ion-col>
+                <ion-col width-80>{{ booking.description }}</ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-card-header>
 </ion-card>
