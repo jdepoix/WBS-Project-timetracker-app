@@ -1,5 +1,10 @@
-import {Component} from '@angular/core';
-import {FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl} from '@angular/common';
+import {Component, EventEmitter} from '@angular/core';
+import {FormBuilder,  ControlGroup, Validators, AbstractControl} from '@angular/common';
+import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
+import {SessionService} from "../../services/session/session.service";
+import {Url} from "../../core/url/url";
+import {NavController, Alert} from "ionic-angular/index";
+import {BookingOverviewComponent} from "../booking/overview/booking-overview.component";
 
 
 
@@ -16,7 +21,10 @@ export class LoginComponent {
     usernameColor: string;
     passwordColor: string;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder,
+                private auth: SessionAuthenticationService,
+                private session: SessionService,
+                private nav: NavController) {
         this.authForm = fb.group({
             'server_address': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
             'username': ['', Validators.required],
@@ -51,6 +59,16 @@ export class LoginComponent {
             this.passwordColor = "grey";
         }
 
+        this.session.apiUrl = new Url("http://localhost:8000");
+        let event: EventEmitter<string> = this.auth.login(this.authForm.value.username, this.authForm.value.password);
+
+        var token: string = '';
+
+        event.subscribe((authToken: string) => {
+            token = authToken;
+        });
+
+        this.nav.setRoot(BookingOverviewComponent);
     }
 }
 
