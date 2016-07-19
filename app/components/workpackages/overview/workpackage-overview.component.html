@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+        <button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Workpackages</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-card *ngFor="let workpackage of _workpackages" (click)="openWorkpackageDetailComponent(workpackage)">
+            <ion-card-header>
+                {{ workpackage.stringId }} - {{ workpackage.name }}
+            </ion-card-header>
+        </ion-card>
+    </ion-list>
+</ion-content>
