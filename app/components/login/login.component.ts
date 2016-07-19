@@ -59,16 +59,22 @@ export class LoginComponent {
             this.passwordColor = "grey";
         }
 
-        this.session.apiUrl = new Url("http://localhost:8000");
-        let event: EventEmitter<string> = this.auth.login(this.authForm.value.username, this.authForm.value.password);
+        if(this.authForm.value.server_address != '' &&
+            this.authForm.value.username != '' &&
+            this.authForm.value.password != ''
+        ) {
+            this.session.apiUrl = new Url(this.authForm.value.server_address);
+            let event:EventEmitter<string> = this.auth.login(this.authForm.value.username, this.authForm.value.password);
 
-        var token: string = '';
+            var token:string = '';
 
-        event.subscribe((authToken: string) => {
-            token = authToken;
-        });
+            event.subscribe((authToken:string) => {
+                token = authToken;
+            });
 
-        this.nav.setRoot(BookingOverviewComponent);
+            this.nav.setRoot(BookingOverviewComponent);
+        }
+
     }
 }
 
