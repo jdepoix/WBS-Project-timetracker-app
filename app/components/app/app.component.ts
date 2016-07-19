@@ -87,6 +87,7 @@ export class AppComponent {
     }
     else {
       this.selectedProject = project.db;
+      this.sessionService.selectedProject = project;
     }
   }
 
