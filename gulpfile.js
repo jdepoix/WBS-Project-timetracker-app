@@ -88,9 +88,9 @@ gulp.task('add-proxy', function() {
         replacement: "http://localhost:8100/api",
         paths: replaceFiles,
         recursive: false,
-        silent: false,
+        silent: false
     });
-})
+});
 
 gulp.task('remove-proxy', function() {
     return replace({
@@ -98,6 +98,6 @@ gulp.task('remove-proxy', function() {
         replacement: "http://localhost:8000/api",
         paths: replaceFiles,
         recursive: false,
-        silent: false,
+        silent: false
     });
-})
+});
