@@ -16,10 +16,10 @@ export class BookingOverviewComponent {
   }
 
   public testLogin() {
-    this._sessionService.apiUrl = new Url('http://143.93.91.93');
+    this._sessionService.apiUrl = new Url('http://localhost:8000');
     this._sessionService.selectedProject = {
-      self: new Url('http://143.93.91.93/api/projects/1/'),
-      db: 'wbs_tool'
+      self: new Url('http://localhost:8000/api/projects/21/'),
+      db: 'rest_test'
     };
     this._authenticationService.login('jdepoix', 'GGVxevgfKr3DnRQ6rpTox44wmLrJQTsT');
   }

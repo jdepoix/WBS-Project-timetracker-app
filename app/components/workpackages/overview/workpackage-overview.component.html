@@ -7,6 +7,12 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <h3>Workpackages</h3>
+<ion-content>
+    <ion-list>
+        <ion-card *ngFor="let workpackage of _workpackages" (click)="openWorkpackageDetailComponent(workpackage)">
+            <ion-card-header>
+                {{ workpackage.stringId }} - {{ workpackage.name }}
+            </ion-card-header>
+        </ion-card>
+    </ion-list>
 </ion-content>
