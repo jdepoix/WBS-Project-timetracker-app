@@ -1,15 +1,35 @@
 <ion-menu [content]="content">
-  <ion-toolbar primary>
-    <ion-title>WBS Timetracker</ion-title>
-  </ion-toolbar>
+    <ion-toolbar primary>
+        <ion-title>WBS Timetracker</ion-title>
+    </ion-toolbar>
 
-  <ion-content>
-    <ion-list>
-      <button ion-item *ngFor="let page of pages" (click)="openPage(page)">
-        {{page.title}}
-      </button>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+        <ion-list>
+
+            <div>
+                <ion-item class="item-stable"
+                          (click)="toggleProjects()"
+                          ng-class="{active: isProjectsShown()}">
+
+                    <ion-icon *ngIf="!isProjectsShown()" name="arrow-dropright-circle"></ion-icon>
+                    <ion-icon *ngIf="isProjectsShown()" name="arrow-dropup-circle"></ion-icon>
+                    Projekte
+                </ion-item>
+                <div *ngIf="isProjectsShown()">
+                    <ion-item class="item-accordion" *ngFor="let project of projects" (click)="selectProject(project)">
+                        {{project.db}}
+                        <ion-icon *ngIf="getProjectSelected() == project.db" name="checkmark"></ion-icon>
+                    </ion-item>
+                </div>
+            </div>
+
+            <button ion-item *ngFor="let page of pages" (click)="openPage(page)">
+                {{page.title}}
+            </button>
+
+        </ion-list>
+
+    </ion-content>
 </ion-menu>
 
 <ion-nav [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
