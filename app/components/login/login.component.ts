@@ -4,9 +4,7 @@ import {SessionAuthenticationService} from "../../services/session/session-authe
 import {SessionService} from "../../services/session/session.service";
 import {Url} from "../../core/url/url";
 import {NavController, Alert, Loading} from "ionic-angular/index";
-import {BookingOverviewComponent} from "../booking/overview/booking-overview.component";
-
-
+import {BookingOverviewComponent} from "../bookings/overview/booking-overview.component";
 
 @Component({
     templateUrl: 'build/components/login/login.component.html'

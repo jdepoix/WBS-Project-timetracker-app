@@ -33,8 +33,14 @@ $colors: (
   accent: #FF5252,
   primary-text: #212121,
   secondary-text: #727272,
-  divider: #B6B6B6
+  divider: #B6B6B6,
+  background-color: #F4F4F4
 );
 
+$background-color: map-get($colors, background-color);
 $toolbar-background: map-get($colors, primary);
 $text-color: map-get($colors, primary-text);
+
+$card-ios-background-color: white;
+$card-md-background-color: white;
+$card-wp-background-color: white;

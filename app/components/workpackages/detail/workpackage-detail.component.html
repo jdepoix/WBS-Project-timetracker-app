@@ -1,0 +1,14 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{ _workpackage.stringId }} - {{ _workpackage.name }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <template ngFor let-date [ngForOf]="_sortedDateGroups">
+        <ion-list-header>
+            {{ date }}
+        </ion-list-header>
+        <booking *ngFor="let booking of _dateGroupedBookings.get(date)" [booking]="booking"></booking>
+    </template>
+</ion-content>

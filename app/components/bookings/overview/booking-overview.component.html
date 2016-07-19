@@ -9,4 +9,9 @@
 
 <ion-content padding>
   <h3>Bookings</h3>
+  <button (click)="testLogin()">login</button>
+  <button (click)="testClick()">test me</button>
+  <ul>
+    <li *ngFor="let project of projects">{{ project?.db }}</li>
+  </ul>
 </ion-content>

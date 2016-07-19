@@ -9,3 +9,192 @@
 // App Shared Styles
 // --------------------------------------------------
 // These are styles shared by all components
+
+.slide-in {
+  animation-name: slideIn;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.slide-in-top {
+  animation-name: slideInTop;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.slide-in-left {
+  animation-name: slideInLeft;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.slide-in-right {
+  animation-name: slideInRight;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.slide-out {
+  animation-direction: reverse;
+  animation-name: slideIn;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.slide-out-top {
+  animation-direction: reverse;
+  animation-name: slideInTop;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.slide-out-left {
+  animation-direction: reverse;
+  animation-name: slideInLeft;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.slide-out-right {
+  animation-name: slideInRight;
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+  animation-direction: reverse;
+}
+
+.zoom-on-hover {
+  transition: transform .1s linear;
+  cursor: pointer;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.05);
+}
+
+.fade-in {
+  animation: fadeIn .7s linear;
+}
+
+.fade-in-half {
+  animation: fadeInHalf .7s linear;
+}
+
+.turn-in-clock {
+  animation: turnInClock 1s linear;
+  animation-duration: 1.3s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+}
+
+.turn-against-clock {
+  animation: turnInClock;
+  animation-duration: 1.5s;
+  animation-timing-function: cubic-bezier(0.38, 0.19, 0.26, 1.08);
+  animation-direction: reverse;
+}
+
+/* KEYFRAMES */
+@-webkit-keyframes spin2 {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes spin2 {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    -webkit-transform: translateY(100%) translateZ(0);
+    transform: translateY(100%) translateZ(0);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0px) translateZ(0);
+    transform: translateY(0px) translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInTop {
+  0% {
+    -webkit-transform: translateY(-100%) translateZ(0);
+    transform: translateY(-100%) translateZ(0);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0px) translateZ(0);
+    transform: translateY(0px) translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    -webkit-transform: translateX(100%) translateZ(0);
+    transform: translateX(100%) translateZ(0);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0px) translateZ(0);
+    transform: translateX(0px) translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    -webkit-transform: translateX(-100%) translateZ(0);
+    transform: translateX(-100%) translateZ(0);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0px) translateZ(0);
+    transform: translateX(0px) translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInHalf {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes turnInClock {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

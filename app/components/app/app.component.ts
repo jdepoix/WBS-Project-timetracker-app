@@ -3,14 +3,15 @@ import {Component, ViewChild, Injectable} from '@angular/core';
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 
-import {BookingOverviewComponent} from '../booking/overview/booking-overview.component';
-import {WorkpackageOverviewComponent} from '../workpackage/overview/workpackage-overview.component';
-import {LoginComponent} from "../login/login.component";
+import {Project} from "../../models/project/project";
+
 import {ProjectService} from "../../services/projects/project.service";
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
-import {Project} from "../../models/project/project";
 
+import {LoginComponent} from "../login/login.component";
+import {BookingOverviewComponent} from '../bookings/overview/booking-overview.component';
+import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage-overview.component';
 
 @Component({
   templateUrl: 'build/components/app/app.component.html',
