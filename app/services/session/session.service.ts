@@ -23,18 +23,6 @@ export class SessionService {
   constructor() {
     this._storage = new Storage(SqlStorage);
 
-    // use this to set params for testing purposes, if there haven't been any attributes set previously which could be
-    // loaded
-    //
-    // TODO remove assignments, only for testing purposes
-    //
-    // this.apiUrl = new Url('http://localhost:8000');
-    // this.authenticationKey = '7b92d4f75aa4b149967d338d754f56101a330cf6';
-    // this.selectedProject = {
-    //   self: new Url('http://localhost:8000/api/projects/21/'),
-    //   db: 'myProject'
-    // };
-
     this._loadStoredVariables();
   }
 
@@ -53,7 +41,7 @@ export class SessionService {
 
   public set authenticationKey(value: string) {
     this._authenticationKey = value;
-    this._storage.set('authenticationKey', this._authenticationKey);
+    //this._storage.set('authenticationKey', this._authenticationKey);
   }
 
   public get selectedProject(): Project {

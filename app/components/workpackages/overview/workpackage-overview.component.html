@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
+    <ion-list class="slide-in">
         <ion-card *ngFor="let workpackage of _workpackages" (click)="openWorkpackageDetailComponent(workpackage)">
             <ion-card-header>
                 {{ workpackage.stringId }} - {{ workpackage.name }}

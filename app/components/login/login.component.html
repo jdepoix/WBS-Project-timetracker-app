@@ -1,0 +1,40 @@
+<ion-content class="content">
+
+    <div class="top">
+        <div class="logo">
+            <ion-icon name="ios-stopwatch-outline"></ion-icon>
+        </div>
+
+        <div class="login">
+            <p icons>Login</p>
+        </div>
+    </div>
+
+    <div class="bottom">
+
+
+        <form [ngFormModel]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+
+            <ion-item class="item">
+                <ion-label floating [style.color]=serverColor>Server-Adresse</ion-label>
+                <ion-input type="text" [ngFormControl]="server_address" required></ion-input>
+            </ion-item>
+
+            <ion-item class="item">
+                <ion-label floating [style.color]=usernameColor>Benutzername</ion-label>
+                <ion-input type="text" [ngFormControl]="username" required></ion-input>
+            </ion-item>
+
+            <ion-item class="item">
+                <ion-label floating [style.color]=passwordColor>Passwort</ion-label>
+                <ion-input type="password" [ngFormControl]="password" required></ion-input>
+            </ion-item>
+
+
+            <button class="login_button" accent floating block full>LOGIN</button>
+        </form>
+
+
+    </div>
+
+</ion-content>
