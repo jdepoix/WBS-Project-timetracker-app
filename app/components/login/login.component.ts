@@ -3,7 +3,7 @@ import {FormBuilder,  ControlGroup, Validators, AbstractControl} from '@angular/
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
 import {Url} from "../../core/url/url";
-import {NavController, Alert} from "ionic-angular/index";
+import {NavController, Alert, Loading} from "ionic-angular/index";
 import {BookingOverviewComponent} from "../booking/overview/booking-overview.component";
 
 
@@ -38,6 +38,39 @@ export class LoginComponent {
 
 
     onSubmit(form){
+        if(this.checkFieldsSet()) {
+            this.session.apiUrl = new Url(this.authForm.value.server_address);
+            let event:EventEmitter<string> = this.auth.login(this.authForm.value.username, this.authForm.value.password);
+
+            var token:string = '';
+
+            event.subscribe((authToken:string) => {
+                token = authToken;
+            });
+
+            setTimeout(() => {
+                if(token == ''){
+                    let alert = Alert.create({
+                        title: 'Falsche Eingabe',
+                        subTitle: 'Benutzername oder Passwort ist falsch!',
+                        buttons: ['OK']
+                    });
+                    this.nav.present(alert);
+                }
+                else{
+                    this.nav.setRoot(BookingOverviewComponent);
+                }
+            }, 1000);
+
+            let loading = Loading.create({
+                content: "Please wait...",
+                duration: 900
+            });
+            this.nav.present(loading);
+        }
+    }
+
+    checkFieldsSet(): boolean{
         if(this.authForm.value.server_address == ''){
             this.serverColor = "red";
         }
@@ -58,23 +91,9 @@ export class LoginComponent {
         else{
             this.passwordColor = "grey";
         }
-
-        if(this.authForm.value.server_address != '' &&
+        return this.authForm.value.server_address != '' &&
             this.authForm.value.username != '' &&
-            this.authForm.value.password != ''
-        ) {
-            this.session.apiUrl = new Url(this.authForm.value.server_address);
-            let event:EventEmitter<string> = this.auth.login(this.authForm.value.username, this.authForm.value.password);
-
-            var token:string = '';
-
-            event.subscribe((authToken:string) => {
-                token = authToken;
-            });
-
-            this.nav.setRoot(BookingOverviewComponent);
-        }
-
+            this.authForm.value.password != '';
     }
 }
 
