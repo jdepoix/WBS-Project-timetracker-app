@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{ _workpackage.stringId }} - {{ _workpackage.name }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <template ngFor let-date [ngForOf]="_sortedDateGroups">
+        <ion-list-header>
+            {{ date }}
+        </ion-list-header>
+        <booking *ngFor="let booking of _dateGroupedBookings.get(date)" [booking]="booking"></booking>
+        <!--<ion-card >-->
+            <!--<ion-card-header>-->
+                <!--{{ booking.effort }}-->
+            <!--</ion-card-header>-->
+        <!--</ion-card>-->
+    </template>
+    <!--<ion-item-group *ngFor="let date of _sortedDateGroups">-->
+        <!--<ion-item-divider>{{ date }}</ion-item-divider>-->
+        <!--<ion-card *ngFor="let booking of _dateGroupedBookings.get(date)">-->
+            <!--<ion-card-header>-->
+                <!--{{ booking.effort }}-->
+            <!--</ion-card-header>-->
+        <!--</ion-card>-->
+    <!--</ion-item-group>-->
+</ion-content>
