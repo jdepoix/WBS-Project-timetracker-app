@@ -16,7 +16,7 @@
                     Projekte
                 </ion-item>
                 <div *ngIf="isProjectsShown()">
-                    <ion-item class="item-accordion" *ngFor="let project of projects" (click)="selectProject(project)">
+                    <ion-item style="background-color: lightgray" *ngFor="let project of projects" (click)="selectProject(project)">
                         {{project.db}}
                         <ion-icon *ngIf="getProjectSelected() == project.db" name="checkmark"></ion-icon>
                     </ion-item>
