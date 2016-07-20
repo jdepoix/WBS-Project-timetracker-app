@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
@@ -16,7 +16,7 @@ import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage
 @Component({
   templateUrl: 'build/components/app/app.component.html'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = BookingOverviewComponent;
@@ -40,26 +40,27 @@ export class AppComponent implements OnInit {
 
     this.showProjects = false;
 
-    if (this._authService.isAuthenticated) {
-      this._loadProjects();
-    }
-
     this._authService.onLogIn.subscribe(() => {
       this._loadProjects();
       this.openPage(this.rootPage);
     });
+
     this._authService.onLogOut.subscribe(() => {
       this.projects = [];
       this.openPage(LoginComponent);
     });
-  }
 
-  ngOnInit(): void {
-    if (this._authService.isAuthenticated) {
-      this.openPage(this.rootPage);
-    } else {
-      this.openPage(LoginComponent);
-    }
+    this._sessionService.onSessionLoaded.subscribe(() => {
+      console.log("loaded");
+      console.log(this._sessionService.authenticationKey);
+      console.log(this._authService.isAuthenticated);
+      if (this._authService.isAuthenticated) {
+        this._loadProjects();
+        this.openPage(this.rootPage);
+      } else {
+        this.openPage(LoginComponent);
+      }
+    });
   }
 
   public initializeApp() {

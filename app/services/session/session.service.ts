@@ -6,6 +6,7 @@ import {Url} from '../../core/url/url';
 
 import {Project} from '../../models/project/project';
 import {ProjectDeserializer} from '../../models/project/project-serializers';
+import {Observable, Subject} from 'rxjs/Rx';
 
 /**
  * takes care of holding, saving and loading data, regarding the current session
@@ -20,10 +21,14 @@ export class SessionService {
 
   private _storage: Storage;
 
+  private _onSessionLoadedSubject: Subject<void> = new Subject<void>();
+
+  public onSessionLoaded: Observable<void> = Observable.from(this._onSessionLoadedSubject);
+
   constructor() {
     this._storage = new Storage(SqlStorage);
 
-    this._loadStoredVariables();
+    this._loadStoredVariables().then(() => this._onSessionLoadedSubject.next(null));
   }
 
   public get apiUrl(): Url {
@@ -41,7 +46,7 @@ export class SessionService {
 
   public set authenticationKey(value: string) {
     this._authenticationKey = value;
-    //this._storage.set('authenticationKey', this._authenticationKey);
+    this._storage.set('authenticationKey', this._authenticationKey);
   }
 
   public get selectedProject(): Project {
