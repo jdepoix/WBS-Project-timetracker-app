@@ -20,6 +20,9 @@ export class SessionAuthenticationService {
     }).subscribe((plainObject: any) => {
       this._sessionService.authenticationKey = plainObject.token || null;
       responseSubject.next(this._sessionService.authenticationKey);
+    }, () => {
+      this._sessionService.authenticationKey = null;
+      responseSubject.next(null);
     });
 
     return Observable.from(responseSubject);
@@ -27,5 +30,7 @@ export class SessionAuthenticationService {
 
   public logout(): void {
     this._sessionService.authenticationKey = null;
+    this._sessionService.apiUrl = null;
+    this._sessionService.selectedProject = null;
   }
 }

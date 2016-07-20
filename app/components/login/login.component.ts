@@ -11,7 +11,7 @@ import {BookingOverviewComponent} from "../bookings/overview/booking-overview.co
 })
 export class LoginComponent {
 
-  server_address: AbstractControl;
+  serverAddress: AbstractControl;
   username: AbstractControl;
   password: AbstractControl;
   authForm: ControlGroup;
@@ -24,28 +24,31 @@ export class LoginComponent {
               private session: SessionService,
               private nav: NavController) {
     this.authForm = fb.group({
-      'server_address': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+      "serverAddress": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'username': ['', Validators.required],
       'password': ['', Validators.required]
     });
 
-    this.server_address = this.authForm.controls['server_address'];
+    this.serverAddress = this.authForm.controls['serverAddress'];
     this.username = this.authForm.controls['username'];
     this.password = this.authForm.controls['password'];
   }
 
 
-  onSubmit(form) {
+  onSubmit() {
     if (this.checkFieldsSet()) {
-      this.session.apiUrl = new Url(this.authForm.value.server_address);
-      var token: string = '';
-
-      this.auth.login(this.authForm.value.username, this.authForm.value.password).subscribe((authToken: string) => {
-        token = authToken;
+      let loading = Loading.create({
+        content: "Please wait..."
       });
 
-      setTimeout(() => {
-        if (token == '') {
+      this.nav.present(loading);
+
+      this.session.apiUrl = new Url(this.authForm.value.serverAddress);
+
+      this.auth.login(this.authForm.value.username, this.authForm.value.password).subscribe((authToken: string) => {
+        loading.destroy();
+
+        if (!authToken) {
           let alert = Alert.create({
             title: 'Falsche Eingabe',
             subTitle: 'Benutzername oder Passwort ist falsch!',
@@ -56,18 +59,12 @@ export class LoginComponent {
         else {
           this.nav.setRoot(BookingOverviewComponent);
         }
-      }, 1000);
-
-      let loading = Loading.create({
-        content: "Please wait...",
-        duration: 900
       });
-      this.nav.present(loading);
     }
   }
 
   checkFieldsSet(): boolean {
-    if (this.authForm.value.server_address == '') {
+    if (this.authForm.value.serverAddress == '') {
       this.serverColor = "red";
     }
     else {
@@ -87,7 +84,7 @@ export class LoginComponent {
     else {
       this.passwordColor = "grey";
     }
-    return this.authForm.value.server_address != '' &&
+    return this.authForm.value.serverAddress != '' &&
       this.authForm.value.username != '' &&
       this.authForm.value.password != '';
   }

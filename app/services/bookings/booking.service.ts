@@ -24,6 +24,7 @@ export class BookingService implements
   private _endpoint: Url;
 
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService, private _sessionService: SessionService) {
+    // TODO update endpoint onLogIn
     this._endpoint = this._sessionService.subProjetUrl.getRelativeUrl('bookings');
   }
 
