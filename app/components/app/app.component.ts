@@ -1,4 +1,4 @@
-import {Component, ViewChild, Injectable, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
@@ -14,15 +14,14 @@ import {BookingOverviewComponent} from '../bookings/overview/booking-overview.co
 import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage-overview.component';
 
 @Component({
-  templateUrl: 'build/components/app/app.component.html',
+  templateUrl: 'build/components/app/app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild(Nav) nav: Nav;
 
-  // make HelloIonicPage the root (or first) page
-  rootPage: any = LoginComponent;
+  rootPage: any = BookingOverviewComponent;
   pages: Array<{title: string, component: any}>;
-  projects: Array<Project>;
+  projects: Array<Project> = [];
   showProjects: boolean;
 
   constructor(
@@ -45,13 +44,26 @@ export class AppComponent {
       this._loadProjects();
     }
 
-    this._authService.onLogIn.subscribe(() => this._loadProjects());
+    this._authService.onLogIn.subscribe(() => {
+      this._loadProjects();
+      this.openPage(this.rootPage);
+    });
+    this._authService.onLogOut.subscribe(() => {
+      this.projects = [];
+      this.openPage(LoginComponent);
+    });
+  }
+
+  ngOnInit(): void {
+    if (this._authService.isAuthenticated) {
+      this.openPage(this.rootPage);
+    } else {
+      this.openPage(LoginComponent);
+    }
   }
 
   public initializeApp() {
     this._platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
 
       // TODO find a more generic way to do this, using the variables specified in app.vairables.scss
@@ -59,12 +71,10 @@ export class AppComponent {
     });
   }
 
-  public openPage(page) {
-    // close the menu when clicking a link from the menu
-    this._menu.close();
+  public openPage(component: any) {
+    if (this._menu.isOpen()) this._menu.close();
 
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(component);
   }
 
   public toggleProjects() {

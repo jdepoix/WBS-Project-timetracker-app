@@ -23,7 +23,7 @@
           </ion-item>
         </div>
       </div>
-      <button ion-item *ngFor="let page of pages" (click)="openPage(page)">
+      <button ion-item *ngFor="let page of pages" (click)="openPage(page.component)">
         {{page.title}}
       </button>
       <button ion-item (click)="_authService.logout()">
@@ -35,4 +35,4 @@
   </ion-content>
 </ion-menu>
 
-<ion-nav [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
+<ion-nav #content swipe-back-enabled="false"></ion-nav>

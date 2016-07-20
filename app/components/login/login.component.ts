@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
 import {FormBuilder, ControlGroup, Validators, AbstractControl} from '@angular/common';
+
+import {NavController, Alert, Loading} from "ionic-angular/index";
+
+import {Url} from "../../core/url/url";
+
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
-import {Url} from "../../core/url/url";
-import {NavController, Alert, Loading} from "ionic-angular/index";
-import {BookingOverviewComponent} from "../bookings/overview/booking-overview.component";
+
 
 @Component({
   templateUrl: 'build/components/login/login.component.html'
@@ -55,9 +58,6 @@ export class LoginComponent {
             buttons: ['OK']
           });
           this.nav.present(alert);
-        }
-        else {
-          this.nav.setRoot(BookingOverviewComponent);
         }
       });
     }
