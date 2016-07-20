@@ -50,10 +50,13 @@ export class SessionService {
 
   public set selectedProject(value: Project) {
     this._selectedProject = value;
-    this._storage.setJson('selectedProject', {
-      self: this._selectedProject.self.toString(),
-      db: this._selectedProject.db
-    });
+    this._storage.setJson(
+      'selectedProject',
+      this._selectedProject != null ? {
+        self: this._selectedProject.self.toString(),
+        db: this._selectedProject.db
+      } : null
+    );
   }
 
   public get subProjetUrl(): Url {
