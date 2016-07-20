@@ -41,7 +41,8 @@
       "platform": "ios",
       "version": "",
       "locator": "ios"
-    }
+    },
+    "android"
   ],
   "name": "wbstimetracker",
   "description": "The mobile app for the WBS-Projects timetracker"
