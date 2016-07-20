@@ -51,9 +51,6 @@ export class AppComponent {
     });
 
     this._sessionService.onSessionLoaded.subscribe(() => {
-      console.log("loaded");
-      console.log(this._sessionService.authenticationKey);
-      console.log(this._authService.isAuthenticated);
       if (this._authService.isAuthenticated) {
         this._loadProjects();
         this.openPage(this.rootPage);
@@ -93,6 +90,10 @@ export class AppComponent {
   private _loadProjects() {
     this._projectService.get().subscribe((projects: Array<Project>) => {
       this.projects = projects;
+
+      if (this._sessionService.selectedProject == null) {
+        this._sessionService.selectedProject = this.projects[0];
+      }
     });
   }
 }
