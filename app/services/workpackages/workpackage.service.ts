@@ -15,10 +15,7 @@ import {RestModelListDeserializer} from '../../models/core/rest-model/serializer
 
 @Injectable()
 export class WorkpackageService implements GetOperation<Workpackage>, UpdateOperation<Workpackage> {
-  private _endpoint: Url;
-
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService, private _sessionService: SessionService) {
-    this._endpoint = this._sessionService.subProjetUrl.getRelativeUrl('workpackages');
   }
 
   public get(isToplevelWorkpackage?: boolean): Observable<Array<Workpackage>> {
@@ -40,5 +37,9 @@ export class WorkpackageService implements GetOperation<Workpackage>, UpdateOper
       .map((plainObject) => {
         return new WorkpackageDeserializer(plainObject).deserialize();
       });
+  }
+
+  private get _endpoint(): Url {
+    return this._sessionService.subProjetUrl.getRelativeUrl('workpackages');
   }
 }

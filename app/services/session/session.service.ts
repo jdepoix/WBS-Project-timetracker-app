@@ -22,8 +22,10 @@ export class SessionService {
   private _storage: Storage;
 
   private _onSessionLoadedSubject: Subject<void> = new Subject<void>();
-
   public onSessionLoaded: Observable<void> = Observable.from(this._onSessionLoadedSubject);
+
+  private _onProjectSelectedSubject: Subject<Project> = new Subject<Project>();
+  public onProjectSelected: Observable<Project> = Observable.from(this._onProjectSelectedSubject);
 
   constructor() {
     this._storage = new Storage(SqlStorage);
@@ -62,6 +64,7 @@ export class SessionService {
         db: this._selectedProject.db
       } : null
     );
+    this._onProjectSelectedSubject.next(this._selectedProject);
   }
 
   public get subProjetUrl(): Url {
