@@ -61,7 +61,6 @@ export class AppComponent {
 
     if(page.title == 'Logout'){
       this.authService.logout();
-      this.sessionService.selectedProject = null;
       this.selectedProject = '';
       this.shownProjects = false;
       this.projects = null;
