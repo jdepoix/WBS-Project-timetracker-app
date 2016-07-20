@@ -82,7 +82,6 @@ export class SessionService {
     });
   }
 
-  // TODO consider using EventEmitter
   private _loadSelectedProject(): Promise<Project> {
     return new Promise<Project>((resolve) => {
       this._storage.getJson('selectedProject').then((selectedProject) => {
