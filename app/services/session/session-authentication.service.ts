@@ -42,4 +42,8 @@ export class SessionAuthenticationService {
 
     this._onLogOutSubject.next(null);
   }
+
+  public get isAuthenticated(): boolean {
+    return this._sessionService.authenticationKey != null && this._sessionService.authenticationKey != '';
+  }
 }

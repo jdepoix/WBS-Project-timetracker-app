@@ -26,6 +26,9 @@
       <button ion-item *ngFor="let page of pages" (click)="openPage(page)">
         {{page.title}}
       </button>
+      <button ion-item (click)="_authService.logout()">
+        Logout
+      </button>
 
     </ion-list>
 

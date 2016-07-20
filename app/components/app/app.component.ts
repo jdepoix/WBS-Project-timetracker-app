@@ -1,4 +1,4 @@
-import {Component, ViewChild, Injectable} from '@angular/core';
+import {Component, ViewChild, Injectable, OnInit} from '@angular/core';
 
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
@@ -40,9 +40,15 @@ export class AppComponent {
     ];
 
     this.showProjects = false;
+
+    if (this._authService.isAuthenticated) {
+      this._loadProjects();
+    }
+
+    this._authService.onLogIn.subscribe(() => this._loadProjects());
   }
 
-  initializeApp() {
+  public initializeApp() {
     this._platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -53,30 +59,29 @@ export class AppComponent {
     });
   }
 
-  openPage(page) {
+  public openPage(page) {
     // close the menu when clicking a link from the menu
     this._menu.close();
-
-    // TODO do this onLogIn
-    if(this._sessionService.authenticationKey != '') {
-      this._projectService.get().subscribe((tmp: Array<Project>) => {
-        this.projects = tmp;
-      });
-    }
 
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
 
-  toggleProjects(){
+  public toggleProjects() {
     this.showProjects = !this.showProjects;
   }
 
-  areProjectsShown(): boolean{
+  public areProjectsShown(): boolean {
     return this.showProjects;
   }
 
-  selectProject(project: Project){
+  public selectProject(project: Project) {
     this._sessionService.selectedProject = project;
+  }
+
+  private _loadProjects() {
+    this._projectService.get().subscribe((projects: Array<Project>) => {
+      this.projects = projects;
+    });
   }
 }
