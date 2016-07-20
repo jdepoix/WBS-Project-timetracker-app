@@ -21,11 +21,7 @@ export class BookingService implements
   UpdateOperation<Booking>,
   DeleteOperation<Booking>
 {
-  private _endpoint: Url;
-
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService, private _sessionService: SessionService) {
-    // TODO update endpoint onLogIn
-    this._endpoint = this._sessionService.subProjetUrl.getRelativeUrl('bookings');
   }
 
   public get(date?: Date, workpackage?: Workpackage): Observable<Array<Booking>> {
@@ -61,5 +57,9 @@ export class BookingService implements
 
   private _deserializePlainObject(plainObject: Object): Booking {
     return new BookingDeserializer(plainObject).deserialize();
+  }
+
+  private get _endpoint(): Url {
+    return this._sessionService.subProjetUrl.getRelativeUrl('bookings');
   }
 }
