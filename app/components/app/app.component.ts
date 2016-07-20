@@ -23,29 +23,27 @@ export class AppComponent {
   rootPage: any = LoginComponent;
   pages: Array<{title: string, component: any}>;
   projects: Array<Project>;
-  shownProjects: boolean;
-  selectedProject: string;
+  showProjects: boolean;
 
   constructor(
-    private platform: Platform,
-    private menu: MenuController,
-    private authService: SessionAuthenticationService,
-    private sessionService: SessionService,
-    private projectService: ProjectService
+    private _platform: Platform,
+    private _menu: MenuController,
+    private _authService: SessionAuthenticationService,
+    private _sessionService: SessionService,
+    private _projectService: ProjectService
   ) {
     this.initializeApp();
     // set our app's pages
     this.pages = [
       { title: 'Bookings', component: BookingOverviewComponent },
       { title: 'Workpackages', component: WorkpackageOverviewComponent },
-      { title: 'Logout', component: LoginComponent}
     ];
 
-    this.shownProjects = false;
+    this.showProjects = false;
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this._platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
@@ -57,17 +55,11 @@ export class AppComponent {
 
   openPage(page) {
     // close the menu when clicking a link from the menu
-    this.menu.close();
+    this._menu.close();
 
-    if(page.title == 'Logout'){
-      this.authService.logout();
-      this.selectedProject = '';
-      this.shownProjects = false;
-      this.projects = null;
-    }
-
-    if(this.sessionService.authenticationKey != '') {
-      this.projectService.get().subscribe((tmp: Array<Project>) => {
+    // TODO do this onLogIn
+    if(this._sessionService.authenticationKey != '') {
+      this._projectService.get().subscribe((tmp: Array<Project>) => {
         this.projects = tmp;
       });
     }
@@ -77,25 +69,14 @@ export class AppComponent {
   }
 
   toggleProjects(){
-    this.shownProjects = !this.shownProjects;
+    this.showProjects = !this.showProjects;
   }
 
-  isProjectsShown(): boolean{
-    return this.shownProjects;
+  areProjectsShown(): boolean{
+    return this.showProjects;
   }
 
   selectProject(project: Project){
-    if(this.selectedProject == project.db){
-      this.selectedProject = '';
-      this.sessionService.selectedProject = null;
-    }
-    else {
-      this.selectedProject = project.db;
-      this.sessionService.selectedProject = project;
-    }
-  }
-
-  getProjectSelected(): string{
-    return this.selectedProject;
+    this._sessionService.selectedProject = project;
   }
 }

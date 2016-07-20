@@ -11,15 +11,15 @@
                   (click)="toggleProjects()"
                   ng-class="{active: isProjectsShown()}">
 
-          <ion-icon *ngIf="!isProjectsShown()" name="arrow-dropright-circle"></ion-icon>
-          <ion-icon *ngIf="isProjectsShown()" name="arrow-dropup-circle"></ion-icon>
+          <ion-icon *ngIf="!areProjectsShown()" name="arrow-dropright-circle"></ion-icon>
+          <ion-icon *ngIf="areProjectsShown()" name="arrow-dropup-circle"></ion-icon>
           Projekte
         </ion-item>
-        <div *ngIf="isProjectsShown()">
+        <div *ngIf="areProjectsShown()">
           <ion-item style="background-color: lightgray" *ngFor="let project of projects"
                     (click)="selectProject(project)">
             {{project.db}}
-            <ion-icon *ngIf="getProjectSelected() == project.db" name="checkmark"></ion-icon>
+            <ion-icon *ngIf="_sessionService.selectedProject != null && _sessionService.selectedProject.db == project.db" name="checkmark"></ion-icon>
           </ion-item>
         </div>
       </div>
