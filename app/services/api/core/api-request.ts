@@ -1,6 +1,6 @@
 import {Http, Response, Headers} from '@angular/http';
 
-import {Observable} from 'rxjs/Rx';
+import {Observable, Subject} from 'rxjs/Rx';
 import 'rxjs/add/operator/map'
 
 import {Url} from '../../../core/url/url';
@@ -26,7 +26,7 @@ export abstract class ApiRequest {
     return this._http.get(
       url.toString(),
       this.getOptions()
-    ).map(this.formatResponse);
+    ).map(this.formatArrayResponse);
   }
 
   /**
@@ -132,13 +132,35 @@ export abstract class ApiRequest {
   }
 
   /**
-   * brings the responses in the desired format
+   * brings a response of a single ressource in the desired format
    *
    * @param response
    * @returns {any|{}[]}
    */
-  public formatResponse(response: Response): Array<Object> {
-    return response.json() || [{}]
+  public formatResponse(response: Response): Object {
+    try {
+      console.log(response.status);
+
+      return response.json() || {};
+    }
+    catch(exception) {
+      return {};
+    }
+  }
+
+  /**
+   * brings a responses for multiple ressources in the desired format
+   *
+   * @param response
+   * @returns {any|{}[]}
+   */
+  public formatArrayResponse(response: Response): Array<Object> {
+    try {
+      return response.json() || [{}]
+    }
+    catch(exception) {
+      return [{}];
+    }
   }
 
   /**
