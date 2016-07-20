@@ -139,8 +139,6 @@ export abstract class ApiRequest {
    */
   public formatResponse(response: Response): Object {
     try {
-      console.log(response.status);
-
       return response.json() || {};
     }
     catch(exception) {
