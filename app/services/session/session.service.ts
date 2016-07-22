@@ -78,6 +78,7 @@ export class SessionService {
         resolve(this._apiUrl);
       }).catch(() => {
         this._apiUrl = null;
+        resolve(this._apiUrl);
       });
     });
   }
@@ -89,6 +90,7 @@ export class SessionService {
         resolve(this._authenticationKey);
       }).catch(() => {
         this._authenticationKey = null;
+        resolve(this._authenticationKey);
       });
     });
   }
@@ -101,6 +103,7 @@ export class SessionService {
         resolve(this._selectedProject);
       }).catch(() => {
         this._selectedProject = null;
+        resolve(this._selectedProject);
       });
     });
   }

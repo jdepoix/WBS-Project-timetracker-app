@@ -32,7 +32,7 @@ export class AppComponent {
     private _projectService: ProjectService
   ) {
     this.initializeApp();
-    // set our app's pages
+
     this.pages = [
       { title: 'Bookings', component: BookingOverviewComponent },
       { title: 'Workpackages', component: WorkpackageOverviewComponent },

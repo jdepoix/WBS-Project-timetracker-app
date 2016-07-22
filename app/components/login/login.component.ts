@@ -13,7 +13,6 @@ import {SessionService} from "../../services/session/session.service";
   templateUrl: 'build/components/login/login.component.html'
 })
 export class LoginComponent {
-
   serverAddress: AbstractControl;
   username: AbstractControl;
   password: AbstractControl;
@@ -36,7 +35,6 @@ export class LoginComponent {
     this.username = this.authForm.controls['username'];
     this.password = this.authForm.controls['password'];
   }
-
 
   onSubmit() {
     if (this.checkFieldsSet()) {
