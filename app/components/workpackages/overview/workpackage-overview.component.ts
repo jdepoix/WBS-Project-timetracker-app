@@ -32,7 +32,7 @@ export class WorkpackageOverviewComponent {
   }
 
   public openWorkpackageDetailComponent(workpackage: Workpackage): void {
-    this._navController.push(WorkpackageDetailComponent, {
+      this._navController.push(WorkpackageDetailComponent, {
       workpackage: workpackage
     });
   }

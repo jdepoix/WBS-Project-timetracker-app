@@ -13,6 +13,8 @@
     <button ion-item id="picker">
 
       <ion-icon item-right name="calendar" id="calicon"></ion-icon>
+
+
       <ion-datetime (ionChange)="dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="pickedDate"></ion-datetime>
 
 
@@ -25,16 +27,10 @@
 
 <ion-content padding>
 
-  <ion-list class="slide-in">
 
-    <ion-card *ngFor="let booking of _bookings" (click)="openBookingDetailComponent(booking)">
-      <ion-card-header>
-        {{ booking.workpackage.name}}
-      </ion-card-header>
-      <ion-card-body padding>
-        {{ booking.description }}
-      </ion-card-body>
-    </ion-card>
+
+  <ion-list class="slide-in">
+    <booking *ngFor="let booking of _bookings" [booking]="booking" [withWpName]="true" (click)="bookingCardClicked(booking)"></booking>
   </ion-list>
 
 
@@ -42,3 +38,7 @@
 
 
 </ion-content>
+<button fab fab-bottom fab-right (click)="add()" calm>
+  <ion-icon name="add"></ion-icon>
+</button>
+

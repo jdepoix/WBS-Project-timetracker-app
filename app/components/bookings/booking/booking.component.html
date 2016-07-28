@@ -2,7 +2,11 @@
     <ion-card-content>
         <ion-grid>
             <ion-row>
-                <ion-col width-20>{{ booking.effort | workdaysToHours }}</ion-col>
+
+                <ion-col width-80 *ngIf="withWpName"><b>Dummy Arbeitspaket Name</b></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col width-20>{{ booking.effort | workdaysToHours }} h</ion-col>
                 <ion-col width-80>{{ booking.description}}</ion-col>
             </ion-row>
 

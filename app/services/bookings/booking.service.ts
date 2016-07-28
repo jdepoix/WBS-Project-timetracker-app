@@ -28,7 +28,6 @@ export class BookingService implements
     let url: Url = this._endpoint;
 
     if (date != null) {
-      console.log("ddf " + date.toISOString());
       url = url.clone().addParam('date', new Date(date.toISOString()).toJSON().split('T')[0]);
     }
     if (workpackage != null) {
