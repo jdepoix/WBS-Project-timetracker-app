@@ -1,12 +1,44 @@
 <ion-header>
   <ion-navbar>
+
+
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+
     <ion-title>Bookings</ion-title>
+
+
+    <ion-buttons end>
+    <button ion-item id="picker">
+
+      <ion-icon item-right name="calendar" id="calicon"></ion-icon>
+      <ion-datetime (ionChange)="dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="pickedDate"></ion-datetime>
+
+
+    </button>
+    </ion-buttons>
+
+
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Bookings</h3>
+
+  <ion-list class="slide-in">
+
+    <ion-card *ngFor="let booking of _bookings" (click)="openBookingDetailComponent(booking)">
+      <ion-card-header>
+        {{ booking.workpackage.name}}
+      </ion-card-header>
+      <ion-card-body padding>
+        {{ booking.description }}
+      </ion-card-body>
+    </ion-card>
+  </ion-list>
+
+
+
+
+
 </ion-content>
