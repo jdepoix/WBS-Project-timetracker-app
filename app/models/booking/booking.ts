@@ -10,10 +10,10 @@ export class Booking extends RestModel implements Updateable, Createable{
 
   getUpdateRequestData(): Object {
     return {
-      effort: this.effort,
-   /*   description: this.description,
+      efhefort: this.effort,
+      description: this.description,
       date: this.date,
-      workpackage: this.workpackage*/
+      workpackage: this.workpackage
     };
   }
 

@@ -11,9 +11,9 @@ import {IONIC_DIRECTIVES} from "ionic-angular/index";
   templateUrl: 'build/components/bookings/booking/booking.component.html',
   pipes: [WorkdaysToHoursPipe]
 })
+
 export class BookingComponent {
   private _isLiveBooking: boolean = false;
-
 
 
   @Input()
@@ -23,11 +23,20 @@ export class BookingComponent {
 
 
 
-
-
   constructor() {
 
 
 
   }
+
+
+
+  public checkout_livebooking (): void{
+
+    console.log("check out!");
+
+
+  }
 }
+
+

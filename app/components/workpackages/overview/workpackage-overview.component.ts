@@ -27,6 +27,7 @@ export class WorkpackageOverviewComponent {
 
   private _loadWorkpackages(): void {
     this._workpackageService.get(false).subscribe((workpackages: Array<Workpackage>) => {
+
       this._workpackages = workpackages;
     });
   }

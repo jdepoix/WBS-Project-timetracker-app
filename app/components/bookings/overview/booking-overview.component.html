@@ -1,3 +1,5 @@
+
+<script src="../../workpackages/detail/workpackage-detail.component.ts"></script>
 <ion-header>
   <ion-navbar>
 
@@ -6,32 +8,30 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>Bookings</ion-title>
+    <ion-title >{{_pickedDateString}}</ion-title>
+
+    <ion-buttons end id="ionButtons">
+      <div>
+        <ion-datetime (ionChange)="dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="pickedDate"></ion-datetime>
+
+        <ion-icon item-right name="calendar" id="calicon"></ion-icon>
 
 
-    <ion-buttons end>
-    <button ion-item id="picker">
-
-      <ion-icon item-right name="calendar" id="calicon"></ion-icon>
-
-
-      <ion-datetime (ionChange)="dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="pickedDate"></ion-datetime>
-
-
-    </button>
+      </div>
     </ion-buttons>
 
 
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content>
 
 
   <ion-list class="slide-in">
     <booking *ngFor="let booking of _bookings" [booking]="booking" [withWpName]="true" (click)="bookingCardClicked(booking)"></booking>
   </ion-list>
+
+  <ion-label padding id="hint">{{hintMsg}}</ion-label>
 
 
 
