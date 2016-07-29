@@ -9,6 +9,7 @@ import {WorkpackageService} from './services/workpackages/workpackage.service';
 import {ProjectService} from './services/projects/project.service';
 import {BookingService} from './services/bookings/booking.service';
 import {SessionAuthenticationService} from './services/session/session-authentication.service';
+import {BookingSessionService} from './services/bookings/booking-session.service';
 
 ionicBootstrap(
   AppComponent, [
@@ -18,5 +19,6 @@ ionicBootstrap(
     SessionAuthenticationService,
     BookingService,
     WorkpackageService,
-    ProjectService
+    ProjectService,
+    BookingSessionService
   ]);
