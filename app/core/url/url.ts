@@ -128,6 +128,13 @@ export class Url {
   private _formatUrlString(stringUrl: string): string {
     return this._addTrailingSlashes(this._removeBeginningSlashes(this._removeParams(stringUrl)));
   }
+
+  public equals(other: Object): boolean {
+    if (!(other instanceof Url)) {
+      return false;
+    }
+    return this.toString() === (<Url> other).toString();
+  }
 }
 
 export class RessourceUrl {
