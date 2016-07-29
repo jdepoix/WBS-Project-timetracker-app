@@ -19,7 +19,7 @@ export class Booking extends RestModel implements Updateable, Createable{
 
   private _getRelevantData(): Object {
     return {
-      workpackage: this.workpackage.self,
+      workpackage: this.workpackage.self.toString(),
       date: this.date,
       effort: this.effort,
       description: this.description
@@ -36,7 +36,7 @@ export class BookingSession extends RestModel implements Createable {
 
   public getCreateRequestData(): Object {
     return {
-      workpackage: this.workpackage.self
+      workpackage: this.workpackage.self.toString()
     }
   }
 }
