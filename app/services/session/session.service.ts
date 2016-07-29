@@ -64,7 +64,10 @@ export class SessionService {
         db: this._selectedProject.db
       } : null
     );
-    this._onProjectSelectedSubject.next(this._selectedProject);
+
+    if (value != null) {
+      this._onProjectSelectedSubject.next(this._selectedProject);
+    }
   }
 
   public get subProjetUrl(): Url {
