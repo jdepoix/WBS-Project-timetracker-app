@@ -19,8 +19,8 @@ import {WorkpackageSelectionComponent} from "../workpackage-selection/booking-wo
 export class BookingOverviewComponent {
 
   private _bookings: Array<Booking>;
-  public pickedDate: Date;
-  private _pickedDateString: String = "4545454";
+  public pickedDate: Date = new Date();
+  private _pickedDateString: String = "";
 
   hintMsg :String = "";
 
@@ -30,7 +30,7 @@ export class BookingOverviewComponent {
                private _sessionService: SessionService
    ) {
 
-      this.pickedDate = new Date();
+
       this._pickedDateString = this.pickedDate.toDateString();
       this._loadBookings();
       //this._loadBookingSession();
@@ -43,6 +43,7 @@ export class BookingOverviewComponent {
   private _loadBookings(): void {
     this._bookingService.get(new Date(this.pickedDate.toString()), null).subscribe((bookings: Array<Booking>) => {
       this._bookings = bookings;
+      this._bookings.concat(new Booking());
       if(this._bookings.length < 1){
         this.hintMsg = "Keine Buchungen an diesem Datum";
       }
@@ -78,7 +79,7 @@ export class BookingOverviewComponent {
   }
 
   public dateChanged(): void {
-    this._pickedDateString = this.pickedDate.toString();
+    this._pickedDateString = new Date(this.pickedDate.toString()).toDateString();
     this._loadBookings();
   }
 

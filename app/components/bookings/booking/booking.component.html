@@ -2,33 +2,25 @@
     <ion-card-content>
         <ion-grid>
             <ion-row>
-
                 <ion-col width-80 *ngIf="withWpName"><b>Dummy Arbeitspaket Name</b></ion-col>
             </ion-row>
             <ion-row>
-                <ion-col width-20>{{ booking.effort | workdaysToHours }} h</ion-col>
+                <ion-col width-20>{{ booking.effort | workdaysToHours }} h <ion-label *ngIf="isLive" style="color: #327eff">LIVE</ion-label></ion-col>
                 <ion-col width-80>{{ booking.description}}</ion-col>
             </ion-row>
 
         </ion-grid>
-        <div *ngIf="false">
+        <div id="checkoutDiv" *ngIf="isLive" >
           <hr style="stroke: 12; color: darkgrey">
-          <ion-grid>
-            <ion-row>
+          <button width-100 id="checkout_button" (click)="checkout_livebooking(booking)">
 
-              <ion-col width-20>
-                <button round id="checkout_button" (click)="checkout_livebooking()">
-                  <ion-icon name="close"></ion-icon>
-                </button>
-              </ion-col>
-              <ion-col width-80>
-                <ion-label id="label_checkout">
-                  AUSCHECKEN
-                </ion-label>
-              </ion-col>
-            </ion-row>
 
-          </ion-grid>
+
+                  <ion-icon item-left round id="closeicon" name="close"></ion-icon>
+
+                   AUSCHECKEN
+
+          </button>
         </div>
 
     </ion-card-content>

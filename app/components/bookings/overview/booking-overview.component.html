@@ -28,7 +28,7 @@
 
 
   <ion-list class="slide-in">
-    <booking *ngFor="let booking of _bookings" [booking]="booking" [withWpName]="true" (click)="bookingCardClicked(booking)"></booking>
+    <booking *ngFor="let booking of _bookings" [booking]="booking" [withWpName]="true"></booking>
   </ion-list>
 
   <ion-label padding id="hint">{{hintMsg}}</ion-label>

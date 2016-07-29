@@ -20,23 +20,21 @@ export class BookingComponent {
   public withWpName: boolean;
   @Input()
   public booking: Booking;
+  @Input()
+  public isLive: boolean = true;
 
 
 
   constructor() {
 
-
-
   }
 
 
+  public checkout_livebooking (booking: Booking): void{
 
-  public checkout_livebooking (): void{
+  console.log("check out!");
 
-    console.log("check out!");
-
-
-  }
+}
 }
 
 
