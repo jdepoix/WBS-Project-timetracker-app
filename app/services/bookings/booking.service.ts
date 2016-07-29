@@ -46,8 +46,14 @@ export class BookingService implements
       .map(this._deserializePlainObject);
   }
 
-  public create(element: Booking): Observable<Booking> {
-    return this._timetrackerApiService.postWithFullUrl(element.self, element.getCreateRequestData())
+  public create(element: Booking, newEtc?: number): Observable<Booking> {
+    let bookingCreateData = element.getCreateRequestData();
+
+    if (newEtc != null) {
+      bookingCreateData['newETC'] = newEtc;
+    }
+
+    return this._timetrackerApiService.postWithFullUrl(element.self, bookingCreateData)
       .map(this._deserializePlainObject);
   }
 
