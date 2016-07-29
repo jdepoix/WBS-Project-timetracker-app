@@ -1,7 +1,6 @@
 import {RestModel} from './rest-model';
 import {RestModelDeserializerField, UrlDeserializerField} from './serializer-fields';
 
-
 export abstract class RestModelDeserializer<Model extends RestModel> {
   protected _deserializerFields: Array<RestModelDeserializerField<Object>> = [
     new UrlDeserializerField('self')
