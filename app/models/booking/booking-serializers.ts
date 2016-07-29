@@ -4,7 +4,9 @@ import {
   StringDeserializerField,
   DateDeserializerField,
   RestModelDeserializerField,
-  FloatDeserializerField, RelatedModelField
+  FloatDeserializerField,
+  RelatedModelField,
+  TimestampDeserializerField
 } from '../core/rest-model/serializer-fields';
 
 import {WorkpackageDeserializer} from '../workpackage/workpackage-serializers';
@@ -29,7 +31,7 @@ export class BookingDeserializer extends RestModelDeserializer<Booking> {
 export class BookingSessionDeserializer extends RestModelDeserializer<BookingSession> {
   protected _deserializerFields: Array<RestModelDeserializerField<any>> = [
     new UrlDeserializerField('self'),
-    new DateDeserializerField('startTime'),
+    new TimestampDeserializerField('startTime'),
     new RelatedModelField<Workpackage>(WorkpackageDeserializer, 'workpackage')
   ];
 

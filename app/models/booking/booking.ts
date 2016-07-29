@@ -21,7 +21,10 @@ export class Booking extends RestModel implements Updateable, Createable{
 }
 
 export class BookingSession extends RestModel implements Createable {
-  public startTime: Date;
+  /**
+   * unix timestamp of the start time
+   */
+  public startTime: number;
   public workpackage: Workpackage;
 
   public getCreateRequestData(): Object {
