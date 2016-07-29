@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 import {Url} from '../../../core/url/url';
 
 import {RestModel} from './rest-model';
@@ -113,5 +115,14 @@ export class RelatedModelField<Model extends RestModel> extends RestModelDeseria
 
   deserializeField(plainObjectField: any): Model {
     return new this._restModelDeserializer(plainObjectField).deserialize();
+  }
+}
+
+/**
+ * takes a datetime field an deserializes it to a timestamp represented by a number
+ */
+export class TimestampDeserializerField extends RestModelDeserializerField<number> {
+  deserializeField(plainObjectField: any): number {
+    return moment(plainObjectField).unix();
   }
 }
