@@ -9,6 +9,10 @@ export interface GetOperation<Model extends RestModel> {
   get(): Observable<Array<Model>>;
 }
 
+export interface RetrieveOperation<Model extends RestModel> {
+  retrieve(): Observable<Model>;
+}
+
 export interface CreateOperation<Model extends RestModel & Createable> {
   create(element: Model): Observable<Model>;
 }
