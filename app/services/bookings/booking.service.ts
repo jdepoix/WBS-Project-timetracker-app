@@ -53,7 +53,7 @@ export class BookingService implements
       bookingCreateData['newETC'] = newEtc;
     }
 
-    return this._timetrackerApiService.postWithFullUrl(element.self, bookingCreateData)
+    return this._timetrackerApiService.postWithFullUrl(this._endpoint, bookingCreateData)
       .map(this._deserializePlainObject);
   }
 
