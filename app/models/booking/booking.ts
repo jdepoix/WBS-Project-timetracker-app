@@ -1,20 +1,30 @@
 import {RestModel} from '../core/rest-model/rest-model';
-import {Url} from '../../core/url/url';
 import {Updateable, Createable} from '../core/rest-model/model-operations';
+
+import {Workpackage} from '../workpackage/workpackage';
 
 export class Booking extends RestModel implements Updateable, Createable{
   public effort: number;
   public description: string;
   public date: Date;
-  public workpackage: Url;
+  public workpackage: Workpackage;
 
-  getUpdateRequestData(): Object {
+  public getUpdateRequestData(): Object {
     // TODO
     return undefined;
   }
 
-  getCreateRequestData(): Object {
+  public getCreateRequestData(): Object {
     // TODO
+    return undefined;
+  }
+}
+
+export class BookingSession extends RestModel implements Createable {
+  public startTime: Date;
+  public workpackage: Workpackage;
+
+  public getCreateRequestData(): Object {
     return undefined;
   }
 }
