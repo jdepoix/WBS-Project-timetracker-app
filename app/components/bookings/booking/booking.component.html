@@ -4,8 +4,11 @@
             <ion-row *ngIf="withWpName">
               <ion-col width-100>
                   <ion-label>
-                    Arbeitspakete haben Namen
+                    {{booking.workpackage.name}}
                   </ion-label>
+                <ion-label style="opacity: 0.6;">
+                  {{booking.workpackage.stringId}}
+                </ion-label>
               </ion-col>
             </ion-row>
             <ion-row>
