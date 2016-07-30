@@ -1,12 +1,15 @@
 import {Component, Input, Renderer} from '@angular/core';
-import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
+
 import {IONIC_DIRECTIVES} from "ionic-angular/index";
+import {Booking} from "../../../models/booking/booking";
+import {HoursToWorkdaysPipe} from "../../../pipes/hours-to-workdays.pipe";
+import {WorkdaysToHoursPipe} from "../../../pipes/workdays-to-hours.pipe";
 
 @Component({
   selector: 'edit-label',
   directives: [IONIC_DIRECTIVES],
   templateUrl: 'build/components/bookings/edit/edit-label.component.html',
-  pipes: [WorkdaysToHoursPipe]
+  pipes: [HoursToWorkdaysPipe, WorkdaysToHoursPipe]
 })
 
 export class EditLabel {
@@ -18,6 +21,8 @@ export class EditLabel {
   public _text: String;
   @Input()
   public isTimeLabel: boolean = false;
+  @Input()
+  public booking: Booking;
 
   constructor() {
 
@@ -25,10 +30,23 @@ export class EditLabel {
   }
 
 
+  private hourStringToWorkdays(hourString: String) :number{
+
+    let hrs = hourString.substring(0, hourString.indexOf(":"));
+    let mins = hourString.substr(hourString.indexOf(":")+1, hourString.indexOf(" ")-1);
+
+    var res :number =  +hrs / 8 + +mins / 60 / 8;
+    console.log(hrs+":"+mins+  "???");
+    console.log("res  " + res+ "   =???");
+    return res;
+  }
+
+
   _update_booking ():void{
 
+    console.log("will update Booking :  :  " + this.hourStringToWorkdays(this._text));
+    //TODO: all this stuff
 
-    console.log("will update Booking after editing");
 
   }
 
@@ -38,13 +56,14 @@ export class EditLabel {
 
     if(this._text.length<1){
       this._text = this._rememberValue;
+      this._text = this._text + " h";
       console.log("but not updating, input empty");
     }
     else if(this._rememberValue.trim() == this._text.trim()){
       console.log("but not updating, no changes have been made");
+      this._text = this._text + " h";
     }
     else {
-
       if(this.isTimeLabel){
 
         if(this._checkTimeLabel()){

@@ -2,11 +2,12 @@
 import {Component} from '@angular/core';
 import {NavController} from "ionic-angular/index";
 
-import {Booking} from "../../../models/booking/booking";
 import {BookingComponent} from "../../../components/bookings/booking/booking.component";
-import {BookingService} from "../../../services/bookings/booking.service";
+
 import {SessionService} from "../../../services/session/session.service";
 import {WorkpackageSelectionComponent} from "../workpackage-selection/booking-workpackage-selection.component";
+import {BookingService} from "../../../services/bookings/booking.service";
+import {Booking} from "../../../models/booking/booking";
 
 
 
@@ -34,15 +35,17 @@ export class BookingOverviewComponent {
       this._pickedDateString = this.pickedDate.toDateString();
       this._loadBookings();
       //this._loadBookingSession();
-      //this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
+      this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
 
   }
 
 
 
   private _loadBookings(): void {
-    this._bookingService.get(new Date(this.pickedDate.toString()), null).subscribe((bookings: Array<Booking>) => {
+    console.log(new Date(this.pickedDate.toString()));
+    this._bookingService.get(/*new Date(this.pickedDate.toString())*/null, null).subscribe((bookings: Array<Booking>) => {
       this._bookings = bookings;
+      console.log("bookingz length  " + this._bookings.length);
       this._bookings.concat(new Booking());
       if(this._bookings.length < 1){
         this.hintMsg = "Keine Buchungen an diesem Datum";
@@ -69,15 +72,6 @@ export class BookingOverviewComponent {
   */
   }
 
-/*
-  public bookingCardClicked(booking: Booking): void {
-
-    console.log("card Clicked -->(" + booking.description + ")");
-    //TODO: if booking is Livebooking, open live detail view
-    // if booking is normal finished booking, make it editable
-
-  }
-*/
 
   public dateChanged(): void {
     this._pickedDateString = new Date(this.pickedDate.toString()).toDateString();

@@ -6,13 +6,14 @@ import {Observable} from 'rxjs/Rx';
 import {Url, RessourceUrl} from '../../core/url/url';
 
 import {RestModelListDeserializer} from '../../models/core/rest-model/serializers';
-import {Booking} from '../../models/booking/booking';
+
 import {Workpackage} from '../../models/workpackage/workpackage';
 import {BookingDeserializer} from '../../models/booking/booking-serializers';
 
 import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 import {GetOperation, CreateOperation, UpdateOperation, DeleteOperation} from '../api/core/crud-operations';
 import {SessionService} from '../session/session.service';
+import {Booking} from "../../models/booking/booking";
 
 @Injectable()
 export class BookingService implements
@@ -28,6 +29,7 @@ export class BookingService implements
     let url: Url = this._endpoint;
 
     if (date != null) {
+      console.log(new Date(date.toISOString()).toJSON().split('T')[0]);
       url = url.clone().addParam('date', new Date(date.toISOString()).toJSON().split('T')[0]);
     }
     if (workpackage != null) {

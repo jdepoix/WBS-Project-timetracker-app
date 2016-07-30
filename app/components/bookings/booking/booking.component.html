@@ -3,18 +3,18 @@
         <ion-grid>
             <ion-row *ngIf="withWpName">
               <ion-col width-100>
-                  <ion-label>
-                    {{booking.workpackage.name}}
-                  </ion-label>
-                <ion-label style="opacity: 0.6;">
-                  {{booking.workpackage.stringId}}
-                </ion-label>
+                <span margin-right="5%" style="font-size: medium">
+                  {{booking.workpackage.name}}
+                </span>
+                <span style="font-size: medium;opacity: 0.5;">
+                   {{"   " + booking.workpackage.stringId}}
+                </span>
               </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col width-20>
 
-                  <edit-label [isTimeLabel]="true" [_text]="(booking.effort | workdaysToHours) + ' h'">
+                  <edit-label [booking]="booking" [isTimeLabel]="true" [_text]="(booking.effort | workdaysToHours) + ' h'">
 
                   </edit-label>
                   <ion-label *ngIf="isLive" style="color: #327eff">LIVE</ion-label>
@@ -24,7 +24,7 @@
                   live booking session
                 </ion-col>
                 <ion-col width-80 *ngIf="!isLive">
-                  <edit-label [_text]="booking.description">
+                  <edit-label [booking]="booking" [_text]="booking.description">
                   </edit-label>
                 </ion-col>
 
@@ -34,13 +34,8 @@
         <div id="checkoutDiv" *ngIf="isLive" >
           <hr style="stroke: 12; color: darkgrey">
           <button width-100 id="checkout_button" (click)="checkout_livebooking(booking)">
-
-
-
                   <ion-icon item-left round id="closeicon" name="close"></ion-icon>
-
                    AUSCHECKEN
-
           </button>
         </div>
 
