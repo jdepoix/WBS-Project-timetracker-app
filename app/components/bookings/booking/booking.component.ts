@@ -14,7 +14,6 @@ import {EditLabel} from "../edit/edit-label.component";
 })
 
 export class BookingComponent {
-  private _isLiveBooking: boolean = false;
 
 
   @Input()
@@ -22,7 +21,7 @@ export class BookingComponent {
   @Input()
   public booking: Booking;
   @Input()
-  public isLive: boolean = true;
+  public isLive: boolean = false;
 
 
 

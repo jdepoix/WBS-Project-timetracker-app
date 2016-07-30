@@ -32,8 +32,6 @@ export class BookingOverviewComponent {
 
 
       this._pickedDateString = this.pickedDate.toDateString();
-      console.log(this._pickedDateString);
-      console.log(this.pickedDate.toString());
       this._loadBookings();
       //this._loadBookingSession();
       //this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
@@ -83,8 +81,6 @@ export class BookingOverviewComponent {
 
   public dateChanged(): void {
     this._pickedDateString = new Date(this.pickedDate.toString()).toDateString();
-    console.log(this._pickedDateString);
-    console.log(this.pickedDate.toString());
     this._loadBookings();
   }
 
