@@ -1,3 +1,5 @@
+import {Url} from '../../core/url/url';
+
 import {RestModel} from '../core/rest-model/rest-model';
 import {Updateable} from '../core/rest-model/model-operations';
 
@@ -14,9 +16,18 @@ export class Workpackage extends RestModel implements Updateable {
   public eac: number;
   public cpi: number;
 
-  getUpdateRequestData(): Object {
+  public getUpdateRequestData(): Object {
     return {
       etc: this.etc
     };
+  }
+
+  /**
+   * returns the RessourceUrl of the Project, this workpackage belongs to
+   *
+   * @returns {Url}
+   */
+  public getProjectUrl(): Url {
+    return new Url(this.self.stringUrl.split('workpackages')[0]);
   }
 }

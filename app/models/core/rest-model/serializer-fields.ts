@@ -1,4 +1,9 @@
+import * as moment from 'moment';
+
 import {Url} from '../../../core/url/url';
+
+import {RestModel} from './rest-model';
+import {RestModelDeserializer} from './serializers';
 
 /**
  * this is the ABC for deserializer fields. Serializer fields are needed, to describe the structure of an RestModel. This
@@ -93,5 +98,31 @@ export class DateDeserializerField extends RestModelDeserializerField<Date> {
     let date: Date = new Date(plainObjectField);
     date.setHours(0, 0, 0, 0);
     return date;
+  }
+}
+
+/**
+ * deserializes a related model into another model.
+ */
+export class RelatedModelField<Model extends RestModel> extends RestModelDeserializerField<Model> {
+  constructor(
+    private _restModelDeserializer: new (plainObject: Object) => RestModelDeserializer<Model>,
+    _fieldName: string,
+    _sourceObjectFieldName?: string
+  ) {
+    super(_fieldName, _sourceObjectFieldName);
+  }
+
+  deserializeField(plainObjectField: any): Model {
+    return new this._restModelDeserializer(plainObjectField).deserialize();
+  }
+}
+
+/**
+ * takes a datetime field an deserializes it to a timestamp represented by a number
+ */
+export class TimestampDeserializerField extends RestModelDeserializerField<number> {
+  deserializeField(plainObjectField: any): number {
+    return moment(plainObjectField).unix();
   }
 }
