@@ -32,6 +32,8 @@ export class BookingOverviewComponent {
 
 
       this._pickedDateString = this.pickedDate.toDateString();
+      console.log(this._pickedDateString);
+      console.log(this.pickedDate.toString());
       this._loadBookings();
       //this._loadBookingSession();
       //this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
@@ -69,7 +71,7 @@ export class BookingOverviewComponent {
   */
   }
 
-
+/*
   public bookingCardClicked(booking: Booking): void {
 
     console.log("card Clicked -->(" + booking.description + ")");
@@ -77,9 +79,12 @@ export class BookingOverviewComponent {
     // if booking is normal finished booking, make it editable
 
   }
+*/
 
   public dateChanged(): void {
     this._pickedDateString = new Date(this.pickedDate.toString()).toDateString();
+    console.log(this._pickedDateString);
+    console.log(this.pickedDate.toString());
     this._loadBookings();
   }
 
