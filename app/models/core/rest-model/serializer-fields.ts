@@ -1,4 +1,5 @@
-import * as moment from 'moment';
+import moment = require('moment');
+import Moment = moment.Moment;
 
 import {Url} from '../../../core/url/url';
 
@@ -93,10 +94,10 @@ export class UrlDeserializerField extends RestModelDeserializerField<Url> {
 /**
  * deserializer for dates. Excpect to receive dates as a string in the YYYY-MM-DD format.
  */
-export class DateDeserializerField extends RestModelDeserializerField<Date> {
-  deserializeField(plainObjectField: any): Date {
-    let date: Date = new Date(plainObjectField);
-    date.setHours(0, 0, 0, 0);
+export class DateDeserializerField extends RestModelDeserializerField<Moment> {
+  deserializeField(plainObjectField: any): Moment {
+    let date: Moment = moment(plainObjectField);
+    date.startOf('day');
     return date;
   }
 }
