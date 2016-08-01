@@ -3,6 +3,9 @@ import {Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 
+import moment = require('moment');
+import Moment = moment.Moment;
+
 import {Url, RessourceUrl} from '../../core/url/url';
 
 import {RestModelListDeserializer} from '../../models/core/rest-model/serializers';
@@ -25,12 +28,15 @@ export class BookingService implements
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService, private _sessionService: SessionService) {
   }
 
-  public get(date?: Date, workpackage?: Workpackage): Observable<Array<Booking>> {
+  public get(date?: Moment, workpackage?: Workpackage): Observable<Array<Booking>> {
     let url: Url = this._endpoint;
 
     if (date != null) {
-      console.log(new Date(date.toISOString()).toJSON().split('T')[0]);
-      url = url.clone().addParam('date', new Date(date.toISOString()).toJSON().split('T')[0]);
+
+     // console.log(new Date(date.toISOString()).toJSON().split('T')[0]);
+     // url = url.clone().addParam('date', new Date(date.toISOString()).toJSON().split('T')[0]);
+      url = url.clone().addParam('date', date.format('YYYY-MM-DD'));
+
     }
     if (workpackage != null) {
       url = url.clone().addParam('workpackage_id', RessourceUrl.getPrimaryKey(workpackage.self));
