@@ -3,6 +3,9 @@ import {Url} from '../../core/url/url';
 import {RestModel} from '../core/rest-model/rest-model';
 import {Updateable} from '../core/rest-model/model-operations';
 
+/**
+ * represents a Workpackage
+ */
 export class Workpackage extends RestModel implements Updateable {
   public stringId: string;
   public name: string;

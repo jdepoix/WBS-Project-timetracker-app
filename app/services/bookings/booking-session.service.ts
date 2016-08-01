@@ -10,6 +10,9 @@ import {CreateOperation, RetrieveOperation, DeleteOperation} from '../api/core/c
 import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 import {BookingSessionDeserializer} from '../../models/booking/booking-serializers';
 
+/**
+ * takes care of handling requests to the BookingSession API
+ */
 @Injectable()
 export class BookingSessionService implements
   RetrieveOperation<BookingSession>,

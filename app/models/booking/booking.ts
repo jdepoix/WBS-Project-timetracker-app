@@ -6,6 +6,9 @@ import {Updateable, Createable} from '../core/rest-model/model-operations';
 
 import {Workpackage} from '../workpackage/workpackage';
 
+/**
+ * represents a Booking or a WorkEffort as it is called in the Database Model
+ */
 export class Booking extends RestModel implements Updateable, Createable{
   public effort: number;
   public description: string;
@@ -30,6 +33,9 @@ export class Booking extends RestModel implements Updateable, Createable{
   }
 }
 
+/**
+ * represents a BookingSession
+ */
 export class BookingSession extends RestModel implements Createable {
   /**
    * unix timestamp of the start time

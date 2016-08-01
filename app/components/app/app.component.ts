@@ -13,6 +13,9 @@ import {LoginComponent} from "../login/login.component";
 import {BookingOverviewComponent} from '../bookings/overview/booking-overview.component';
 import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage-overview.component';
 
+/**
+ * Entry point for the App. Holds the Menu and handles which View should be rendered
+ */
 @Component({
   templateUrl: 'build/components/app/app.component.html'
 })
@@ -69,6 +72,11 @@ export class AppComponent {
     });
   }
 
+  /**
+   * takes a Component and renders it as the MainView
+   *
+   * @param component Component to render
+   */
   public openPage(component: any) {
     if (this._menu.isOpen()) this._menu.close();
 

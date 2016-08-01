@@ -13,6 +13,9 @@ import {SessionService} from '../session/session.service';
 import {WorkpackageDeserializer} from '../../models/workpackage/workpackage-serializers';
 import {RestModelListDeserializer} from '../../models/core/rest-model/serializers';
 
+/**
+ * takes care of handling requests to the Workpackage API
+ */
 @Injectable()
 export class WorkpackageService implements GetOperation<Workpackage>, UpdateOperation<Workpackage> {
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService, private _sessionService: SessionService) {

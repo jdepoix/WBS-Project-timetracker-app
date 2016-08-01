@@ -9,6 +9,9 @@ import {SessionService} from '../../../services/session/session.service';
 
 import {WorkpackageDetailComponent} from '../detail/workpackage-detail.component';
 
+/**
+ * renders a list of all workpackages belonging to a user
+ */
 @Component({
   templateUrl: 'build/components/workpackages/overview/workpackage-overview.component.html'
 })
@@ -25,12 +28,22 @@ export class WorkpackageOverviewComponent {
     this._sessionService.onProjectSelected.subscribe(() => this._loadWorkpackages());
   }
 
+  /**
+   * load all workpackages
+   *
+   * @private
+   */
   private _loadWorkpackages(): void {
     this._workpackageService.get(false).subscribe((workpackages: Array<Workpackage>) => {
       this._workpackages = workpackages;
     });
   }
 
+  /**
+   * opens the WorkpackageDetailComponent and parses a workpackage whoms details should be shown
+   *
+   * @param workpackage
+   */
   public openWorkpackageDetailComponent(workpackage: Workpackage): void {
     this._navController.push(WorkpackageDetailComponent, {
       workpackage: workpackage
