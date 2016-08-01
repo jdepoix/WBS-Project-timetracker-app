@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Response} from '@angular/http';
-
 import {Observable} from 'rxjs/Rx';
 
 import moment = require('moment');
@@ -32,11 +31,9 @@ export class BookingService implements
     let url: Url = this._endpoint;
 
     if (date != null) {
-
-     // console.log(new Date(date.toISOString()).toJSON().split('T')[0]);
+      console.log(" in bSession: " + date.format('YYYY-MM-DD'));
      // url = url.clone().addParam('date', new Date(date.toISOString()).toJSON().split('T')[0]);
       url = url.clone().addParam('date', date.format('YYYY-MM-DD'));
-
     }
     if (workpackage != null) {
       url = url.clone().addParam('workpackage_id', RessourceUrl.getPrimaryKey(workpackage.self));

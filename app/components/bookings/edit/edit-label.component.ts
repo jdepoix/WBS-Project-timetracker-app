@@ -113,11 +113,13 @@ export class EditLabel {
 
     if(this._text.length<1){
       this._text = this._rememberValue;
+      if(this.isTimeLabel)
       this._text = this._text + " h";
       console.log("but not updating, input empty");
     }
     else if(this._rememberValue.trim() == this._text.trim()){
       console.log("but not updating, no changes have been made");
+      if(this.isTimeLabel)
       this._text = this._text + " h";
     }
     else {

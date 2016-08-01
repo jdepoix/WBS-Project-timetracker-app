@@ -7,6 +7,8 @@ import {WorkpackageSelectionComponent} from "../workpackage-selection/booking-wo
 import {BookingService} from "../../../services/bookings/booking.service";
 import {Booking, BookingSession} from "../../../models/booking/booking";
 import {BookingSessionService} from "../../../services/bookings/booking-session.service";
+import moment = require("moment/moment");
+import Moment = moment.Moment;
 
 
 
@@ -19,7 +21,7 @@ export class BookingOverviewComponent {
 
   private _bookings: Array<Booking>;
   private _bokingSession: BookingSession;
-  public pickedDate: Date = new Date();
+  public pickedDate: Moment = moment('2016-07-30');
   private _pickedDateString: String = "";
 
   hintMsg :String = "";
@@ -30,7 +32,7 @@ export class BookingOverviewComponent {
                private _sessionService: SessionService
    ) {
 
-      this._pickedDateString = this.pickedDate.toDateString();
+      this._pickedDateString = this.pickedDate.format('YYYY-MM-DD');
       this._loadBookings();
       this._loadBookingSession();
       this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
@@ -39,9 +41,14 @@ export class BookingOverviewComponent {
 
 
   private _loadBookings(): void {
-    console.log(new Date(this.pickedDate.toString()));
-    this._bookingService.get(/*new Date(this.pickedDate.toString())*/null, null).subscribe((bookings: Array<Booking>) => {
+
+    console.log(this.pickedDate);
+    this._bookingService.get(/*moment(this.pickedDate.toString()*/moment('2016-07-31'), null).subscribe((bookings: Array<Booking>) => {
       this._bookings = bookings;
+
+      if(this._bookings.length > 1)
+      console.log(" first fetched booking date : " + this._bookings[0].date.format('YYYY-MM-DD'));
+
       if(this._bookings.length < 1){
         this.hintMsg = "Keine Buchungen an diesem Datum";
       }
@@ -65,7 +72,7 @@ export class BookingOverviewComponent {
 
 
   public dateChanged(): void {
-    this._pickedDateString = new Date(this.pickedDate.toString()).toDateString();
+    this._pickedDateString = this.pickedDate.toString();// format('YYYY-MM-DD');
     this._loadBookings();
   }
 

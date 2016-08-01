@@ -3,29 +3,23 @@
 -->
 <ion-header>
   <ion-navbar>
-
-
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-
-    <ion-title >{{_pickedDateString}}</ion-title>
+    <ion-title >{{ _pickedDateString}}</ion-title>
 
     <ion-buttons end id="ionButtons">
       <div>
-
         <ion-datetime (ionChange)="dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="pickedDate"></ion-datetime>
         <ion-icon item-right name="calendar" id="calicon"></ion-icon>
-
       </div>
     </ion-buttons>
-
 
   </ion-navbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content>
 
   <ion-list class="slide-in">
     <booking *ngIf="_bokingSession != null" [withWpName]="true" [bookingSession]="_bokingSession" [isLive]="true"></booking>
