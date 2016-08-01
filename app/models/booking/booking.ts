@@ -9,9 +9,10 @@ export class Booking extends RestModel implements Updateable, Createable{
   public date: Date;
   public workpackage: Workpackage;
 
+
   public getUpdateRequestData(): Object {
-    return this._getRelevantData();
-  }
+  return this._getRelevantData();
+}
 
   public getCreateRequestData(): Object {
     return this._getRelevantData();

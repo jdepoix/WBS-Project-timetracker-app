@@ -1,15 +1,17 @@
-import {Component, Input, Renderer} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {IONIC_DIRECTIVES} from "ionic-angular/index";
 import {Booking} from "../../../models/booking/booking";
 import {HoursToWorkdaysPipe} from "../../../pipes/hours-to-workdays.pipe";
-import {WorkdaysToHoursPipe} from "../../../pipes/workdays-to-hours.pipe";
+import {BookingService} from "../../../services/bookings/booking.service";
+import {Toast} from "ionic-native/dist/index";
+
 
 @Component({
   selector: 'edit-label',
   directives: [IONIC_DIRECTIVES],
   templateUrl: 'build/components/bookings/edit/edit-label.component.html',
-  pipes: [HoursToWorkdaysPipe, WorkdaysToHoursPipe]
+  pipes: [HoursToWorkdaysPipe]
 })
 
 export class EditLabel {
@@ -24,7 +26,7 @@ export class EditLabel {
   @Input()
   public booking: Booking;
 
-  constructor() {
+  constructor(private _bookingService: BookingService) {
 
 
   }
@@ -42,13 +44,68 @@ export class EditLabel {
   }
 
 
+
+
   _update_booking ():void{
 
     console.log("will update Booking :  :  " + this.hourStringToWorkdays(this._text));
-    //TODO: all this stuff
+    if(this.isTimeLabel) {
+      this.booking.effort = this.hourStringToWorkdays(this._text);
+    }
+    else {
+      this.booking.description = String(this._text);
+    }
+    console.log("EFF: "+ this.booking.workpackage.bac);
 
+
+
+    //TODO: update und create vom booking service geht nicht - check Backend for errors:
+
+    /*
+    *POST /api/projects/3/bookings/
+     HTTP 400 Bad Request
+
+     {
+     "detail": "JSON parse error - Extra data: line 20 column 6 - line 20 column 7 (char 614 - 615)"
+     }
+
+
+     File "...WBS-Project-timetracker-backend\wbs_timetracker\api\bookings\serializers.py", line 33, in create
+     if workpackage.is_toplevel_wp:
+     AttributeError: 'OrderedDict' object has no attribute 'is_toplevel_wp
+
+
+
+
+    *
+    * */
+
+    this.showToast();
+
+    this._bookingService.update(this.booking);
 
   }
+
+
+
+  showToast() {
+
+    let it :String = this.isTimeLabel ? "time" : "desciption";
+    Toast.show("updated " + it, 'short', 'top').subscribe(
+      toast => {
+        console.log('toast Success', toast);
+      },
+      error => {
+        console.log('Error -- browser cant show toast', error);
+      },
+      () => {
+        console.log('Completed');
+      }
+    );
+
+  }
+
+
 
   editing_finished():void{
 
@@ -75,8 +132,6 @@ export class EditLabel {
           console.log("Test NICHT best");
           this._text = this._rememberValue;
         }
-
-
       }
       else {
         this._update_booking();

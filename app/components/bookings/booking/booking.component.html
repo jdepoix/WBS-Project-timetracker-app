@@ -4,38 +4,47 @@
             <ion-row *ngIf="withWpName">
               <ion-col width-100>
                 <span margin-right="5%" style="font-size: medium">
-                  {{booking.workpackage.name}}
+                  {{(isLive ? bookingSession.workpackage.name : booking.workpackage.name)}}
                 </span>
                 <span style="font-size: medium;opacity: 0.5;">
-                   {{"   " + booking.workpackage.stringId}}
+                   {{"   " + (isLive ? bookingSession.workpackage.stringId : booking.workpackage.stringId)}}
                 </span>
               </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col width-20>
 
-                  <edit-label [booking]="booking" [isTimeLabel]="true" [_text]="(booking.effort | workdaysToHours) + ' h'">
+                    <edit-label *ngIf="!isLive" [booking]="booking" [isTimeLabel]="true" [_text]="(booking.effort | workdaysToHours) + ' h'">
+                    </edit-label>
 
-                  </edit-label>
-                  <ion-label *ngIf="isLive" style="color: #327eff">LIVE</ion-label>
+                  <span *ngIf="isLive" style="color: #327eff">LIVE</span>
 
                 </ion-col>
                 <ion-col width-80 *ngIf="isLive">
-                  live booking session
+<!---
+                  <span style="margin-right: 5%; opacity: 0.6">
+                    start: {{timeStampToTime(bookingSession.startTime)}}
+                  </span>
+--->
+                  <span style="color: #327eff">
+                    <ion-icon name="clock"></ion-icon><span>{{" "}}</span>
+                    {{"  "+timeStampToDuration(bookingSession.startTime)}}
+                  </span>
+
                 </ion-col>
                 <ion-col width-80 *ngIf="!isLive">
-                  <edit-label [booking]="booking" [_text]="booking.description">
+                  <edit-label [booking]="booking"  [_text]="booking.description">
                   </edit-label>
                 </ion-col>
 
             </ion-row>
 
         </ion-grid>
-        <div id="checkoutDiv" *ngIf="isLive" >
-          <hr style="stroke: 12; color: darkgrey">
-          <button width-100 id="checkout_button" (click)="checkout_livebooking(booking)">
-                  <ion-icon item-left round id="closeicon" name="close"></ion-icon>
-                   AUSCHECKEN
+        <div id="checkoutDiv" *ngIf="isLive">
+          <hr style="border: 5px; stroke: 12; color: darkgrey;">
+          <button width-100 id="checkout_button" (click)="checkout_livebooking()">
+                 <ion-icon item-left round id="closeicon" name="log-out"></ion-icon>
+            <ion-label style="margin: 2px">AUSCHECKEN</ion-label>
           </button>
         </div>
 

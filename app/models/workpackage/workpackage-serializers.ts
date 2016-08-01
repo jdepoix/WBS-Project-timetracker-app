@@ -27,7 +27,6 @@ export class WorkpackageDeserializer extends RestModelDeserializer<Workpackage> 
 
   createInstance(): Workpackage {
     var wp :Workpackage = new Workpackage();
-    console.log("Fresh WP NAME: " + wp.name);
     return wp;
   }
 }

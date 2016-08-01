@@ -13,10 +13,9 @@
 
     <ion-buttons end id="ionButtons">
       <div>
+
         <ion-datetime (ionChange)="dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="pickedDate"></ion-datetime>
-
         <ion-icon item-right name="calendar" id="calicon"></ion-icon>
-
 
       </div>
     </ion-buttons>
@@ -29,7 +28,8 @@
 
 
   <ion-list class="slide-in">
-    <booking *ngFor="let booking of _bookings" [booking]="booking" [withWpName]="true"></booking>
+    <booking *ngIf="_bokingSession != null" [withWpName]="true" [bookingSession]="_bokingSession" [isLive]="true"></booking>
+    <booking *ngFor="let booking of _bookings" [booking]="booking" [withWpName]="true" [isLive]="false"></booking>
   </ion-list>
 
   <ion-label padding id="hint">{{hintMsg}}</ion-label>

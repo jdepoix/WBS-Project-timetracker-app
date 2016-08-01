@@ -2,17 +2,29 @@
 
 #lab{
   margin: 0px;
+  margin-left: 2px;
   font-style: italic;
   background-color: white;
   font-size: medium;
   border: none;
   color: #2e74eb;
   opacity: 0.7;
+
+
+
 }
 
 input[type="text"]{
+
   font-style: italic;
+  font-size: medium;
   margin: 0px;
+  margin-left: 2px;
+  line-break: normal;
+  max-lines: 4;
+ // height: 30px;
+
+
 }
 
 input[type="text"][disabled] {
@@ -20,17 +32,14 @@ input[type="text"][disabled] {
   font-style: normal;
   opacity: 1.0;
   margin: 0px;
+  margin-left: 3px;
 
 }
 
-
-input{
-  margin: 2px;
-}
 
 #container{
   padding: 0px;
   z-index: 75;
-  height: auto;
+
   width: auto;
 }
