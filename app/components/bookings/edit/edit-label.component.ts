@@ -7,6 +7,7 @@ import {BookingService} from "../../../services/bookings/booking.service";
 import {Toast} from "ionic-native/dist/index";
 
 
+
 @Component({
   selector: 'edit-label',
   directives: [IONIC_DIRECTIVES],

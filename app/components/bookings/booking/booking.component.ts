@@ -6,6 +6,8 @@ import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
 import {IONIC_DIRECTIVES} from "ionic-angular/index";
 import {EditLabel} from "../edit/edit-label.component";
 import {Workpackage} from "../../../models/workpackage/workpackage";
+import Moment = moment.Moment;
+import moment = require("moment/moment");
 
 @Component({
   selector: 'booking',
@@ -15,6 +17,9 @@ import {Workpackage} from "../../../models/workpackage/workpackage";
 })
 
 export class BookingComponent{
+
+
+  private _pickedEffort :Moment = moment().date(new Date().getTime());
 
   /*
   * if this.isLife is true, booking is null
@@ -39,7 +44,12 @@ export class BookingComponent{
   }
 
 
+  public changedEffortLabel():void{
 
+
+  }
+
+ // this method is actually used
   timeStampToTime(stamp: number): String{
 
   let date = new Date(stamp*1000);
@@ -52,16 +62,18 @@ export class BookingComponent{
   return formattedTime;
 }
 
+  // this method is actually used
   timeStampToDuration(stamp: number): String{
 
-    let now:number = new Date().getTime();
-    let date = new Date(now-stamp*1000);
-// Hours part from the timestamp
-    let hours = date.getHours();
-// Minutes part from the timestamp
-    let minutes = "0" + date.getMinutes();
-// Will display time in 10:30:23 format
-    let formattedTime = '  ' + hours + ' h ' + minutes.substr(-2) + ' min';
+    let start = new Date(stamp*1000);
+    let until = new Date();
+    let d = until.getDay()-start.getDay();
+    let h = until.getHours()-start.getHours();
+    let mins = until.getMinutes()-start.getMinutes();
+    let formattedTime = '  ' + h + ' h ' + mins + ' min';
+    if(d > 0){
+      formattedTime = d + ' d(!)' + formattedTime + '\n' + "   --> YOU WORKED TOO LONG";
+    }
     return formattedTime;
   }
 

@@ -43,18 +43,12 @@ export class BookingOverviewComponent {
   private _loadBookings(): void {
 
     console.log(this.pickedDate);
-    this._bookingService.get(/*moment(this.pickedDate.toString()*/moment('2016-07-31'), null).subscribe((bookings: Array<Booking>) => {
+    this._bookingService.get(/*moment(this.pickedDate.toString()*//*moment('2016-07-31')*/ null, null).subscribe((bookings: Array<Booking>) => {
       this._bookings = bookings;
 
       if(this._bookings.length > 1)
       console.log(" first fetched booking date : " + this._bookings[0].date.format('YYYY-MM-DD'));
 
-      if(this._bookings.length < 1){
-        this.hintMsg = "Keine Buchungen an diesem Datum";
-      }
-      else{
-        this.hintMsg ="";
-      }
     });
   }
 
@@ -62,8 +56,20 @@ export class BookingOverviewComponent {
   private _loadBookingSession(): void {
     this._bookingSessionService.retrieve().subscribe((bookingSession: BookingSession) => {
 
-      this._bokingSession = bookingSession;
-      console.log(bookingSession.workpackage.name + "  sessionstart: " );
+     if(bookingSession != null){
+       this._bokingSession = bookingSession;
+       this.hintMsg = "";
+       console.log(bookingSession.workpackage.name + "  sessionstart: " );
+     }
+     else if(this._bookings.length < 1) // no bookings an no live booking sessions
+      {
+        this.hintMsg = "Keine Buchungen an diesem Datum";
+      }
+      else // no live booking sessions, but bookings
+      {
+        this.hintMsg ="";
+      }
+
 
     });
 

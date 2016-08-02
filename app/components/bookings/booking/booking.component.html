@@ -1,23 +1,29 @@
 <ion-card>
-    <ion-card-content>
-        <ion-grid>
-            <ion-row *ngIf="withWpName">
-              <ion-col width-100>
-                <span margin-right="5%" style="font-size: medium">
-                  {{(isLive ? bookingSession.workpackage.name : booking.workpackage.name)}}
-                </span>
+  <ion-card-header>
+    <ion-grid>
+      <ion-row *ngIf="withWpName">
+        <ion-col width-100>
                 <span style="font-size: medium;opacity: 0.5;">
                    {{"   " + (isLive ? bookingSession.workpackage.stringId : booking.workpackage.stringId)}}
                 </span>
-              </ion-col>
-            </ion-row>
+          <span margin-right="5%" style="font-size: medium">
+                  {{(isLive ? bookingSession.workpackage.name : booking.workpackage.name)}}
+                </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-header>
+  <ion-card-content>
+        <ion-grid>
             <ion-row>
                 <ion-col width-23>
-
-                    <edit-label *ngIf="!isLive" [booking]="booking" [isTimeLabel]="true" [_text]="(booking.effort | workdaysToHours) + ' h'">
+                   <!-- <edit-label *ngIf="!isLive" [booking]="booking" [isTimeLabel]="true" [_text]="(booking.effort | workdaysToHours) + ' h'">
                     </edit-label>
+                   --><span *ngIf="!isLive">
+                    <ion-datetime displayFormat="HH : mm" pickerFormat="HH : mm" [(ngModel)]="pickedEffort"></ion-datetime>
+                    </span>
 
-                  <span *ngIf="isLive" style="color: #327eff">LIVE</span>
+                    <span *ngIf="isLive" style="color: #327eff">LIVE</span>
 
                 </ion-col>
                 <ion-col width-80 *ngIf="isLive">
@@ -43,7 +49,7 @@
         <div id="checkoutDiv" *ngIf="isLive">
           <hr style="border: 5px; stroke: 12; color: darkgrey;">
           <button width-100 id="checkout_button" (click)="checkout_livebooking()">
-                 <ion-icon item-left round id="closeicon" name="log-out"></ion-icon>
+                 <ion-icon round id="closeicon" name="log-out"></ion-icon>
             <ion-label style="margin: 2px">AUSCHECKEN</ion-label>
           </button>
         </div>
