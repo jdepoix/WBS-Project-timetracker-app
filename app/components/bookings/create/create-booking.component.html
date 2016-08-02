@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ _workpackage.stringId }} - {{ _workpackage.name }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <button accent floating block full (click)="createBookingSession()" >
+      <ion-icon name="ios-stopwatch-outline"></ion-icon>Livebuchung starten
+    </button>
+  <form [ngFormModel]="authForm" (ngSubmit)="onSubmit(authForm)">
+    <ion-item>
+      <ion-label>Datum</ion-label>
+      <ion-datetime displayFormat="DD.MM.YYYY" pickerFormat="DD MM YYYY" max="{{maxDate}}"
+                    [(ngModel)]="myDate" [ngFormControl]="date" required></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Aufwand</ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" minuteValues="{{minuteValues}}"
+                    [(ngModel)]="myEffort" [ngFormControl]="effort" required=""></ion-datetime>
+    </ion-item>
+    <ion-item class="item">
+      <ion-label floating >Beschreibung</ion-label>
+      <ion-textarea type="text" [ngFormControl]="description" required></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label>ETC - aktuell: {{ _workpackage.etc}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>ETC - neu: {{ _workpackage.etc }}</ion-label>
+    </ion-item>
+    <button accent floating block full>Buchung abschicken</button>
+  </form>
+</ion-content>
