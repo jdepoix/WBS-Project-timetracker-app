@@ -12,23 +12,25 @@
     <ion-item>
       <ion-label>Datum</ion-label>
       <ion-datetime displayFormat="DD.MM.YYYY" pickerFormat="DD MM YYYY" max="{{maxDate}}"
-                    [(ngModel)]="myDate" [ngFormControl]="date" required></ion-datetime>
+                    [(ngModel)]="maxDate" [ngFormControl]="date" required></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>Aufwand</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" minuteValues="{{minuteValues}}"
-                    [(ngModel)]="myEffort" [ngFormControl]="effort" required=""></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"
+                    [(ngModel)]="myEffort" [ngFormControl]="effort"  (change)="refreshEtc()"  required></ion-datetime>
     </ion-item>
     <ion-item class="item">
       <ion-label floating >Beschreibung</ion-label>
       <ion-textarea type="text" [ngFormControl]="description" required></ion-textarea>
     </ion-item>
     <ion-item>
-      <ion-label>ETC - aktuell: {{ _workpackage.etc}}</ion-label>
+      <ion-label>ETC-aktuell:</ion-label>
+      <ion-label>{{ _workpackage.etc}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>ETC - neu: {{ _workpackage.etc }}</ion-label>
+      <ion-label>ETC-neu:</ion-label>
+      <ion-input type="text" [(ngModel)]="myEtc" ></ion-input>
     </ion-item>
-    <button accent floating block full>Buchung abschicken</button>
+    <button floating block full>Buchung abschicken</button>
   </form>
 </ion-content>
