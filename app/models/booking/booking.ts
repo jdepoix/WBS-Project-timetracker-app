@@ -1,3 +1,6 @@
+import moment = require('moment');
+import Moment = moment.Moment;
+
 import {RestModel} from '../core/rest-model/rest-model';
 import {Updateable, Createable} from '../core/rest-model/model-operations';
 
@@ -6,7 +9,7 @@ import {Workpackage} from '../workpackage/workpackage';
 export class Booking extends RestModel implements Updateable, Createable{
   public effort: number;
   public description: string;
-  public date: Date;
+  public date: Moment;
   public workpackage: Workpackage;
 
   public getUpdateRequestData(): Object {

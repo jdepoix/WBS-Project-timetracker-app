@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {DatePipe} from '@angular/common';
 
 import {NavParams, NavController} from 'ionic-angular/index';
 
@@ -32,7 +31,7 @@ export class WorkpackageDetailComponent {
     let sortedDateGroups: Array<string> = new Array<string>();
 
     bookings.forEach((booking: Booking) => {
-      let date: string = new DatePipe().transform(booking.date, 'dd.MM.yyyy');
+      let date: string = booking.date.format('DD.MM.YYYY');
 
       if (dateGroupedBookings.has(date)) {
         dateGroupedBookings.get(date).push(booking);
