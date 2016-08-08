@@ -3,10 +3,14 @@
         <button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-searchbar [(ngModel)]="_workpackagesSearchString" debounce="0"></ion-searchbar>
+        <ion-searchbar [(ngModel)]="_workpackagesSearchString"
+                       debounce="0"
+                       [placeholder]="_context === _contextEnum.BOOKING_WORKPACKAGE_SELECTION ?
+                       'Select Workpackage for Booking' : 'Search for Workpackage'">
+        </ion-searchbar>
     </ion-navbar>
 </ion-header>
-
+<h3>asdf</h3>
 <ion-content>
     <ion-list class="slide-in">
         <ion-card *ngFor="let workpackage of _workpackages" (click)="selectWorkpackage(workpackage)">
