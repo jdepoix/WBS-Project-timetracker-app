@@ -41,7 +41,7 @@ export class BookingSessionService implements
       });
   }
 
-  delete(element: BookingSession): Observable<Response> {
+  public delete(element: BookingSession): Observable<Response> {
     return this._timetrackerApiService.deleteWithFullUrl(element.self);
   }
 }
