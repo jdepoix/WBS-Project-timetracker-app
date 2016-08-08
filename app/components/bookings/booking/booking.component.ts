@@ -3,12 +3,13 @@ import {Component, Input, AfterViewInit, Pipe, OnInit} from '@angular/core';
 import {Booking, BookingSession} from '../../../models/booking/booking';
 
 import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
-import {IONIC_DIRECTIVES, DateTime, Alert, NavController} from "ionic-angular/index";
+import {IONIC_DIRECTIVES, DateTime, Alert, NavController, Toast} from "ionic-angular/index";
 import {EditLabel} from "../edit/edit-label.component";
 import Moment = moment.Moment;
 import moment = require("moment/moment");
 import {BookingService} from "../../../services/bookings/booking.service";
 import {Response} from "@angular/http";
+import {CreateBookingComponent} from "../create/create-booking.component";
 
 @Component({
   selector: 'booking',
@@ -24,7 +25,6 @@ export class BookingComponent{
   public pickedEffort :Moment = moment(new Date().getTime());
   // undefined until user has changed effort
   private _bookingEffort : number;
-  private _nav :NavController;
 
   /*
   * if this.isLife is true, booking is null
@@ -44,9 +44,9 @@ export class BookingComponent{
   public allBookings: Array<Booking>;
 
 
-  constructor( private  _bookingService : BookingService, nav: NavController) {
+  constructor( private  _bookingService : BookingService, private _nav: NavController) {
 
-    this._nav=nav;
+
 
   }
 
@@ -70,7 +70,6 @@ export class BookingComponent{
 
   private _momentEffortToWorkdays(mom :String):number{
 
-    console.log("mom? : " + mom.split(":"));
     return  +(mom.split(":")[0]) / 8 + +(mom.split(":")[1]) / 60 / 8;
 
   }
@@ -112,7 +111,10 @@ export class BookingComponent{
 
   public checkout_livebooking (): void{
 
-    console.log("check out!");
+    this._nav.push(CreateBookingComponent, {
+      workpackage: this.bookingSession.workpackage,
+      session: this.bookingSession
+    });
 
   }
 
@@ -136,8 +138,8 @@ export class BookingComponent{
             this._bookingService.delete(this.booking).subscribe((returnedDeleteResponse: Response) => {
               console.log("returned Delete Bokking Response: " + returnedDeleteResponse);
               if(returnedDeleteResponse.status == 204){
-                //
-                //location.reload();
+
+                this._showToast();
                 var index = this.allBookings.indexOf(this.booking, 0);
                 if (index > -1) {
                   this.allBookings.splice(index, 1);
@@ -151,6 +153,25 @@ export class BookingComponent{
     });
     this._nav.present(alert);
   }
+
+
+
+
+  private _showToast() {
+
+    let toast = Toast.create({
+      message: 'Effort changed',
+      duration: 1500,
+      position: 'bottom'
+    });
+
+    toast.onDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    this._nav.present(toast);
+  }
+
 
 }
 

@@ -15,7 +15,7 @@ import Moment = moment.Moment;
 @Component({
   templateUrl: 'build/components/bookings/overview/booking-overview.component.html',
   directives: [BookingComponent],
-  /*providers: [BookingSessionService]*/
+
 })
 export class BookingOverviewComponent {
 

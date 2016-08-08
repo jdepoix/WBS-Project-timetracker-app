@@ -1,4 +1,4 @@
 <div id="container">
-   <ion-input disabled="{{!_is_edit_mode}}" onfocus="console.log('foooocus');" (blur)='editing_finished()' (keyup)="key_up()" #input id="lab" [(ngModel)]="_text" value={{_text}} (press)="editing_should_begin()" type="text">
+   <ion-input disabled="{{!_is_edit_mode}}" onfocus="console.log('foooocus');" (blur)='editing_finished()' #input id="lab" [(ngModel)]="_text" value={{_text}} (press)="editing_should_begin()" type="text">
    </ion-input>
 </div>

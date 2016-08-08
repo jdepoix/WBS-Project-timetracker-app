@@ -1,44 +1,43 @@
 <ion-card>
-  <ion-card-header *ngIf="withWpName">
-    <ion-grid>
-      <ion-row>
-
-      </ion-row>
-      <ion-row >
-
-        <ion-col width-90>
-
-          <span style=" font-size: larger;opacity: 0.5; align-self: center">
-                  {{"   " + (isLive ? bookingSession.workpackage.stringId : booking.workpackage.stringId)}}
-          </span>
-          <span style="font-size: larger; width: 80px">
-
-                  {{(isLive ? bookingSession.workpackage.name : booking.workpackage.name)}}
-
-          </span>
-
-        </ion-col>
-
-        <ion-col *ngIf="!isLive">
-
-            <ion-button  style="opacity: 0.5; text-align: center" (press)="swipeRight()">
-              <ion-icon  style="font-size: medium" name="close" ></ion-icon>
-            </ion-button>
-
-        </ion-col>
-
-      </ion-row>
-    </ion-grid>
-  </ion-card-header>
-
 
   <ion-card-content>
         <ion-grid>
+
+          <ion-row *ngIf="withWpName">
+
+            <ion-col width-20>
+
+              <span style=" font-size: medium;opacity: 0.5; align-self: center">
+                  {{" " + (isLive ? bookingSession.workpackage.stringId : booking.workpackage.stringId)}}
+              </span>
+
+            </ion-col>
+
+
+            <ion-col width-80>
+
+              <span style="font-size: medium; width: 80px">
+                  {{(isLive ? bookingSession.workpackage.name : booking.workpackage.name)}}
+              </span>
+
+            </ion-col>
+
+
+
+
+
+            <ion-col *ngIf="!isLive">
+
+              <ion-button  style="opacity: 0.5; text-align: center" (press)="swipeRight()">
+                <ion-icon  style="font-size: medium" name="close" ></ion-icon>
+              </ion-button>
+
+            </ion-col>
+
+          </ion-row>
+
             <ion-row>
                 <ion-col width-23>
-          <!--          <edit-label *ngIf="!isLive" [booking]="booking" [isTimeLabel]="true" [_text]="(booking.effort | workdaysToHours) + ' h'">
-                    </edit-label>
-  -->
                   <ion-buttons style="width: 60px; margin: 0px" *ngIf="!isLive">
                     <div>
                     <ion-datetime doneText="Change Effort" (ionChange)="changedEffortLabel()" id="tp" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="pickedEffort"></ion-datetime>
@@ -59,7 +58,7 @@
                   </span>
                 </ion-col>
                 <ion-col width-80 *ngIf="!isLive">
-                  <edit-label [booking]="booking"  [_text]="booking.description">
+                  <edit-label [booking]="booking" [_text]="booking.description">
                   </edit-label>
                 </ion-col>
 
