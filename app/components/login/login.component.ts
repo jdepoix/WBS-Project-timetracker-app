@@ -7,10 +7,12 @@ import {Url} from "../../core/url/url";
 
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 
 @Component({
-  templateUrl: 'build/components/login/login.component.html'
+  templateUrl: 'build/components/login/login.component.html',
+  pipes: [TranslatePipe]
 })
 export class LoginComponent {
   serverAddress: AbstractControl;
@@ -24,7 +26,7 @@ export class LoginComponent {
   constructor(private fb: FormBuilder,
               private auth: SessionAuthenticationService,
               private session: SessionService,
-              private nav: NavController) {
+              private nav: NavController, private translate: TranslateService) {
     this.authForm = fb.group({
       "serverAddress": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'username': ['', Validators.required],
