@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 
-import {Platform, MenuController, Nav} from 'ionic-angular';
+import {Platform, MenuController, Nav, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 
 import {Project} from "../../models/project/project";
@@ -13,12 +13,25 @@ import {LoginComponent} from "../login/login.component";
 import {BookingOverviewComponent} from '../bookings/overview/booking-overview.component';
 import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage-overview.component';
 
+import {Http} from '@angular/http';
+import {TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader,} from 'ng2-translate/ng2-translate';
+
 /**
  * Entry point for the App. Holds the Menu and handles which View should be rendered
  */
 @Component({
-  templateUrl: 'build/components/app/app.component.html'
+  templateUrl: 'build/components/app/app.component.html',
+  pipes: [TranslatePipe],
+  providers: [
+    {
+      provide: TranslateLoader,
+      useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets', '.json'),
+      deps: [Http]
+    },
+    TranslateService
+  ]
 })
+
 export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
@@ -32,7 +45,8 @@ export class AppComponent {
     private _menu: MenuController,
     private _authService: SessionAuthenticationService,
     private _sessionService: SessionService,
-    private _projectService: ProjectService
+    private _projectService: ProjectService,
+    private _translate: TranslateService
   ) {
     this.initializeApp();
 
@@ -61,6 +75,9 @@ export class AppComponent {
         this.openPage(LoginComponent);
       }
     });
+
+    this._translate = _translate;
+    this.translateConfig();
   }
 
   public initializeApp() {
@@ -104,4 +121,14 @@ export class AppComponent {
       }
     });
   }
+
+  translateConfig() {
+    var userLang = navigator.language.split('-')[0];
+    userLang = /(de|en)/gi.test(userLang) ? userLang : 'en';
+
+    this._translate.setDefaultLang('en');
+
+    this._translate.use(userLang);
+  }
 }
+
