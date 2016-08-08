@@ -26,7 +26,8 @@ export class LoginComponent {
   constructor(private fb: FormBuilder,
               private auth: SessionAuthenticationService,
               private session: SessionService,
-              private nav: NavController, private translate: TranslateService) {
+              private nav: NavController,
+              private translate: TranslateService) {
     this.authForm = fb.group({
       "serverAddress": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'username': ['', Validators.required],
