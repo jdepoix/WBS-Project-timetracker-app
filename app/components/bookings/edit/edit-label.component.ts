@@ -83,7 +83,9 @@ export class EditLabel {
 
     this.showToast();
 
-    this._bookingService.update(this.booking);
+    this._bookingService.update(this.booking).subscribe((returnedBooking: Booking) => {
+      console.log("ret_booking after update: " + returnedBooking);
+    });
 
   }
 

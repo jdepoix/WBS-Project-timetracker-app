@@ -23,7 +23,7 @@
 
   <ion-list class="slide-in">
     <booking *ngIf="_bokingSession != null" [withWpName]="true" [bookingSession]="_bokingSession" [isLive]="true"></booking>
-    <booking *ngFor="let booking of _bookings" [booking]="booking" [withWpName]="true" [isLive]="false"></booking>
+    <booking *ngFor="let booking of _bookings" [allBookings]="_bookings" [booking]="booking" [withWpName]="true" [isLive]="false"></booking>
   </ion-list>
 
   <ion-label padding id="hint">{{hintMsg}}</ion-label>

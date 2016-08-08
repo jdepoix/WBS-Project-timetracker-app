@@ -24,7 +24,7 @@ export class Booking extends RestModel implements Updateable, Createable{
   private _getRelevantData(): Object {
     return {
       workpackage: this.workpackage.self.toString(),
-      date: this.date,
+      date: this.date.format('YYYY-MM-DD'),
       effort: this.effort,
       description: this.description
     }

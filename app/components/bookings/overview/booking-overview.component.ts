@@ -21,7 +21,7 @@ export class BookingOverviewComponent {
 
   private _bookings: Array<Booking>;
   private _bokingSession: BookingSession;
-  public pickedDate: Moment = moment('2016-07-30');
+  public pickedDate: Moment = moment(new Date());
   private _pickedDateString: String = "";
 
   hintMsg :String = "";
