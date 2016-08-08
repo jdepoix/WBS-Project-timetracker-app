@@ -1,5 +1,5 @@
 {
-  "key" : "Uebersetzung fuer Key",
+  "key" : "german",
   "nested": {
     "server_address": "Server-Adresse",
     "user": "Benutzername",

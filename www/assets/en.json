@@ -1,5 +1,5 @@
 {
-  "key" : "Translation for Key",
+  "key" : "english",
   "nested": {
     "server_address": "Server-Address",
     "user": "User",
