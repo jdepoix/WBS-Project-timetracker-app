@@ -1,0 +1,8 @@
+{
+  "key" : "Uebersetzung fuer Key",
+  "nested": {
+    "server_address": "Server-Adresse",
+    "user": "Benutzername",
+    "password": "Passwort"
+  }
+}
