@@ -68,9 +68,10 @@ export class WorkpackageOverviewComponent {
    * @private
    */
   private _loadWorkpackages(): void {
-    // TODO only render not finished wps
     this._workpackageService.get(false).subscribe((workpackages: Array<Workpackage>) => {
-      this._workpackages = workpackages;
+      this._workpackages = workpackages.filter((workpackage: Workpackage): boolean => {
+        return workpackage.etc > 0.0;
+      });
     });
   }
 
