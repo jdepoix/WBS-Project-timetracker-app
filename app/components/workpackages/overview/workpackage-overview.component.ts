@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {NavController} from 'ionic-angular/index';
+import {NavController, NavParams} from 'ionic-angular/index';
 
 import {Workpackage} from '../../../models/workpackage/workpackage';
 
@@ -8,6 +8,14 @@ import {WorkpackageService} from '../../../services/workpackages/workpackage.ser
 import {SessionService} from '../../../services/session/session.service';
 
 import {WorkpackageDetailComponent} from '../detail/workpackage-detail.component';
+
+/**
+ * describes the context in which the WorkpackageOverviewComponent is used
+ */
+export enum WorkpackageOverviewContext {
+  WORKPAKAGE_OVERVIEW,
+  BOOKING_WORKPACKAGE_SELECTION
+}
 
 /**
  * renders a list of all workpackages belonging to a user
@@ -18,13 +26,20 @@ import {WorkpackageDetailComponent} from '../detail/workpackage-detail.component
 export class WorkpackageOverviewComponent {
   private _workpackages: Array<Workpackage>;
 
+  /**
+   * describes the context in which this component is used, to be rendered accordingly
+   */
+  private _context: WorkpackageOverviewContext;
+
   constructor(
+    navParams: NavParams,
     private _workpackageService: WorkpackageService,
     private _navController: NavController,
     private _sessionService: SessionService
   ) {
-    this._loadWorkpackages();
+    this._context = navParams.get('context') || WorkpackageOverviewContext.WORKPAKAGE_OVERVIEW;
 
+    this._loadWorkpackages();
     this._sessionService.onProjectSelected.subscribe(() => this._loadWorkpackages());
   }
 
@@ -44,9 +59,13 @@ export class WorkpackageOverviewComponent {
    *
    * @param workpackage
    */
-  public openWorkpackageDetailComponent(workpackage: Workpackage): void {
-    this._navController.push(WorkpackageDetailComponent, {
-      workpackage: workpackage
-    });
+  public selectWorkpackage(workpackage: Workpackage): void {
+    if (this._context === WorkpackageOverviewContext.WORKPAKAGE_OVERVIEW) {
+      this._navController.push(WorkpackageDetailComponent, {
+        workpackage: workpackage
+      });
+    } else {
+      // TODO
+    }
   }
 }

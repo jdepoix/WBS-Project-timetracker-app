@@ -9,7 +9,7 @@
 
 <ion-content>
     <ion-list class="slide-in">
-        <ion-card *ngFor="let workpackage of _workpackages" (click)="openWorkpackageDetailComponent(workpackage)">
+        <ion-card *ngFor="let workpackage of _workpackages" (click)="selectWorkpackage(workpackage)">
             <ion-card-header>
                 {{ workpackage.stringId }} - {{ workpackage.name }}
             </ion-card-header>
