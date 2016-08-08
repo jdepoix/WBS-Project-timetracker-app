@@ -3,7 +3,7 @@
         <button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Workpackages</ion-title>
+        <ion-searchbar [(ngModel)]="_workpackagesSearchString" debounce="0"></ion-searchbar>
     </ion-navbar>
 </ion-header>
 

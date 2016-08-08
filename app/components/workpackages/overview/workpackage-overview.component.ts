@@ -18,13 +18,28 @@ export enum WorkpackageOverviewContext {
 }
 
 /**
- * renders a list of all workpackages belonging to a user
+ * renders a list of all workpackages belonging to a user, which are not finished yet
  */
 @Component({
   templateUrl: 'build/components/workpackages/overview/workpackage-overview.component.html'
 })
 export class WorkpackageOverviewComponent {
+  /**
+   * list of all relevant workpackages
+   */
   private _workpackages: Array<Workpackage>;
+
+  /**
+   * the string which the list of workpackages is filtered by
+   */
+  private _workpackagesSearchString: string = '';
+
+  /**
+   * reference to the WorkpackageOverviewContext enum, to be able to access it in the template
+   *
+   * @type {WorkpackageOverviewContext}
+   */
+  private _contextEnum: typeof WorkpackageOverviewContext = WorkpackageOverviewContext;
 
   /**
    * describes the context in which this component is used, to be rendered accordingly
@@ -49,6 +64,7 @@ export class WorkpackageOverviewComponent {
    * @private
    */
   private _loadWorkpackages(): void {
+    // TODO only render not finished wps
     this._workpackageService.get(false).subscribe((workpackages: Array<Workpackage>) => {
       this._workpackages = workpackages;
     });
