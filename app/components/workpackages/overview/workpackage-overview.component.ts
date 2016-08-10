@@ -8,12 +8,14 @@ import {WorkpackageService} from '../../../services/workpackages/workpackage.ser
 import {SessionService} from '../../../services/session/session.service';
 
 import {WorkpackageDetailComponent} from '../detail/workpackage-detail.component';
+import {TranslatePipe} from "ng2-translate/ng2-translate";
 
 /**
  * renders a list of all workpackages belonging to a user
  */
 @Component({
-  templateUrl: 'build/components/workpackages/overview/workpackage-overview.component.html'
+  templateUrl: 'build/components/workpackages/overview/workpackage-overview.component.html',
+  pipes: [TranslatePipe]
 })
 export class WorkpackageOverviewComponent {
   private _workpackages: Array<Workpackage>;
