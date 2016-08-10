@@ -1,39 +1,27 @@
 
-<!--<script src="../../workpackages/detail/workpackage-detail.component.ts"></script>
--->
 <ion-header>
   <ion-navbar>
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title >{{ _pickedDateString}}</ion-title>
-
     <ion-buttons end id="ionButtons">
       <div>
-        <ion-datetime (ionChange)="dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="pickedDate"></ion-datetime>
+        <ion-datetime (ionChange)="_dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="_pickedDate"></ion-datetime>
         <ion-icon item-right name="calendar" id="calicon"></ion-icon>
       </div>
     </ion-buttons>
-
   </ion-navbar>
 </ion-header>
-
-
 <ion-content>
-
   <ion-list class="slide-in">
     <booking *ngIf="_bokingSession != null" [withWpName]="true" [bookingSession]="_bokingSession" [isLive]="true"></booking>
-    <booking *ngFor="let booking of _bookings" [allBookings]="_bookings" [booking]="booking" [withWpName]="true" [isLive]="false"></booking>
+    <booking *ngFor="let booking of _bookings" (deletedBooking)="_deletedBooking($event)" [booking]="booking" [withWpName]="true" [isLive]="false"></booking>
   </ion-list>
-
-  <ion-label padding id="hint">{{hintMsg}}</ion-label>
-
-
-
-
-
+  <ion-label padding id="hint">{{_hintMsg}}</ion-label>
 </ion-content>
-<button fab fab-bottom fab-right (click)="add()" calm>
+
+<button fab fab-bottom fab-right (click)="_add()" calm>
   <ion-icon name="add"></ion-icon>
 </button>
 
