@@ -1,8 +1,10 @@
 {
-  "key" : "german",
-  "nested": {
-    "server_address": "Server-Adresse",
-    "user": "Benutzername",
-    "password": "Passwort"
-  }
+  "server_address": "Server-Adresse",
+  "user": "Benutzername",
+  "password": "Passwort",
+  "projects": "Projekte",
+  "bookings": "Buchungen",
+  "workpackages": "Arbeitspakete",
+  "logout": "Ausloggen"
+
 }
