@@ -51,8 +51,8 @@ export class AppComponent {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Bookings', component: BookingOverviewComponent },
-      { title: 'Workpackages', component: WorkpackageOverviewComponent },
+      { title: "bookings" , component: BookingOverviewComponent },
+      { title: "workpackages", component: WorkpackageOverviewComponent },
     ];
 
     this.showProjects = false;
