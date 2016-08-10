@@ -1,8 +1,9 @@
 {
-  "key" : "english",
-  "nested": {
-    "server_address": "Server-Address",
-    "user": "User",
-    "password": "Password"
-  }
+  "server_address": "Server-Address",
+  "user": "Username",
+  "password": "Password",
+  "projects": "Projects",
+  "bookings": "Bookings",
+  "workpackages": "Workpackages",
+  "logout": "Logout"
 }
