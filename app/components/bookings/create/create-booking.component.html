@@ -5,19 +5,22 @@
 </ion-header>
 
 <ion-content>
-    <button accent floating block full (click)="createBookingSession()" >
+    <button accent floating block full *ngIf="!_bookingSession" (click)="createBookingSession()" >
       <ion-icon name="ios-stopwatch-outline"></ion-icon>Livebuchung starten
+    </button>
+    <button accent floating block full *ngIf="_bookingSession" (click)="checkoutBookingSession()" >
+      <ion-icon name="ios-checkmark"></ion-icon>Checkout Session
     </button>
   <form [ngFormModel]="authForm" (ngSubmit)="onSubmit(authForm)">
     <ion-item>
       <ion-label>Datum</ion-label>
-      <ion-datetime displayFormat="DD.MM.YYYY" pickerFormat="DD MM YYYY" max="{{maxDate}}"
-                    [(ngModel)]="maxDate" [ngFormControl]="date" required></ion-datetime>
+      <ion-datetime displayFormat="DD.MM.YYYY" pickerFormat="DD MM YYYY" max="{{myDate}}"
+                    [(ngModel)]="myDate" [ngFormControl]="date" required></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>Aufwand</ion-label>
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm"
-                    [(ngModel)]="myEffort" [ngFormControl]="effort"  (change)="refreshEtc()"  required></ion-datetime>
+                    [(ngModel)]="myEffort" [ngFormControl]="effort" (ionChange)="refreshEtc()"  required></ion-datetime>
     </ion-item>
     <ion-item class="item">
       <ion-label floating >Beschreibung</ion-label>
