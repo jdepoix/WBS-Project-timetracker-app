@@ -58,7 +58,7 @@ export class CreateBookingComponent {
       booking.description = this.description.value;
       booking.effort = this._stringToWorkday(this.effort.value);
       booking.workpackage = this._workpackage;
-      this._bookingsService.create(booking).subscribe((returnedBooking: Booking) => {
+      this._bookingsService.create(booking, this.myEtc).subscribe((returnedBooking: Booking) => {
         let alert = Alert.create({
           title: 'Buchung',
           subTitle: 'Buchung erfolgreich!',
