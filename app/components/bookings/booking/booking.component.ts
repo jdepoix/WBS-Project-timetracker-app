@@ -2,7 +2,7 @@ import {Component, Input, Output} from '@angular/core';
 import {Booking, BookingSession} from '../../../models/booking/booking';
 import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
 import {IONIC_DIRECTIVES, Alert, NavController, Toast} from "ionic-angular/index";
-import {EditLabel} from "../edit/edit-label.component";
+import {EditLabelComponent} from "../edit/edit-label.component";
 import Moment = moment.Moment;
 import moment = require("moment/moment");
 import {BookingService} from "../../../services/bookings/booking.service";
@@ -10,10 +10,9 @@ import {Response} from "@angular/http";
 import {CreateBookingComponent} from "../create/create-booking.component";
 import {EventEmitter} from "@angular/common/src/facade/async";
 
-
 @Component({
   selector: 'booking',
-  directives: [IONIC_DIRECTIVES, EditLabel],
+  directives: [IONIC_DIRECTIVES, EditLabelComponent],
   templateUrl: 'build/components/bookings/booking/booking.component.html',
   pipes: [WorkdaysToHoursPipe]
 })
@@ -28,7 +27,7 @@ export class BookingComponent{
   /*
   * if this.isLife is true, booking is null
   * otherwise bookingSession will be null
-  * */
+  */
 
   @Input()
   public withWpName: boolean;
@@ -41,7 +40,6 @@ export class BookingComponent{
   @Output()
   public deletedBooking = new EventEmitter<Booking>();
 
-
   constructor( private  _bookingService : BookingService, private _nav: NavController) {
   }
 
@@ -53,9 +51,7 @@ export class BookingComponent{
       if(returnedBooking)
       this._showToast("Effort has been updated to " + this._pickedEffort.toString());
     });
-
   }
-
 
   private _momentEffortToWorkdays(mom :String):number{
 
@@ -64,6 +60,7 @@ export class BookingComponent{
   }
 
   private _deleteSelf():void{
+
     this._presentDeleteConfirm((this.booking.effort*8) + "", this.booking.description);
   }
 
@@ -81,15 +78,13 @@ export class BookingComponent{
     return formattedTime;
   }
 
-
-  private _checkout_livebooking(): void{
+  private _checkoutLivebooking(): void{
 
     this._nav.push(CreateBookingComponent, {
       workpackage: this.bookingSession.workpackage,
       session: this.bookingSession
     });
   }
-
 
   private _presentDeleteConfirm(effort: string, bookingDescr: string): void {
 
@@ -116,7 +111,6 @@ export class BookingComponent{
     });
     this._nav.present(alert);
   }
-
 
   private _showToast(msg :string) {
 

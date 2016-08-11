@@ -31,8 +31,6 @@ export class BookingService implements
     let url: Url = this._endpoint;
 
     if (date != null) {
-      console.log(" in bSession: " + date.format('YYYY-MM-DD'));
-     // url = url.clone().addParam('date', new Date(date.toISOString()).toJSON().split('T')[0]);
       url = url.clone().addParam('date', date.format('YYYY-MM-DD'));
     }
     if (workpackage != null) {

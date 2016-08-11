@@ -41,7 +41,7 @@ export class BookingOverviewComponent {
     /*
     TODO: first param is supposed to be moment, not null
     * */
-    this._bookingService.get(/*moment(this.pickedDate.toString()*//*moment('2016-07-31')*/ null, null).subscribe((bookings: Array<Booking>) => {
+    this._bookingService.get(/*moment(this.pickedDate.toString()*/null, null).subscribe((bookings: Array<Booking>) => {
       this._bookings = bookings;
     });
   }
@@ -53,13 +53,10 @@ export class BookingOverviewComponent {
      if(bookingSession != null){
        this._bokingSession = bookingSession;
        this._hintMsg = "";
-     }
-     else if(this._bookings.length < 1) // no bookings an no live booking sessions
+     }else if(this._bookings.length < 1) // no bookings an no live booking sessions
       {
         this._hintMsg = "Keine Buchungen an diesem Datum";
-      }
-      else // no live booking sessions, but bookings
-      {
+      }else{
         this._hintMsg ="";
       }
     });

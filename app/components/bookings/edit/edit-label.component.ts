@@ -11,13 +11,13 @@ import {BookingService} from "../../../services/bookings/booking.service";
   pipes: [HoursToWorkdaysPipe]
 })
 
-export class EditLabel {
+export class EditLabelComponent {
 
-  private _is_edit_mode: boolean = false;
+  private _isEditMode: boolean = false;
   private _rememberValue: String= "";
 
   @Input()
-  public _text: String;
+  public text: String;
   @Input()
   public booking: Booking;
 
@@ -25,14 +25,14 @@ export class EditLabel {
                private _bookingService: BookingService) {
   }
 
-
   private _focus():void{
-
+    // this Method is just here for the case that this Editlabel should be triggered
+    // by a click instead of a longclick in the future
   }
 
-  private _update_booking ():void{
+  private _updateBooking ():void{
 
-    this.booking.description = String(this._text);
+    this.booking.description = String(this.text);
     //TODO: test on valid backend istallation
 
     // once got this error in backend:
@@ -53,7 +53,7 @@ export class EditLabel {
 
     this._showToast();
     this._bookingService.update(this.booking).subscribe((returnedBooking: Booking) => {
-      console.log("returned booking after update: " + returnedBooking);
+      //console.log("returned booking after update: " + returnedBooking);
     });
   }
 
@@ -69,24 +69,24 @@ export class EditLabel {
   }
 
 
-  private _editing_finished():void{
+  private _editingFinished():void{
 
-    if(this._text.length<1){
-      this._text = this._rememberValue;
+    if(this.text.length<1){
+      this.text = this._rememberValue;
     }
-    else if(this._rememberValue.trim() == this._text.trim()){
+    else if(this._rememberValue.trim() == this.text.trim()){
       // nothing to change
     }
     else {
-        this._update_booking();
+        this._updateBooking();
     }
-    this._is_edit_mode = false;
+    this._isEditMode = false;
   }
 
 
-  private  _editing_should_begin (): void{
-    this._rememberValue = this._text;
-    this._is_edit_mode = true;
+  private  _editingShouldBegin (): void{
+    this._rememberValue = this.text;
+    this._isEditMode = true;
   }
 }
 

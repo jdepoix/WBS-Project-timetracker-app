@@ -1,4 +1,4 @@
-#checkout_button{
+.checkoutButton{
   background-color: #f4f4f9;
   color: #555555;
   font-size: larger;
@@ -6,7 +6,30 @@
   width: 100%;
 }
 
-#tp{
+.ion-row{
+  font-size: medium;
+}
+
+.wpStringIdCol{
+  opacity: 0.7;
+}
+
+.delButton{
+  opacity: 0.5; float:right;
+}
+
+.delIcon{
+  font-size: medium;
+}
+
+.effortPick{
+  width: 60px;
+  margin-top: 3px;
+  vertical-align: middle;
+  padding: 0px;
+}
+
+.tp{
   opacity: 0.25;
   height: 2pt;
   margin: 0px;
@@ -15,11 +38,26 @@
   float: left;
   background-color: #2ec95c;
 }
+
+.liveIndicatorLabel{
+  color: #327eff;
+}
+#checkoutButtonLabel{
+  margin: 2px;
+}
+
+.liveDuration{
+  color: #327eff;
+}
+
 #timelab{
-  padding: 2px;
   font-size: medium;
-  margin: 1px;
+  margin: 0px;
   margin-right: 10px;
+  padding: 0px;
+  vertical-align: middle;
+  width: auto;
+  height: 20px
 }
 
 
