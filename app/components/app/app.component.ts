@@ -13,8 +13,7 @@ import {LoginComponent} from "../login/login.component";
 import {BookingOverviewComponent} from '../bookings/overview/booking-overview.component';
 import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage-overview.component';
 
-import {Http} from '@angular/http';
-import {TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader,} from 'ng2-translate/ng2-translate';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Translations} from "../../multilanguage/translations";
 
 /**
@@ -70,7 +69,7 @@ export class AppComponent {
       }
     });
 
-    this.translateConfig();
+    this._translateConfig();
   }
 
   public initializeApp() {
@@ -115,8 +114,8 @@ export class AppComponent {
     });
   }
 
-  private translateConfig() {
-    var userLang = navigator.language;
+  private _translateConfig() {
+    let userLang = navigator.language.split('-')[0];
     userLang = /(de|en)/.test(userLang) ? userLang : 'en';
 
     this._translate.setDefaultLang('en');

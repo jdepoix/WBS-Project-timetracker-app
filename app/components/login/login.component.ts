@@ -25,12 +25,12 @@ export class LoginComponent {
   passwordColor: string;
   private _translations: typeof Translations = Translations;
 
-  constructor(private fb: FormBuilder,
-              private auth: SessionAuthenticationService,
-              private session: SessionService,
-              private nav: NavController,
-              private translate: TranslateService) {
-    this.authForm = fb.group({
+  constructor(private _formBuilder: FormBuilder,
+              private _authenticationSerivce: SessionAuthenticationService,
+              private _sessionSerivce: SessionService,
+              private _nav: NavController,
+              private _translate: TranslateService) {
+    this.authForm = _formBuilder.group({
       "serverAddress": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'username': ['', Validators.required],
       'password': ['', Validators.required]
@@ -47,11 +47,11 @@ export class LoginComponent {
         content: "Please wait..."
       });
 
-      this.nav.present(loading);
+      this._nav.present(loading);
 
-      this.session.apiUrl = new Url(this.authForm.value.serverAddress);
+      this._sessionSerivce.apiUrl = new Url(this.authForm.value.serverAddress);
 
-      this.auth.login(this.authForm.value.username, this.authForm.value.password).subscribe((authToken: string) => {
+      this._authenticationSerivce.login(this.authForm.value.username, this.authForm.value.password).subscribe((authToken: string) => {
         loading.destroy();
 
         if (!authToken) {
@@ -60,7 +60,7 @@ export class LoginComponent {
             subTitle: 'Benutzername oder Passwort ist falsch!',
             buttons: ['OK']
           });
-          this.nav.present(alert);
+          this._nav.present(alert);
         }
       });
     }
