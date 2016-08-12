@@ -9,6 +9,6 @@
         <ion-list-header>
             {{ date }}
         </ion-list-header>
-        <booking *ngFor="let booking of _dateGroupedBookings.get(date)" [booking]="booking"></booking>
+        <booking *ngFor="let booking of _dateGroupedBookings.get(date)" [booking]="booking" [withWpName]="false"></booking>
     </template>
 </ion-content>

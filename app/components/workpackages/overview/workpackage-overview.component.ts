@@ -10,6 +10,8 @@ import {WorkpackageService} from '../../../services/workpackages/workpackage.ser
 import {SessionService} from '../../../services/session/session.service';
 
 import {WorkpackageDetailComponent} from '../detail/workpackage-detail.component';
+import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {Translations} from "../../../multilanguage/translations";
 import {CreateBookingComponent} from '../../bookings/create/create-booking.component';
 
 /**
@@ -25,13 +27,14 @@ export enum WorkpackageOverviewContext {
  */
 @Component({
   templateUrl: 'build/components/workpackages/overview/workpackage-overview.component.html',
-  pipes: [FilterListByStringPipe]
+  pipes: [FilterListByStringPipe, TranslatePipe]
 })
 export class WorkpackageOverviewComponent {
   /**
    * list of all relevant workpackages
    */
   private _workpackages: Array<Workpackage>;
+  private _translations: typeof Translations = Translations;
 
   /**
    * the string which the list of workpackages is filtered by

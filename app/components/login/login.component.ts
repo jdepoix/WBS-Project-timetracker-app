@@ -7,10 +7,13 @@ import {Url} from "../../core/url/url";
 
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Translations} from "../../multilanguage/translations";
 
 
 @Component({
-  templateUrl: 'build/components/login/login.component.html'
+  templateUrl: 'build/components/login/login.component.html',
+  pipes: [TranslatePipe]
 })
 export class LoginComponent {
   serverAddress: AbstractControl;
@@ -20,12 +23,14 @@ export class LoginComponent {
   serverColor: string;
   usernameColor: string;
   passwordColor: string;
+  private _translations: typeof Translations = Translations;
 
-  constructor(private fb: FormBuilder,
-              private auth: SessionAuthenticationService,
-              private session: SessionService,
-              private nav: NavController) {
-    this.authForm = fb.group({
+  constructor(private _formBuilder: FormBuilder,
+              private _authenticationSerivce: SessionAuthenticationService,
+              private _sessionSerivce: SessionService,
+              private _nav: NavController,
+              private _translate: TranslateService) {
+    this.authForm = _formBuilder.group({
       "serverAddress": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'username': ['', Validators.required],
       'password': ['', Validators.required]
@@ -42,11 +47,11 @@ export class LoginComponent {
         content: "Please wait..."
       });
 
-      this.nav.present(loading);
+      this._nav.present(loading);
 
-      this.session.apiUrl = new Url(this.authForm.value.serverAddress);
+      this._sessionSerivce.apiUrl = new Url(this.authForm.value.serverAddress);
 
-      this.auth.login(this.authForm.value.username, this.authForm.value.password).subscribe((authToken: string) => {
+      this._authenticationSerivce.login(this.authForm.value.username, this.authForm.value.password).subscribe((authToken: string) => {
         loading.destroy();
 
         if (!authToken) {
@@ -55,7 +60,7 @@ export class LoginComponent {
             subTitle: 'Benutzername oder Passwort ist falsch!',
             buttons: ['OK']
           });
-          this.nav.present(alert);
+          this._nav.present(alert);
         }
       });
     }
