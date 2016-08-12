@@ -8,6 +8,7 @@ import {BookingSessionService} from "../../../services/bookings/booking-session.
 import {BookingSession, Booking} from "../../../models/booking/booking";
 import Moment = moment.Moment;
 import {Response} from "@angular/http";
+import {BookingOverviewComponent} from "../overview/booking-overview.component";
 
 @Component({
   templateUrl: 'build/components/bookings/create/create-booking.component.html'
@@ -15,101 +16,92 @@ import {Response} from "@angular/http";
 export class CreateBookingComponent {
   private _workpackage: Workpackage;
   private _bookingSession: BookingSession;
-  effort : AbstractControl;
-  description: AbstractControl;
-  date: AbstractControl;
-  newEtc: AbstractControl;
-  authForm: ControlGroup;
-  myDate = moment().startOf('day').format('YYYY-MM-DD');
-  myEffort = moment().startOf('day').format('HH:mm');
-  myEtc: number;
+  private _effortControl : AbstractControl;
+  private _descriptionControl: AbstractControl;
+  private _dateControl: AbstractControl;
+  private _newEtcControl: AbstractControl;
+  private _authForm: ControlGroup;
+  private _maxDate = moment().startOf('day').format('YYYY-MM-DD');
+  private _Date = moment().startOf('day').format('YYYY-MM-DD');
+  private _effort = moment().startOf('day').format('HH:mm');
+  private _Etc: number;
 
   constructor(navParams: NavParams,
               private _bookingsService: BookingService,
               private _bookingSessionService: BookingSessionService,
-              private _fb: FormBuilder,
-              private _nav: NavController) {
+              private _formBuilder: FormBuilder,
+              private _navController: NavController) {
 
     this._workpackage = navParams.get('workpackage');
     this._bookingSession = navParams.get('bookingSession');
 
     if(this._bookingSession) {
-      this.myEffort = this._calcEffortForSession(this._bookingSession.startTime, moment().unix());
+      this._Date = moment(this._bookingSession.startTime).startOf('day').format('YYYY-MM-DD');
+      this._effort = this._calcEffortForSession(this._bookingSession.startTime, moment().unix());
       this.refreshEtc();
     }
 
-    this.authForm = _fb.group({
-      'description': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
-      'date': ['', Validators.required],
-      'effort': ['', Validators.required]
+    this._authForm = _formBuilder.group({
+      '_descriptionControl': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+      '_dateControl': ['', Validators.required],
+      '_effortControl': ['', Validators.required]
     });
 
-    this.newEtc = this.authForm.controls['newEtc'];
-    this.effort = this.authForm.controls['effort'];
-    this.description = this.authForm.controls['description'];
-    this.date = this.authForm.controls['date'];
-    this.myEtc = this._workpackage.etc;
+    this._newEtcControl = this._authForm.controls['_newEtcControl'];
+    this._effortControl = this._authForm.controls['_effortControl'];
+    this._descriptionControl = this._authForm.controls['_descriptionControl'];
+    this._dateControl = this._authForm.controls['_dateControl'];
+    this._Etc = this._workpackage.etc;
   }
 
   onSubmit() {
     if (this._checkFieldsSet()) {
       var booking: Booking = new Booking();
-      booking.date = moment(this.date.value);
-      booking.description = this.description.value;
-      booking.effort = this._stringToWorkday(this.effort.value);
+      booking.date = moment(this._dateControl.value);
+      booking.description = this._descriptionControl.value;
+      booking.effort = this._stringToWorkday(this._effortControl.value);
       booking.workpackage = this._workpackage;
-      this._bookingsService.create(booking, this.myEtc).subscribe((returnedBooking: Booking) => {
-        let alert = Alert.create({
-          title: 'Buchung',
-          subTitle: 'Buchung erfolgreich!',
-          buttons: ['OK']
-        });
-        this._nav.present(alert);
-      });
-    }
-  }
+      this._bookingsService.create(booking, this._Etc).subscribe((booking: Booking) => {
+        if(this._bookingSession) {
+          //if there is a bookingsession, delete it when the booking was successful
+          this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
 
-  private _checkFieldsSet(): boolean {
-    return this.authForm.value.description != '';
+          });
+        }
+        //TODO: show ToastMsg Booking successful
+        this._navigateToBookingOverview();
+      },
+        error => {
+          let alert = Alert.create({
+            title: 'Buchung fehlgeschlagen!',
+            subTitle: 'Verbindung zum Server konnte nicht hergestellt werden.',
+            buttons: ['OK']
+          });
+          this._navController.present(alert);
+        }
+      );
+    }
   }
 
   createBookingSession(): void {
     this._bookingSession = new BookingSession();
-    this.myEffort = moment().hours(0).minutes(0).format('HH:mm');
-    this._bookingSession.startTime = moment().unix();
+    this._effort = moment().hours(0).minutes(0).format('HH:mm');
     this._bookingSession.workpackage = this._workpackage;
-    this._bookingSessionService.create(this._bookingSession).subscribe((returnedBookingSession: BookingSession) => {
-      this._bookingSessionService.retrieve().subscribe((bookingSession: BookingSession) => {
-        this._bookingSession = bookingSession;
-      });
+    this._bookingSessionService.create(this._bookingSession).subscribe((bookingSession: BookingSession) => {
+      this._bookingSession = bookingSession;
     });
   }
 
-  checkoutBookingSession(): void {
-    if (this._checkFieldsSet()) {
-      var booking: Booking = new Booking();
-      booking.date = moment(this.date.value);
-      booking.description = this.description.value;
-      booking.effort = this._stringToWorkday(this.effort.value);
-      booking.workpackage = this._workpackage;
-      this._bookingsService.create(booking).subscribe((returnedBooking: Booking) => {
-        this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
-          if(response['ok']) {
-            let alert = Alert.create({
-              title: 'Live Buchung',
-              subTitle: 'Live Buchung erfolgreich!',
-              buttons: ['OK']
-            });
-            this._bookingSession = null;
-            this._nav.present(alert);
-          }
-        });
-      });
-    }
+  refreshEtc(): void {
+    this._Etc = this._workpackage.etc - this._stringToWorkday(this._effortControl.value);
   }
 
-  private _stringToWorkday(effort: string): number {
-    let timeStrings = effort.split(':');
+  private _checkFieldsSet(): boolean {
+    return this._authForm.value._descriptionControl != '';
+  }
+
+  private _stringToWorkday(_effortControl: string): number {
+    let timeStrings = _effortControl.split(':');
     let hoursPerDay = parseInt(timeStrings[0])/8;
     let minutesPerDay = (parseInt(timeStrings[1])/60) /8;
     return hoursPerDay+minutesPerDay;
@@ -124,7 +116,9 @@ export class CreateBookingComponent {
     return effortMoment.format('HH mm');
   }
 
-  refreshEtc(): void {
-    this.myEtc = this._workpackage.etc - this._stringToWorkday(this.effort.value);
+  private _navigateToBookingOverview(): void {
+    this._navController.push(BookingOverviewComponent, {
+      bookingSession: this._bookingSession
+    });
   }
 }
