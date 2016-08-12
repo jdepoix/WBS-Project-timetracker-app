@@ -12,7 +12,7 @@
                   ng-class="{active: isProjectsShown()}">
           <ion-icon class="project-selection-icon"
                     [class.project-selection-icon-unfold]="areProjectsShown()" name="ios-arrow-dropright"></ion-icon>
-          <span class="project-selection-header">Projekte</span>
+          <span class="project-selection-header">{{ _translations.PROJECTS | translate}}</span>
         </ion-item>
         <div *ngIf="areProjectsShown()">
           <ion-item class="project" *ngFor="let project of projects"
@@ -25,10 +25,10 @@
         </div>
       </div>
       <button ion-item *ngFor="let page of pages" (click)="openPage(page.component)">
-        {{page.title}}
+        {{ page.title | translate}}
       </button>
       <button ion-item (click)="_authService.logout()">
-        Logout
+        {{ _translations.LOGOUT | translate}}
       </button>
 
     </ion-list>
