@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, ControlGroup, Validators, AbstractControl} from '@angular/common';
 
-import {NavController, Alert, Loading} from "ionic-angular/index";
+import {NavController, Alert, Loading, Toast} from "ionic-angular/index";
 
 import {Url} from "../../core/url/url";
 
@@ -55,12 +55,14 @@ export class LoginComponent {
         loading.destroy();
 
         if (!authToken) {
-          let alert = Alert.create({
-            title: 'Falsche Eingabe',
-            subTitle: 'Benutzername oder Passwort ist falsch!',
-            buttons: ['OK']
+          let toast = Toast.create({
+            message: this._translate.instant(this._translations.USER_PASSWORD_ERROR),
+            duration: 1800,
+            position: 'bottom'
           });
-          this._nav.present(alert);
+          toast.onDismiss(() => {
+          });
+          this._nav.present(toast);
         }
       });
     }
