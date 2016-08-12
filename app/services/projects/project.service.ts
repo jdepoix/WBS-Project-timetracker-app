@@ -10,6 +10,9 @@ import {ProjectDeserializer} from '../../models/project/project-serializers';
 
 import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 
+/**
+ * takes care of handling requests to the Projects API
+ */
 @Injectable()
 export class ProjectService implements GetOperation<Project> {
   private _endpointPath: string;

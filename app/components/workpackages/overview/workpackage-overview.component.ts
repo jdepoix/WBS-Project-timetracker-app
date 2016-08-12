@@ -8,12 +8,19 @@ import {WorkpackageService} from '../../../services/workpackages/workpackage.ser
 import {SessionService} from '../../../services/session/session.service';
 
 import {WorkpackageDetailComponent} from '../detail/workpackage-detail.component';
+import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {Translations} from "../../../multilanguage/translations";
 
+/**
+ * renders a list of all workpackages belonging to a user
+ */
 @Component({
-  templateUrl: 'build/components/workpackages/overview/workpackage-overview.component.html'
+  templateUrl: 'build/components/workpackages/overview/workpackage-overview.component.html',
+  pipes: [TranslatePipe]
 })
 export class WorkpackageOverviewComponent {
   private _workpackages: Array<Workpackage>;
+  private _translations: typeof Translations = Translations;
 
   constructor(
     private _workpackageService: WorkpackageService,
@@ -25,6 +32,11 @@ export class WorkpackageOverviewComponent {
     this._sessionService.onProjectSelected.subscribe(() => this._loadWorkpackages());
   }
 
+  /**
+   * load all workpackages
+   *
+   * @private
+   */
   private _loadWorkpackages(): void {
     this._workpackageService.get(false).subscribe((workpackages: Array<Workpackage>) => {
 
@@ -32,6 +44,11 @@ export class WorkpackageOverviewComponent {
     });
   }
 
+  /**
+   * opens the WorkpackageDetailComponent and parses a workpackage whoms details should be shown
+   *
+   * @param workpackage
+   */
   public openWorkpackageDetailComponent(workpackage: Workpackage): void {
     this._navController.push(WorkpackageDetailComponent, {
       workpackage: workpackage

@@ -17,6 +17,9 @@ import {GetOperation, CreateOperation, UpdateOperation, DeleteOperation} from '.
 import {SessionService} from '../session/session.service';
 import {Booking} from "../../models/booking/booking";
 
+/**
+ * takes care of handling requests to the Booking API
+ */
 @Injectable()
 export class BookingService implements
   GetOperation<Booking>,
@@ -27,6 +30,13 @@ export class BookingService implements
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService, private _sessionService: SessionService) {
   }
 
+  /**
+   * gets all Bookings belonging to the logged in User.
+   *
+   * @param date filter by this date
+   * @param workpackage filter by this workpackage
+   * @returns {Observable<Array<Booking>>}
+   */
   public get(date?: Moment, workpackage?: Workpackage): Observable<Array<Booking>> {
     let url: Url = this._endpoint;
 

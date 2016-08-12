@@ -10,24 +10,25 @@
         <ion-item class="item-stable"
                   (click)="toggleProjects()"
                   ng-class="{active: isProjectsShown()}">
-
-          <ion-icon *ngIf="!areProjectsShown()" name="arrow-dropright-circle"></ion-icon>
-          <ion-icon *ngIf="areProjectsShown()" name="arrow-dropup-circle"></ion-icon>
-          Projekte
+          <ion-icon class="project-selection-icon"
+                    [class.project-selection-icon-unfold]="areProjectsShown()" name="ios-arrow-dropright"></ion-icon>
+          <span class="project-selection-header">{{ _translations.PROJECTS | translate}}</span>
         </ion-item>
         <div *ngIf="areProjectsShown()">
-          <ion-item style="background-color: lightgray" *ngFor="let project of projects"
-                    (click)="selectProject(project)">
-            {{project.db}}
-            <ion-icon *ngIf="_sessionService.selectedProject != null && _sessionService.selectedProject.db == project.db" name="checkmark"></ion-icon>
+          <ion-item class="project" *ngFor="let project of projects"
+                    (click)="selectProject(project)"
+                    [class.selected-project]="
+                      _sessionService.selectedProject != null && _sessionService.selectedProject.equals(project)"
+                    no-lines="false">
+            <span class="project-name">{{project.db}}</span>
           </ion-item>
         </div>
       </div>
       <button ion-item *ngFor="let page of pages" (click)="openPage(page.component)">
-        {{page.title}}
+        {{ page.title | translate}}
       </button>
       <button ion-item (click)="_authService.logout()">
-        Logout
+        {{ _translations.LOGOUT | translate}}
       </button>
 
     </ion-list>
