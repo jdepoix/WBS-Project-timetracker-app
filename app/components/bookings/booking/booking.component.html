@@ -31,7 +31,7 @@
           </span>
         </ion-col>
         <ion-col width-80 *ngIf="!isLive">
-          <edit-label [booking]="booking" [text]="booking.description">
+          <edit-label (updateBooking)="_updateBooking($event)" [text]="booking.description">
           </edit-label>
         </ion-col>
       </ion-row>
