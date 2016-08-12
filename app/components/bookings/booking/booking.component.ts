@@ -115,10 +115,8 @@ export class BookingComponent{
   private _updateBooking(bookingDescription: string) :void{
 
     this.booking.description = bookingDescription;
-    console.log("--->" + this.booking.description);
 
     this._bookingService.update(this.booking).subscribe((returnedBooking:Booking) => {
-      //console.log("returned booking after update: " + returnedBooking);
       if (returnedBooking.self != null)
         this._showToast("updated booking decription");
       else

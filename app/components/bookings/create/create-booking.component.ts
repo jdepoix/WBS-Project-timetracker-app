@@ -118,6 +118,6 @@ export class CreateBookingComponent {
   }
 
   private _navigateToBookingOverview(): void {
-    this._navController.push(BookingOverviewComponent);
+    this._navController.setRoot(BookingOverviewComponent);
   }
 }
