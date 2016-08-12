@@ -5,19 +5,19 @@
 </ion-header>
 
 <ion-content>
-  <button accent floating block full *ngIf="!_bookingSession" (click)="createBookingSession()" >
+  <button accent floating block full *ngIf="!_bookingSession" (click)="_createBookingSession()" >
     <ion-icon name="ios-stopwatch-outline"></ion-icon>Livebuchung starten
   </button>
   <ion-label *ngIf="_bookingSession" align="center">
     <h4>Checkout Session</h4>
   </ion-label>
-  <form [ngFormModel]="_authForm" (ngSubmit)="onSubmit(authForm)">
+  <form [ngFormModel]="_authForm" (ngSubmit)="_onSubmit(authForm)">
     <ion-item>
       <ion-label>Datum</ion-label>
       <ion-datetime displayFormat="DD.MM.YYYY"
                     pickerFormat="DD MM YYYY"
                     max="{{_maxDate}}"
-                    [(ngModel)]="_Date"
+                    [(ngModel)]="_date"
                     [ngFormControl]="_dateControl"
                     required>
       </ion-datetime>
@@ -28,7 +28,7 @@
                     pickerFormat="HH mm"
                     [(ngModel)]="_effort"
                     [ngFormControl]="_effortControl"
-                    (ionChange)="refreshEtc()"
+                    (ionChange)="_refreshEtc()"
                     required>
       </ion-datetime>
     </ion-item>
@@ -42,7 +42,7 @@
     </ion-item>
     <ion-item>
       <ion-label>ETC-neu:</ion-label>
-      <ion-input type="text" [(ngModel)]="_Etc" ></ion-input>
+      <ion-input type="text" [(ngModel)]="_etc" ></ion-input>
     </ion-item>
     <button floating block full>Buchung abschicken</button>
   </form>

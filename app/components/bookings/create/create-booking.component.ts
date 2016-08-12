@@ -22,9 +22,9 @@ export class CreateBookingComponent {
   private _newEtcControl: AbstractControl;
   private _authForm: ControlGroup;
   private _maxDate = moment().startOf('day').format('YYYY-MM-DD');
-  private _Date = moment().startOf('day').format('YYYY-MM-DD');
+  private _date = moment().startOf('day').format('YYYY-MM-DD');
   private _effort = moment().startOf('day').format('HH:mm');
-  private _Etc: number;
+  private _etc: number;
 
   constructor(navParams: NavParams,
               private _bookingsService: BookingService,
@@ -35,10 +35,11 @@ export class CreateBookingComponent {
     this._workpackage = navParams.get('workpackage');
     this._bookingSession = navParams.get('bookingSession');
 
+
     if(this._bookingSession) {
-      this._Date = moment(this._bookingSession.startTime).startOf('day').format('YYYY-MM-DD');
+      this._date = moment(this._bookingSession.startTime).startOf('day').format('YYYY-MM-DD');
       this._effort = this._calcEffortForSession(this._bookingSession.startTime, moment().unix());
-      this.refreshEtc();
+      this._refreshEtc();
     }
 
     this._authForm = _formBuilder.group({
@@ -51,24 +52,24 @@ export class CreateBookingComponent {
     this._effortControl = this._authForm.controls['_effortControl'];
     this._descriptionControl = this._authForm.controls['_descriptionControl'];
     this._dateControl = this._authForm.controls['_dateControl'];
-    this._Etc = this._workpackage.etc;
+    this._etc = this._workpackage.etc;
   }
 
-  onSubmit() {
+  private _onSubmit() {
     if (this._checkFieldsSet()) {
-      var booking: Booking = new Booking();
+      let booking: Booking = new Booking();
       booking.date = moment(this._dateControl.value);
       booking.description = this._descriptionControl.value;
       booking.effort = this._stringToWorkday(this._effortControl.value);
       booking.workpackage = this._workpackage;
-      this._bookingsService.create(booking, this._Etc).subscribe((booking: Booking) => {
+      this._bookingsService.create(booking, this._etc).subscribe((booking: Booking) => {
         if(this._bookingSession) {
           //if there is a bookingsession, delete it when the booking was successful
           this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
-
+            //TODO: show ToastMsg Booking successful
           });
+          this._navigateToBookingOverview();
         }
-        //TODO: show ToastMsg Booking successful
         this._navigateToBookingOverview();
       },
         error => {
@@ -83,7 +84,7 @@ export class CreateBookingComponent {
     }
   }
 
-  createBookingSession(): void {
+  private _createBookingSession(): void {
     this._bookingSession = new BookingSession();
     this._effort = moment().hours(0).minutes(0).format('HH:mm');
     this._bookingSession.workpackage = this._workpackage;
@@ -92,8 +93,8 @@ export class CreateBookingComponent {
     });
   }
 
-  refreshEtc(): void {
-    this._Etc = this._workpackage.etc - this._stringToWorkday(this._effortControl.value);
+  private _refreshEtc(): void {
+    this._etc = this._workpackage.etc - this._stringToWorkday(this._effortControl.value);
   }
 
   private _checkFieldsSet(): boolean {
@@ -117,8 +118,6 @@ export class CreateBookingComponent {
   }
 
   private _navigateToBookingOverview(): void {
-    this._navController.push(BookingOverviewComponent, {
-      bookingSession: this._bookingSession
-    });
+    this._navController.push(BookingOverviewComponent);
   }
 }
