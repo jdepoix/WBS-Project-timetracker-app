@@ -2,6 +2,7 @@
 
 // app
 @import "../../components/app/app.component";
+@import "../../components/edit/edit-label.component";
 
 // login
 @import "../../components/login/login.component";
@@ -9,7 +10,6 @@
 // bookings
 @import "../../components/bookings/overview/booking-overview.component";
 @import "../../components/bookings/booking/booking.component";
-@import "../../components/edit/edit-label.component";
 @import "../../components/bookings/create/create-booking.component";
 
 // workpackages

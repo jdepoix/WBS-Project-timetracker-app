@@ -2,7 +2,7 @@ import {Component, Input, Output} from '@angular/core';
 import {Booking, BookingSession} from '../../../models/booking/booking';
 import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
 import {Alert, NavController, Toast} from "ionic-angular/index";
-import {EditLabelComponent} from "../../edit/edit-label.component";
+import {EditLabelComponent, RevertableChange} from "../../edit/edit-label.component";
 import Moment = moment.Moment;
 import moment = require("moment/moment");
 import {BookingService} from "../../../services/bookings/booking.service";
@@ -55,7 +55,7 @@ export class BookingComponent {
     });
   }
 
-  private _momentEffortToWorkdays(mom: String): number {
+  private _momentEffortToWorkdays(mom: string): number {
     return +(mom.split(":")[0]) / 8 + +(mom.split(":")[1]) / 60 / 8;
   }
 
@@ -63,7 +63,7 @@ export class BookingComponent {
     this._presentDeleteConfirm((this.booking.effort * 8) + "", this.booking.description);
   }
 
-  private _timeStampToDuration(stamp: number): String {
+  private _timeStampToDuration(stamp: number): string {
     let start = new Date(stamp * 1000);
     let until = new Date();
     let d = until.getDay() - start.getDay();
@@ -101,22 +101,27 @@ export class BookingComponent {
     this._nav.present(alert);
   }
 
-  private _updateBooking(bookingDescription: string): void {
-    this.booking.description = bookingDescription;
+  private _updateBooking(bookingDescriptionChange: RevertableChange<string>): void {
+    this.booking.description = bookingDescriptionChange.getChange();
 
-    this._bookingService.update(this.booking).subscribe((returnedBooking: Booking) => {
-      if (returnedBooking.self != null)
-        this._showToast("updated booking decription"); else
-        this._showToast("something went wrong");
+    this._bookingService.update(this.booking).subscribe(() => {
+      this._showToast("updated booking decription");
+    }, () => {
+      bookingDescriptionChange.revert();
+      this._showToast("something went wrong");
     });
   }
 
   private _showToast(msg: string) {
     let toast = Toast.create({
-      message: msg, duration: 1800, position: 'bottom'
+      message: msg,
+      duration: 1800,
+      position: 'bottom'
     });
+
     toast.onDismiss(() => {
     });
+
     this._nav.present(toast);
   }
 }
