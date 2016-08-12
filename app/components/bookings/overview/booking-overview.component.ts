@@ -2,12 +2,15 @@ import {Component} from '@angular/core';
 import {NavController} from "ionic-angular/index";
 import {BookingComponent} from "../../../components/bookings/booking/booking.component";
 import {SessionService} from "../../../services/session/session.service";
-import {WorkpackageSelectionComponent} from "../workpackage-selection/booking-workpackage-selection.component";
 import {BookingService} from "../../../services/bookings/booking.service";
 import {Booking, BookingSession} from "../../../models/booking/booking";
 import {BookingSessionService} from "../../../services/bookings/booking-session.service";
 import moment = require("moment/moment");
 import Moment = moment.Moment;
+import {
+  WorkpackageOverviewComponent,
+  WorkpackageOverviewContext
+} from "../../workpackages/overview/workpackage-overview.component";
 
 @Component({
   templateUrl: 'build/components/bookings/overview/booking-overview.component.html',
@@ -56,7 +59,9 @@ export class BookingOverviewComponent {
 
 
   private _add():void {
-    this._navController.push(WorkpackageSelectionComponent);
+    this._navController.push(WorkpackageOverviewComponent, {
+      context: WorkpackageOverviewContext.BOOKING_WORKPACKAGE_SELECTION
+    });
   }
 
 
