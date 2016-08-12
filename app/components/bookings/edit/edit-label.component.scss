@@ -1,0 +1,36 @@
+
+
+#lab{
+  margin: 1px;
+  margin-left: 0px;
+  background-color: transparent;
+  font-size: medium;
+  border: none;
+  color: #2e74eb;
+}
+
+input[type="text"]{
+
+  font-size: medium;
+  margin: 1px;
+  margin-left: 0px;
+  line-break: normal;
+  max-lines: 4;
+  width: 100%;
+}
+
+input[type="text"][disabled] {
+  color: #2d2d2d;
+  font-style: normal;
+  opacity: 1.0;
+  margin: 1px;
+  margin-left: 0px;
+  width: 100%;
+}
+
+
+#container{
+  padding: 0px;
+  z-index: 75;
+  width: auto;
+}

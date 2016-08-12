@@ -1,0 +1,9 @@
+{
+  "server_address": "Server-Adresse",
+  "user": "Benutzername",
+  "password": "Passwort",
+  "projects": "Projekte",
+  "bookings": "Buchungen",
+  "workpackages": "Arbeitspakete",
+  "logout": "Ausloggen"
+}

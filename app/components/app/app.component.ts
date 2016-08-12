@@ -13,9 +13,17 @@ import {LoginComponent} from "../login/login.component";
 import {BookingOverviewComponent} from '../bookings/overview/booking-overview.component';
 import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage-overview.component';
 
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {Translations} from "../../multilanguage/translations";
+
+/**
+ * Entry point for the App. Holds the Menu and handles which View should be rendered
+ */
 @Component({
-  templateUrl: 'build/components/app/app.component.html'
+  templateUrl: 'build/components/app/app.component.html',
+  pipes: [TranslatePipe]
 })
+
 export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
@@ -23,19 +31,21 @@ export class AppComponent {
   pages: Array<{title: string, component: any}>;
   projects: Array<Project> = [];
   showProjects: boolean;
+  private _translations: typeof Translations = Translations;
 
   constructor(
     private _platform: Platform,
     private _menu: MenuController,
     private _authService: SessionAuthenticationService,
     private _sessionService: SessionService,
-    private _projectService: ProjectService
+    private _projectService: ProjectService,
+    private _translate: TranslateService
   ) {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Bookings', component: BookingOverviewComponent },
-      { title: 'Workpackages', component: WorkpackageOverviewComponent },
+      { title: _translate.instant(this._translations.BOOKINGS) , component: BookingOverviewComponent },
+      { title: _translate.instant(this._translations.WORKPACKAGES), component: WorkpackageOverviewComponent },
     ];
 
     this.showProjects = false;
@@ -58,6 +68,8 @@ export class AppComponent {
         this.openPage(LoginComponent);
       }
     });
+
+    this._translateConfig();
   }
 
   public initializeApp() {
@@ -69,6 +81,11 @@ export class AppComponent {
     });
   }
 
+  /**
+   * takes a Component and renders it as the MainView
+   *
+   * @param component Component to render
+   */
   public openPage(component: any) {
     if (this._menu.isOpen()) this._menu.close();
 
@@ -96,4 +113,14 @@ export class AppComponent {
       }
     });
   }
+
+  private _translateConfig() {
+    let userLang = navigator.language.split('-')[0];
+    userLang = /(de|en)/.test(userLang) ? userLang : 'en';
+
+    this._translate.setDefaultLang('en');
+
+    this._translate.use(userLang);
+  }
 }
+

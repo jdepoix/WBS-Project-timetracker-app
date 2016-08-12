@@ -1,5 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+ * transforms a Float representing a fraction of a workday (8 hours each) into a more readable format: HH:MM
+ */
 @Pipe({name: 'workdaysToHours'})
 export class WorkdaysToHoursPipe implements PipeTransform {
   transform(workdays: number): string {

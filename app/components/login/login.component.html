@@ -1,3 +1,4 @@
+
 <ion-content class="content">
   <div class="top">
     <div class="logo">
@@ -11,15 +12,15 @@
   <div class="bottom">
     <form [ngFormModel]="authForm" (ngSubmit)="onSubmit(authForm.value)">
       <ion-item class="item">
-        <ion-label floating [style.color]="serverColor">Server-Adresse</ion-label>
+        <ion-label floating [style.color]="serverColor">{{ _translations.SERVER_ADDRESS | translate }}</ion-label>
         <ion-input type="text" [ngFormControl]="serverAddress" required></ion-input>
       </ion-item>
       <ion-item class="item">
-        <ion-label floating [style.color]="usernameColor">Benutzername</ion-label>
+        <ion-label floating [style.color]="usernameColor">{{ _translations.USER | translate }}</ion-label>
         <ion-input type="text" [ngFormControl]="username" required></ion-input>
       </ion-item>
       <ion-item class="item">
-        <ion-label floating [style.color]="passwordColor">Passwort</ion-label>
+        <ion-label floating [style.color]="passwordColor">{{ _translations.PASSWORD | translate }}</ion-label>
         <ion-input type="password" [ngFormControl]="password" required></ion-input>
       </ion-item>
       <button class="login_button" accent floating block full>LOGIN</button>

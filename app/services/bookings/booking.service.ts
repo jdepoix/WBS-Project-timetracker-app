@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Response} from '@angular/http';
-
 import {Observable} from 'rxjs/Rx';
 
 import moment = require('moment');
@@ -9,14 +8,18 @@ import Moment = moment.Moment;
 import {Url, RessourceUrl} from '../../core/url/url';
 
 import {RestModelListDeserializer} from '../../models/core/rest-model/serializers';
-import {Booking} from '../../models/booking/booking';
+
 import {Workpackage} from '../../models/workpackage/workpackage';
 import {BookingDeserializer} from '../../models/booking/booking-serializers';
 
 import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 import {GetOperation, CreateOperation, UpdateOperation, DeleteOperation} from '../api/core/crud-operations';
 import {SessionService} from '../session/session.service';
+import {Booking} from "../../models/booking/booking";
 
+/**
+ * takes care of handling requests to the Booking API
+ */
 @Injectable()
 export class BookingService implements
   GetOperation<Booking>,
@@ -27,6 +30,13 @@ export class BookingService implements
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService, private _sessionService: SessionService) {
   }
 
+  /**
+   * gets all Bookings belonging to the logged in User.
+   *
+   * @param date filter by this date
+   * @param workpackage filter by this workpackage
+   * @returns {Observable<Array<Booking>>}
+   */
   public get(date?: Moment, workpackage?: Workpackage): Observable<Array<Booking>> {
     let url: Url = this._endpoint;
 

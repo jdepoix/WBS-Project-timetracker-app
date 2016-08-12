@@ -10,6 +10,9 @@ import {CreateOperation, RetrieveOperation, DeleteOperation} from '../api/core/c
 import {TimetrackerApiReuqestService} from '../api/timetracker/timetracker-api-request.service';
 import {BookingSessionDeserializer} from '../../models/booking/booking-serializers';
 
+/**
+ * takes care of handling requests to the BookingSession API
+ */
 @Injectable()
 export class BookingSessionService implements
   RetrieveOperation<BookingSession>,
@@ -38,7 +41,7 @@ export class BookingSessionService implements
       });
   }
 
-  delete(element: BookingSession): Observable<Response> {
+  public delete(element: BookingSession): Observable<Response> {
     return this._timetrackerApiService.deleteWithFullUrl(element.self);
   }
 }
