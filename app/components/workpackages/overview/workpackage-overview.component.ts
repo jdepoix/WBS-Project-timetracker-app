@@ -9,6 +9,7 @@ import {SessionService} from '../../../services/session/session.service';
 
 import {WorkpackageDetailComponent} from '../detail/workpackage-detail.component';
 import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {Translations} from "../../../multilanguage/translations";
 
 /**
  * renders a list of all workpackages belonging to a user
@@ -19,6 +20,7 @@ import {TranslatePipe} from "ng2-translate/ng2-translate";
 })
 export class WorkpackageOverviewComponent {
   private _workpackages: Array<Workpackage>;
+  private _translations: typeof Translations = Translations;
 
   constructor(
     private _workpackageService: WorkpackageService,

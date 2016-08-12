@@ -8,6 +8,7 @@ import {Url} from "../../core/url/url";
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Translations} from "../../multilanguage/translations";
 
 
 @Component({
@@ -22,6 +23,7 @@ export class LoginComponent {
   serverColor: string;
   usernameColor: string;
   passwordColor: string;
+  private _translations: typeof Translations = Translations;
 
   constructor(private fb: FormBuilder,
               private auth: SessionAuthenticationService,

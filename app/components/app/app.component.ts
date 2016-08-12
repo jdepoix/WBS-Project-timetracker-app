@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 
-import {Platform, MenuController, Nav, ionicBootstrap} from 'ionic-angular';
+import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 
 import {Project} from "../../models/project/project";
@@ -15,6 +15,7 @@ import {WorkpackageOverviewComponent} from '../workpackages/overview/workpackage
 
 import {Http} from '@angular/http';
 import {TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader,} from 'ng2-translate/ng2-translate';
+import {Translations} from "../../multilanguage/translations";
 
 /**
  * Entry point for the App. Holds the Menu and handles which View should be rendered
@@ -25,10 +26,9 @@ import {TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader,
   providers: [
     {
       provide: TranslateLoader,
-      useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets', '.json'),
+      useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/translations', '.json'),
       deps: [Http]
-    },
-    TranslateService
+    }, TranslateService
   ]
 })
 
@@ -39,6 +39,7 @@ export class AppComponent {
   pages: Array<{title: string, component: any}>;
   projects: Array<Project> = [];
   showProjects: boolean;
+  private _translations: typeof Translations = Translations;
 
   constructor(
     private _platform: Platform,
@@ -51,8 +52,8 @@ export class AppComponent {
     this.initializeApp();
 
     this.pages = [
-      { title: "bookings" , component: BookingOverviewComponent },
-      { title: "workpackages", component: WorkpackageOverviewComponent },
+      { title: _translate.instant(this._translations.BOOKINGS) , component: BookingOverviewComponent },
+      { title: _translate.instant(this._translations.WORKPACKAGES), component: WorkpackageOverviewComponent },
     ];
 
     this.showProjects = false;
@@ -76,7 +77,6 @@ export class AppComponent {
       }
     });
 
-    this._translate = _translate;
     this.translateConfig();
   }
 
