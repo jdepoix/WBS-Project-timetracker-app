@@ -17,68 +17,68 @@ import {EventEmitter} from "@angular/common/src/facade/async";
   pipes: [WorkdaysToHoursPipe]
 })
 
-export class BookingComponent{
+export class BookingComponent {
 
   // Moment object, but behaves like a String("HH:mm") after set by DateTimePicker via Gui
-  private _pickedEffort :Moment = moment(new Date().getTime());
+  private _pickedEffort:Moment = moment(new Date().getTime());
   // undefined until user has changed effort
-  private _bookingEffort : number;
+  private _bookingEffort:number;
 
   /*
-  * if this.isLife is true, booking is null
-  * otherwise bookingSession will be null
-  */
+   * if this.isLife is true, booking is null
+   * otherwise bookingSession will be null
+   */
 
   @Input()
-  public withWpName: boolean;
+  public withWpName:boolean;
   @Input()
-  public booking: Booking;
+  public booking:Booking;
   @Input()
-  public bookingSession: BookingSession;
+  public bookingSession:BookingSession;
   @Input()
-  public isLive: boolean;
+  public isLive:boolean;
   @Output()
   public deletedBooking = new EventEmitter<Booking>();
 
-  constructor( private  _bookingService : BookingService, private _nav: NavController) {
+  constructor(private  _bookingService:BookingService, private _nav:NavController) {
   }
 
-  private _changedEffortLabel():void{
+  private _changedEffortLabel():void {
 
     this._bookingEffort = this._momentEffortToWorkdays(this._pickedEffort.toString());
     this.booking.effort = this._bookingEffort;
-    this._bookingService.update(this.booking).subscribe((returnedBooking: Booking) => {
-      if(returnedBooking)
-      this._showToast("Effort has been updated to " + this._pickedEffort.toString());
+    this._bookingService.update(this.booking).subscribe((returnedBooking:Booking) => {
+      if (returnedBooking)
+        this._showToast("Effort has been updated to " + this._pickedEffort.toString());
     });
   }
 
-  private _momentEffortToWorkdays(mom :String):number{
+  private _momentEffortToWorkdays(mom:String):number {
 
-    return  +(mom.split(":")[0]) / 8 + +(mom.split(":")[1]) / 60 / 8;
+    return +(mom.split(":")[0]) / 8 + +(mom.split(":")[1]) / 60 / 8;
 
   }
 
-  private _deleteSelf():void{
+  private _deleteSelf():void {
 
-    this._presentDeleteConfirm((this.booking.effort*8) + "", this.booking.description);
+    this._presentDeleteConfirm((this.booking.effort * 8) + "", this.booking.description);
   }
 
-  private _timeStampToDuration(stamp: number): String{
+  private _timeStampToDuration(stamp:number):String {
 
-    let start = new Date(stamp*1000);
+    let start = new Date(stamp * 1000);
     let until = new Date();
-    let d = until.getDay()-start.getDay();
-    let h = until.getHours()-start.getHours();
-    let mins = until.getMinutes()-start.getMinutes();
-    if(d > 0) {
-      h = h + 24*d;
+    let d = until.getDay() - start.getDay();
+    let h = until.getHours() - start.getHours();
+    let mins = until.getMinutes() - start.getMinutes();
+    if (d > 0) {
+      h = h + 24 * d;
     }
     let formattedTime = h + ' h ' + mins + ' min';
     return formattedTime;
   }
 
-  private _checkoutLivebooking(): void{
+  private _checkoutLivebooking():void {
 
     this._nav.push(CreateBookingComponent, {
       workpackage: this.bookingSession.workpackage,
@@ -86,16 +86,17 @@ export class BookingComponent{
     });
   }
 
-  private _presentDeleteConfirm(effort: string, bookingDescr: string): void {
+  private _presentDeleteConfirm(effort:string, bookingDescr:string):void {
 
     let alert = Alert.create({
       title: 'Delete Booking?',
-      message: bookingDescr + " (ca. "+effort+" h)",
+      message: bookingDescr + " (ca. " + effort + " h)",
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => {}
+          handler: () => {
+          }
         },
         {
           text: 'Delete',
@@ -112,13 +113,11 @@ export class BookingComponent{
     this._nav.present(alert);
   }
 
-  private _updateBooking(bookingDescription: string) :void{
+  private _updateBooking(bookingDescription:string):void {
 
     this.booking.description = bookingDescription;
-    console.log("--->" + this.booking.description);
 
     this._bookingService.update(this.booking).subscribe((returnedBooking:Booking) => {
-      //console.log("returned booking after update: " + returnedBooking);
       if (returnedBooking.self != null)
         this._showToast("updated booking decription");
       else
@@ -129,18 +128,15 @@ export class BookingComponent{
   }
 
 
-
-
-
-
-  private _showToast(msg :string) {
+  private _showToast(msg:string) {
 
     let toast = Toast.create({
       message: msg,
       duration: 1800,
       position: 'bottom'
     });
-    toast.onDismiss(() => {});
+    toast.onDismiss(() => {
+    });
     this._nav.present(toast);
   }
 

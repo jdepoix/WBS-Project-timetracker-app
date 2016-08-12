@@ -12,3 +12,6 @@
         <booking *ngFor="let booking of _dateGroupedBookings.get(date)" [booking]="booking" [withWpName]="false"></booking>
     </template>
 </ion-content>
+<button fab fab-bottom fab-right  (click)="createBooking(_workpackage)" calm>
+    <ion-icon name="ios-stopwatch-outline"></ion-icon>
+</button>

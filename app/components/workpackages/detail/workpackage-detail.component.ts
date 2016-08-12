@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {NavParams} from 'ionic-angular/index';
+import {NavParams, NavController} from 'ionic-angular/index';
 
 import {Workpackage} from '../../../models/workpackage/workpackage';
 import {Booking} from '../../../models/booking/booking';
@@ -8,6 +8,7 @@ import {Booking} from '../../../models/booking/booking';
 import {BookingService} from '../../../services/bookings/booking.service';
 
 import {BookingComponent} from '../../bookings/booking/booking.component';
+import {CreateBookingComponent} from "../../bookings/create/create-booking.component";
 
 @Component({
   templateUrl: 'build/components/workpackages/detail/workpackage-detail.component.html',
@@ -18,9 +19,9 @@ export class WorkpackageDetailComponent {
   private _dateGroupedBookings: Map<string, Array<Booking>>;
   private _sortedDateGroups: Array<string> = [];
 
-  constructor(navParams: NavParams, private _bookingsService: BookingService) {
+  constructor(navParams: NavParams, private _bookingsService: BookingService, private _navController: NavController) {
     this._workpackage = navParams.get('workpackage');
-    this._bookingsService
+      this._bookingsService
       .get(null, this._workpackage)
       .subscribe((bookings: Array<Booking>) => this._groupBookingsByDate(bookings));
   }
@@ -42,5 +43,11 @@ export class WorkpackageDetailComponent {
 
     this._dateGroupedBookings = dateGroupedBookings;
     this._sortedDateGroups = sortedDateGroups;
+  }
+
+  public createBooking(workpackage: Workpackage):void {
+    this._navController.push(CreateBookingComponent, {
+      workpackage: this._workpackage
+    });
   }
 }
