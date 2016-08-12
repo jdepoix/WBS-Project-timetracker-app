@@ -38,10 +38,8 @@ export class BookingOverviewComponent {
 
   private _loadBookings(): void {
 
-    /*
-    TODO: first param is supposed to be moment, not null
-    * */
-    this._bookingService.get(/*moment(this.pickedDate.toString()*/null, null).subscribe((bookings: Array<Booking>) => {
+
+    this._bookingService.get(moment(this._pickedDate.toString()), null).subscribe((bookings: Array<Booking>) => {
       this._bookings = bookings;
     });
   }
