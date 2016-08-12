@@ -21,25 +21,26 @@ export class BookingOverviewComponent {
 
   private _bookings:Array<Booking> = [];
   private _bookingSession:BookingSession;
-  private _pickedDate:Moment = moment(new Date());
+  private _pickedDate:string = moment().format("YYYY-MM-DD");
   private _pickedDateString:String = "";
 
   constructor(private _bookingService:BookingService,
               private _navController:NavController,
               private _bookingSessionService:BookingSessionService,
               private _sessionService:SessionService) {
-    this._pickedDateString = this._pickedDate.format('DD.MM.YYYY');
-    this._loadBookings();
+    this._pickedDateString = moment(this._pickedDate).format("DD.MM.YYYY");
     this._loadBookingSession();
+    this._loadBookings();
     this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
   }
 
 
   private _loadBookings():void {
 
-
-    this._bookingService.get(moment(this._pickedDate.toString()), null).subscribe((bookings:Array<Booking>) => {
+    this._bookingService.get(moment(this._pickedDate), null).subscribe((bookings:Array<Booking>) => {
       this._bookings = bookings;
+      if(bookings.length == 0)
+        this._bookings = null;
     });
   }
 

@@ -7,4 +7,5 @@ export class Translations{
   public static BOOKINGS: string = 'bookings';
   public static WORKPACKAGES: string = 'workpackages';
   public static LOGOUT: string = 'logout';
+  public static USER_PASSWORD_ERROR: string = 'user_password_error';
 }
