@@ -22,14 +22,7 @@ import {Translations} from "../../multilanguage/translations";
  */
 @Component({
   templateUrl: 'build/components/app/app.component.html',
-  pipes: [TranslatePipe],
-  providers: [
-    {
-      provide: TranslateLoader,
-      useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/translations', '.json'),
-      deps: [Http]
-    }, TranslateService
-  ]
+  pipes: [TranslatePipe]
 })
 
 export class AppComponent {
@@ -122,9 +115,9 @@ export class AppComponent {
     });
   }
 
-  translateConfig() {
-    var userLang = navigator.language.split('-')[0];
-    userLang = /(de|en)/gi.test(userLang) ? userLang : 'en';
+  private translateConfig() {
+    var userLang = navigator.language;
+    userLang = /(de|en)/.test(userLang) ? userLang : 'en';
 
     this._translate.setDefaultLang('en');
 
