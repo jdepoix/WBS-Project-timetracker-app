@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Workpackage} from "../../../models/workpackage/workpackage";
-import {NavParams, NavController, Alert} from "ionic-angular/index";
+import {NavParams, NavController, Alert, Toast} from "ionic-angular/index";
 import {BookingService} from "../../../services/bookings/booking.service";
 import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
 import moment = require("moment/moment");
@@ -64,21 +64,18 @@ export class CreateBookingComponent {
       booking.workpackage = this._workpackage;
       this._bookingsService.create(booking, this._etc).subscribe((booking: Booking) => {
         if(this._bookingSession) {
-          //if there is a bookingsession, delete it when the booking was successful
+          //if there is a bookingsession, delete it when the booking was successful and show Toast
           this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
-            //TODO: show ToastMsg Booking successful
+            this._showToast('Livesession erfolgreich gebucht');
           });
           this._navigateToBookingOverview();
         }
+        //if the booking was successful (without session) show Toast
+        this._showToast('Buchung erfolgreich abgeschlossen');
         this._navigateToBookingOverview();
       },
         error => {
-          let alert = Alert.create({
-            title: 'Buchung fehlgeschlagen!',
-            subTitle: 'Verbindung zum Server konnte nicht hergestellt werden.',
-            buttons: ['OK']
-          });
-          this._navController.present(alert);
+          this._showToast('Verbindungsfehler zum Server');
         }
       );
     }
@@ -115,6 +112,16 @@ export class CreateBookingComponent {
     let minutes = (endMoment.diff(startMoment, 'minutes'))%60;
     let effortMoment = moment().hours(hours).minutes(minutes);
     return effortMoment.format('HH mm');
+  }
+
+  private _showToast(msg: string): void {
+    let toast = Toast.create({
+      message: msg,
+      duration: 1800,
+      position: 'bottom'
+    });
+    toast.onDismiss(() => {});
+    this._navController.present(toast);
   }
 
   private _navigateToBookingOverview(): void {
