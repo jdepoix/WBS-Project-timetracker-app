@@ -78,7 +78,7 @@ export class BookingComponent {
 
   private _checkoutLivebooking(): void {
     this._nav.push(CreateBookingComponent, {
-      workpackage: this.bookingSession.workpackage, session: this.bookingSession
+      workpackage: this.bookingSession.workpackage, bookingSession: this.bookingSession
     });
   }
 

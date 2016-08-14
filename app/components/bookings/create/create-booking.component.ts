@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Workpackage} from "../../../models/workpackage/workpackage";
-import {NavParams, NavController, Alert, Toast} from "ionic-angular/index";
+import {NavParams, NavController, Toast} from "ionic-angular/index";
 import {BookingService} from "../../../services/bookings/booking.service";
 import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
 import moment = require("moment/moment");
@@ -25,6 +25,7 @@ export class CreateBookingComponent {
   private _date = moment().startOf('day').format('YYYY-MM-DD');
   private _effort = moment().startOf('day').format('HH:mm');
   private _etc: number;
+  private _hideLiveBookingButton: boolean;
 
   constructor(navParams: NavParams,
               private _bookingsService: BookingService,
@@ -32,15 +33,9 @@ export class CreateBookingComponent {
               private _formBuilder: FormBuilder,
               private _navController: NavController) {
 
+    this._loadHideLiveBooking();
     this._workpackage = navParams.get('workpackage');
     this._bookingSession = navParams.get('bookingSession');
-
-
-    if(this._bookingSession) {
-      this._date = moment(this._bookingSession.startTime).startOf('day').format('YYYY-MM-DD');
-      this._effort = this._calcEffortForSession(this._bookingSession.startTime, moment().unix());
-      this._refreshEtc();
-    }
 
     this._authForm = _formBuilder.group({
       '_descriptionControl': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
@@ -53,6 +48,12 @@ export class CreateBookingComponent {
     this._descriptionControl = this._authForm.controls['_descriptionControl'];
     this._dateControl = this._authForm.controls['_dateControl'];
     this._etc = this._workpackage.etc;
+
+    if(this._bookingSession) {
+      this._date = moment(this._bookingSession.startTime * 1000).startOf('day').format('YYYY-MM-DD');
+      this._calcEffortForSession(this._bookingSession.startTime * 1000);
+      this._refreshEtc();
+    }
   }
 
   private _onSubmit() {
@@ -66,16 +67,21 @@ export class CreateBookingComponent {
         if(this._bookingSession) {
           //if there is a bookingsession, delete it when the booking was successful and show Toast
           this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
-            this._showToast('Livesession erfolgreich gebucht');
+            if(response['ok']) {
+              this._showToast('Livesession erfolgreich gebucht');
+            } else {
+              this._showToast('Livesession konnte nicht geschlossen werden!');
+            }
           });
           this._navigateToBookingOverview();
+        } else {
+          //if the booking was successful (without session) show Toast
+          this._showToast('Buchung erfolgreich abgeschlossen');
+          this._navigateToBookingOverview();
         }
-        //if the booking was successful (without session) show Toast
-        this._showToast('Buchung erfolgreich abgeschlossen');
-        this._navigateToBookingOverview();
       },
         error => {
-          this._showToast('Verbindungsfehler zum Server');
+          this._showToast('Verbindungsfehler zum Server!');
         }
       );
     }
@@ -87,15 +93,18 @@ export class CreateBookingComponent {
     this._bookingSession.workpackage = this._workpackage;
     this._bookingSessionService.create(this._bookingSession).subscribe((bookingSession: BookingSession) => {
       this._bookingSession = bookingSession;
+      this._showToast('Livesession gestartet');
+      this._navigateToBookingOverview();
     });
+
   }
 
   private _refreshEtc(): void {
-    this._etc = this._workpackage.etc - this._stringToWorkday(this._effortControl.value);
+    this._etc = this._workpackage.etc - this._stringToWorkday(this._effort);
   }
 
   private _checkFieldsSet(): boolean {
-    return this._authForm.value._descriptionControl != '';
+    return  this._authForm.value._descriptionControl != '';
   }
 
   private _stringToWorkday(_effortControl: string): number {
@@ -105,13 +114,12 @@ export class CreateBookingComponent {
     return hoursPerDay+minutesPerDay;
   }
 
-  private _calcEffortForSession(start: number, end: number): string {
+  private _calcEffortForSession(start: number):void  {
     let startMoment = moment(start);
-    let endMoment = moment(end);
-    let hours = endMoment.diff(startMoment, 'hours');
-    let minutes = (endMoment.diff(startMoment, 'minutes'))%60;
+    let hours = moment().diff(startMoment, 'hours')-2;
+    let minutes = (moment().diff(startMoment, 'minutes'))%60;
     let effortMoment = moment().hours(hours).minutes(minutes);
-    return effortMoment.format('HH mm');
+    this._effort = effortMoment.format('HH:mm');
   }
 
   private _showToast(msg: string): void {
@@ -122,6 +130,15 @@ export class CreateBookingComponent {
     });
     toast.onDismiss(() => {});
     this._navController.present(toast);
+  }
+
+  private _loadHideLiveBooking(): void {
+    this._hideLiveBookingButton = true;
+    this._bookingSessionService.retrieve().subscribe((bookingSession:BookingSession) => {
+      if(bookingSession) {
+        this._hideLiveBookingButton = false;
+      }
+    });
   }
 
   private _navigateToBookingOverview(): void {

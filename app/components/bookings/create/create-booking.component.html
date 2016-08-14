@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <button accent floating block full *ngIf="!_bookingSession" (click)="_createBookingSession()" >
+  <button accent floating block full *ngIf="_hideLiveBookingButton" (click)="_createBookingSession()" >
     <ion-icon name="ios-stopwatch-outline"></ion-icon>Livebuchung starten
   </button>
   <ion-label *ngIf="_bookingSession" align="center">
@@ -42,7 +42,7 @@
     </ion-item>
     <ion-item>
       <ion-label>ETC-neu:</ion-label>
-      <ion-input type="text" [(ngModel)]="_etc" ></ion-input>
+      <ion-input type="text" [(ngModel)]="_etc"></ion-input>
     </ion-item>
     <button floating block full>Buchung abschicken</button>
   </form>
