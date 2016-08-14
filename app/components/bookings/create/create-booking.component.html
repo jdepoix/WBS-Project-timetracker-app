@@ -12,7 +12,8 @@
     <h4>Checkout Session</h4>
   </ion-label>
   <form [ngFormModel]="_authForm" (ngSubmit)="_onSubmit(authForm)">
-    <ion-item>
+    <ion-list>
+    <ion-item class="item">
       <ion-label>Datum</ion-label>
       <ion-datetime displayFormat="DD.MM.YYYY"
                     pickerFormat="DD MM YYYY"
@@ -34,17 +35,18 @@
     </ion-item>
     <ion-item class="item">
       <ion-label floating >Beschreibung</ion-label>
-      <ion-textarea type="text" [ngFormControl]="_descriptionControl" required></ion-textarea>
+      <ion-textarea type="text" [ngFormControl]="_descriptionControl" rows="3" required></ion-textarea>
     </ion-item>
-    <ion-item>
-      <ion-label>ETC-aktuell:</ion-label>
-      <ion-label>{{ _workpackage.etc}}</ion-label>
+    <ion-item class="item">
+      <ion-label color="grey">ETC - aktuell:</ion-label>
+      <ion-input value="{{ _workpackage.etc}}" text-right="right" readonly></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label>ETC-neu:</ion-label>
-      <ion-input type="text" [(ngModel)]="_etc"></ion-input>
+    <ion-item class="item">
+      <ion-label text->ETC - neu:</ion-label>
+      <ion-input type="number" [(ngModel)]="_etc" text-right="right"></ion-input>
     </ion-item>
     <button floating block full>Buchung abschicken</button>
+      </ion-list>
   </form>
 </ion-content>
 
