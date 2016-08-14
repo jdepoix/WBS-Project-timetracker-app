@@ -6,5 +6,18 @@
   "bookings": "Buchungen",
   "workpackages": "Arbeitspakete",
   "logout": "Ausloggen",
-  "user_password_error": "Benutzername oder Passwort ist falsch!"
+  "date": "Datum",
+  "effort": "Aufwand",
+  "description": "Beschreibung",
+  "user_password_error": "Benutzername oder Passwort ist falsch!",
+  "booking_create_livebooking": "Livebuchung starten",
+  "booking_create_etc_actual": "ETC - aktuell",
+  "booking_create_etc_new": "ETC - neu",
+  "booking_create_send": "Buchung senden",
+  "booking_create_livebooking_checkout": "Livebuchung auschecken",
+  "booking_create_livebooking_started": "Livebuchung gestartet!",
+  "booking_create_livebooking_notify": "Livebuchung erfolgreich geschlossen",
+  "booking_create_livebooking_error": "Livebuchung konnte nicht geschlossen werden",
+  "booking_create_notify": "Buchung erfolgreich",
+  "booking_create_error": "Verbindungsfehler zum Server aufgetreten!"
 }

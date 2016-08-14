@@ -9,9 +9,12 @@ import {BookingSession, Booking} from "../../../models/booking/booking";
 import Moment = moment.Moment;
 import {Response} from "@angular/http";
 import {BookingOverviewComponent} from "../overview/booking-overview.component";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Translations} from "../../../multilanguage/translations";
 
 @Component({
-  templateUrl: 'build/components/bookings/create/create-booking.component.html'
+  templateUrl: 'build/components/bookings/create/create-booking.component.html',
+  pipes: [TranslatePipe]
 })
 export class CreateBookingComponent {
   private _workpackage: Workpackage;
@@ -21,6 +24,7 @@ export class CreateBookingComponent {
   private _dateControl: AbstractControl;
   private _newEtcControl: AbstractControl;
   private _authForm: ControlGroup;
+  private _translations: typeof Translations = Translations;
   private _maxDate = moment().startOf('day').format('YYYY-MM-DD');
   private _date = moment().startOf('day').format('YYYY-MM-DD');
   private _effort = moment().startOf('day').format('HH:mm');
@@ -31,7 +35,8 @@ export class CreateBookingComponent {
               private _bookingsService: BookingService,
               private _bookingSessionService: BookingSessionService,
               private _formBuilder: FormBuilder,
-              private _navController: NavController) {
+              private _navController: NavController,
+              private _translate: TranslateService) {
 
     this._loadHideLiveBooking();
     this._workpackage = navParams.get('workpackage');
@@ -68,20 +73,20 @@ export class CreateBookingComponent {
           //if there is a bookingsession, delete it when the booking was successful and show Toast
           this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
             if(response['ok']) {
-              this._showToast('Livesession erfolgreich gebucht');
+              this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_NOTIFY));
             } else {
-              this._showToast('Livesession konnte nicht geschlossen werden!');
+              this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_ERROR));
             }
           });
           this._navigateToBookingOverview();
         } else {
           //if the booking was successful (without session) show Toast
-          this._showToast('Buchung erfolgreich abgeschlossen');
+          this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_NOTIFY));
           this._navigateToBookingOverview();
         }
       },
         error => {
-          this._showToast('Verbindungsfehler zum Server!');
+          this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_ERROR));
         }
       );
     }
@@ -93,7 +98,7 @@ export class CreateBookingComponent {
     this._bookingSession.workpackage = this._workpackage;
     this._bookingSessionService.create(this._bookingSession).subscribe((bookingSession: BookingSession) => {
       this._bookingSession = bookingSession;
-      this._showToast('Livesession gestartet');
+      this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_STARTED));
       this._navigateToBookingOverview();
     });
 

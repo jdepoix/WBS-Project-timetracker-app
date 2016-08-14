@@ -6,5 +6,18 @@
   "bookings": "Bookings",
   "workpackages": "Workpackages",
   "logout": "Logout",
-  "user_password_error": "Wrong username or password!"
+  "date": "Date",
+  "effort": "Effort",
+  "description": "Description",
+  "user_password_error": "Wrong username or password!",
+  "booking_create_livebooking": "Start livebooking",
+  "booking_create_etc_actual": "ETC - actual",
+  "booking_create_etc_new": "ETC - new",
+  "booking_create_send": "Send booking",
+  "booking_create_livebooking_checkout": "Checkout livebooking",
+  "booking_create_livebooking_started": "Livebooking started!",
+  "booking_create_livebooking_notify": "Livebooking successfully closed",
+  "booking_create_livebooking_error": "Livebooking could not be closed",
+  "booking_create_notify": "Booking successful",
+  "booking_create_error": "Connection error"
 }
