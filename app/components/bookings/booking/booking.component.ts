@@ -1,4 +1,4 @@
-import {Component, Input, Output} from '@angular/core';
+import {Component, Input, Output, OnInit, OnDestroy} from '@angular/core';
 import {Response} from "@angular/http";
 import {EventEmitter} from "@angular/common/src/facade/async";
 
@@ -27,10 +27,14 @@ import {CreateBookingComponent} from "../create/create-booking.component";
   pipes: [WorkdaysToHoursPipe, TranslatePipe]
 })
 
-export class BookingComponent {
+export class BookingComponent implements OnInit, OnDestroy {
   private _pickedEffort: string;
   // undefined until user has changed effort
   private _bookingEffort: number;
+
+  private _liveBookingRuntime: string = '';
+
+  private _liveBookingIntervallTimerId: number = null;
 
   /*
    * if this.isLife is true, booking is null
@@ -57,6 +61,26 @@ export class BookingComponent {
     private _nav: NavController,
     private _translateService: TranslateService
   ) {}
+
+  public ngOnInit(): any {
+    if (this.bookingSession) {
+      this._calulateLiveBookingRuntime();
+      this._liveBookingIntervallTimerId = setInterval(() => {
+        this._calulateLiveBookingRuntime();
+      }, 1000);
+    }
+  }
+
+  public ngOnDestroy(): any {
+    if (this._liveBookingIntervallTimerId) {
+      console.log("destroy");
+      clearInterval(this._liveBookingIntervallTimerId);
+    }
+  }
+
+  private _calulateLiveBookingRuntime(): void {
+    this._liveBookingRuntime = this._timeStampToDuration(this.bookingSession.startTime);
+  }
 
   private _changedEffortLabel(): void {
     this._bookingEffort = this._momentEffortToWorkdays(this._pickedEffort.toString());
