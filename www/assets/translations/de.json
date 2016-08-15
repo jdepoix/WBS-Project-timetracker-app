@@ -22,5 +22,12 @@
   "BOOKING_CREATE_ERROR": "Verbindungsfehler zum Server aufgetreten!",
   "BOOKING_OVERVIEW_NO_BOOKINGS": "Keine Buchungen für das ausgewählte Datum",
   "WORKPACKAGE_OVERVIEW_SEARCH": "Arbeitspaket suchen...",
-  "WORKPACKAGE_SELECTION_SEARCH": "Arbeitspaket wählen..."
+  "WORKPACKAGE_SELECTION_SEARCH": "Arbeitspaket wählen...",
+  "BOOKING_UPDATE_SUCCESS": "Booking updated successfully",
+  "BOOKING_UPDATE_ERROR": "updating Booking failed",
+  "BOOKING_DELETE_DIALOG": "Delete Booking?",
+  "DELETE": "delete",
+  "CANCEL": "cancel",
+  "BOOKING_DELETE_SUCCESS": "Booking deleted",
+  "BOOKING_DELETE_ERROR": "deleting Booking failed"
 }

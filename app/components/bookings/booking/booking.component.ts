@@ -1,25 +1,35 @@
 import {Component, Input, Output} from '@angular/core';
-import {Booking, BookingSession} from '../../../models/booking/booking';
-import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
+import {Response} from "@angular/http";
+import {EventEmitter} from "@angular/common/src/facade/async";
+
 import {Alert, NavController, Toast} from "ionic-angular/index";
-import {EditLabelComponent, RevertableChange} from "../../edit/edit-label.component";
+
+import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
+
 import Moment = moment.Moment;
 import moment = require("moment/moment");
+
+import {Translations} from '../../../multilanguage/translations';
+
+import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
+
+import {Booking, BookingSession} from '../../../models/booking/booking';
+
 import {BookingService} from "../../../services/bookings/booking.service";
-import {Response} from "@angular/http";
+
+import {EditLabelComponent, RevertableChange} from "../../edit/edit-label.component";
 import {CreateBookingComponent} from "../create/create-booking.component";
-import {EventEmitter} from "@angular/common/src/facade/async";
 
 @Component({
   selector: 'booking',
   directives: [EditLabelComponent],
   templateUrl: 'build/components/bookings/booking/booking.component.html',
-  pipes: [WorkdaysToHoursPipe]
+  pipes: [WorkdaysToHoursPipe, TranslatePipe]
 })
 
 export class BookingComponent {
   // Moment object, but behaves like a String("HH:mm") after set by DateTimePicker via Gui
-  private _pickedEffort: Moment = moment(new Date().getTime());
+  private _pickedEffort: string;
   // undefined until user has changed effort
   private _bookingEffort: number;
 
@@ -43,16 +53,19 @@ export class BookingComponent {
   @Output()
   public deletedBooking = new EventEmitter<Booking>();
 
-  constructor(private _bookingService: BookingService, private _nav: NavController) {
-  }
+  constructor(
+    private _bookingService: BookingService,
+    private _nav: NavController,
+    private _translateService: TranslateService
+  ) {}
 
   private _changedEffortLabel(): void {
     this._bookingEffort = this._momentEffortToWorkdays(this._pickedEffort.toString());
     this.booking.effort = this._bookingEffort;
-    this._bookingService.update(this.booking).subscribe((returnedBooking: Booking) => {
-      if (returnedBooking)
-        this._showToast("Effort has been updated to " + this._pickedEffort.toString());
-    });
+    this._bookingService.update(this.booking).subscribe(
+      () => this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_SUCCESS)),
+      () => this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR))
+    );
   }
 
   private _momentEffortToWorkdays(mom: string): number {
@@ -84,19 +97,19 @@ export class BookingComponent {
 
   private _presentDeleteConfirm(booking: Booking): void {
     let alert = Alert.create({
-      title: 'Delete Booking?',
+      title: this._translateService.instant(Translations.BOOKING_DELETE_DIALOG),
       message: booking.description + " (" + new WorkdaysToHoursPipe().transform(booking.effort) + ")",
       buttons: [{
-        text: 'Cancel', role: 'cancel', handler: () => {
+        text: this._translateService.instant(Translations.CANCEL), role: 'cancel', handler: () => {
         }
       }, {
-        text: 'Delete', handler: () => {
-          this._bookingService.delete(this.booking).subscribe((returnedDeleteResponse: Response) => {
-            if (returnedDeleteResponse.status == 204) {
-              this._showToast("Deleted Booking");
+        text: this._translateService.instant(Translations.DELETE), handler: () => {
+          this._bookingService.delete(this.booking).subscribe(
+            () => {
+              this._showToast(this._translateService.instant(Translations.BOOKING_DELETE_SUCCESS));
               this.deletedBooking.emit(this.booking);
-            }
-          });
+            }, () => this._translateService.instant(Translations.BOOKING_DELETE_ERROR)
+          );
         }
       }]
     });
@@ -107,10 +120,10 @@ export class BookingComponent {
     this.booking.description = bookingDescriptionChange.getChange();
 
     this._bookingService.update(this.booking).subscribe(() => {
-      this._showToast("updated booking decription");
+      this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_SUCCESS));
     }, () => {
       bookingDescriptionChange.revert();
-      this._showToast("something went wrong");
+      this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR));
     });
   }
 
