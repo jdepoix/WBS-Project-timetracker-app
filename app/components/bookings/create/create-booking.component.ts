@@ -28,7 +28,7 @@ export class CreateBookingComponent {
   private _maxDate = moment().startOf('day').format('YYYY-MM-DD');
   private _date = moment().startOf('day').format('YYYY-MM-DD');
   private _effort = moment().startOf('day').format('HH:mm');
-  private _etc: number;
+  private _newEtc: number;
   private _hideLiveBookingButton: boolean;
 
   constructor(navParams: NavParams,
@@ -45,14 +45,15 @@ export class CreateBookingComponent {
     this._authForm = _formBuilder.group({
       '_descriptionControl': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       '_dateControl': ['', Validators.required],
-      '_effortControl': ['', Validators.required]
+      '_effortControl': ['', Validators.required],
+      '_newEtcControl': ['', Validators.required]
     });
 
     this._newEtcControl = this._authForm.controls['_newEtcControl'];
     this._effortControl = this._authForm.controls['_effortControl'];
     this._descriptionControl = this._authForm.controls['_descriptionControl'];
     this._dateControl = this._authForm.controls['_dateControl'];
-    this._etc = this._workpackage.etc;
+    this._newEtc = this._workpackage.etc;
 
     if(this._bookingSession) {
       this._date = moment(this._bookingSession.startTime * 1000).startOf('day').format('YYYY-MM-DD');
@@ -68,7 +69,7 @@ export class CreateBookingComponent {
       booking.description = this._descriptionControl.value;
       booking.effort = this._stringToWorkday(this._effortControl.value);
       booking.workpackage = this._workpackage;
-      this._bookingsService.create(booking, this._etc).subscribe((booking: Booking) => {
+      this._bookingsService.create(booking, this._newEtc.valueOf()).subscribe((booking: Booking) => {
         if(this._bookingSession) {
           //if there is a bookingsession, delete it when the booking was successful and show Toast
           this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
@@ -105,11 +106,13 @@ export class CreateBookingComponent {
   }
 
   private _refreshEtc(): void {
-    this._etc = this._workpackage.etc - this._stringToWorkday(this._effort);
+    this._newEtc = this._workpackage.etc - this._stringToWorkday(this._effort);
   }
 
   private _checkFieldsSet(): boolean {
-    return  this._authForm.value._descriptionControl != '';
+    return  (this._authForm.value._descriptionControl != '' &&
+            !isNaN(Number(this._newEtc))) &&
+            Number(this._newEtc) >= 0;
   }
 
   private _stringToWorkday(_effortControl: string): number {
