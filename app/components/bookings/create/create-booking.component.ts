@@ -98,7 +98,6 @@ export class CreateBookingComponent {
     this._effort = moment().hours(0).minutes(0).format('HH:mm');
     this._bookingSession.workpackage = this._workpackage;
     this._bookingSessionService.create(this._bookingSession).subscribe((bookingSession: BookingSession) => {
-      this._bookingSession = bookingSession;
       this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_STARTED));
       this._navigateToBookingOverview();
     });
