@@ -135,7 +135,6 @@ export class CreateBookingComponent {
       duration: 1800,
       position: 'bottom'
     });
-    toast.onDismiss(() => {});
     this._navController.present(toast);
   }
 

@@ -60,7 +60,7 @@ export class BookingComponent {
   }
 
   private _deleteSelf(): void {
-    this._presentDeleteConfirm((this.booking.effort * 8) + "", this.booking.description);
+    this._presentDeleteConfirm(this.booking);
   }
 
   private _timeStampToDuration(stamp: number): string {
@@ -82,9 +82,11 @@ export class BookingComponent {
     });
   }
 
-  private _presentDeleteConfirm(effort: string, bookingDescr: string): void {
+  private _presentDeleteConfirm(booking: Booking): void {
     let alert = Alert.create({
-      title: 'Delete Booking?', message: bookingDescr + " (ca. " + effort + " h)", buttons: [{
+      title: 'Delete Booking?',
+      message: booking.description + " (" + new WorkdaysToHoursPipe().transform(booking.effort) + ")",
+      buttons: [{
         text: 'Cancel', role: 'cancel', handler: () => {
         }
       }, {
@@ -118,10 +120,6 @@ export class BookingComponent {
       duration: 1800,
       position: 'bottom'
     });
-
-    toast.onDismiss(() => {
-    });
-
     this._nav.present(toast);
   }
 }
