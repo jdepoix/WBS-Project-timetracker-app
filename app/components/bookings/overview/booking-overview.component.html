@@ -18,7 +18,7 @@
     <booking *ngIf="_bookingSession != null" [withWpName]="true" [bookingSession]="_bookingSession" [isLive]="true"></booking>
     <booking *ngFor="let booking of _bookings" (deletedBooking)="_deletedBooking($event)" [booking]="booking" [withWpName]="true" [isLive]="false"></booking>
   </ion-list>
-  <ion-label padding *ngIf="_bookings== null && _bookingSession == null" id="hint">Message</ion-label>
+  <ion-label padding *ngIf="_bookings == null && _bookingSession == null" id="hint">{{ _translations.BOOKING_OVERVIEW_NO_BOOKINGS | translate }}</ion-label>
 </ion-content>
 
 <button fab fab-bottom fab-right (click)="_add()" calm>

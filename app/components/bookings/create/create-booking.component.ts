@@ -101,7 +101,6 @@ export class CreateBookingComponent {
       this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_STARTED));
       this._navigateToBookingOverview();
     });
-
   }
 
   private _refreshEtc(): void {
