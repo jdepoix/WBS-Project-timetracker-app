@@ -27,7 +27,7 @@ import {
 })
 export class BookingOverviewComponent {
   private _translations: typeof Translations = Translations;
-  private _bookings: Array<Booking> = [];
+  private _bookings: Array<Booking> = null;
   private _bookingSession: BookingSession;
   private _pickedDate: string = moment().format("YYYY-MM-DD");
   private _pickedDateString: String = "";
@@ -42,8 +42,6 @@ export class BookingOverviewComponent {
   private _loadBookings(): void {
     this._bookingService.get(moment(this._pickedDate), null).subscribe((bookings: Array<Booking>) => {
       this._bookings = bookings;
-      if (bookings.length == 0)
-        this._bookings = null;
     });
   }
 
