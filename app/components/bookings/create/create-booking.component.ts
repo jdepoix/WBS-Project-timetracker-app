@@ -114,7 +114,7 @@ export class CreateBookingComponent {
   }
 
   private _stringToWorkday(_effortControl: string): number {
-    let timeStrings: string = _effortControl.split(':');
+    let timeStrings: Array<string> = _effortControl.split(':');
     let hoursPerDay: number = parseInt(timeStrings[0])/8;
     let minutesPerDay: number = (parseInt(timeStrings[1])/60) /8;
     return hoursPerDay + minutesPerDay;
