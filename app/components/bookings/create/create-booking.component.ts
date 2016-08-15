@@ -94,10 +94,10 @@ export class CreateBookingComponent {
   }
 
   private _createBookingSession(): void {
-    this._bookingSession = new BookingSession();
-    this._effort = moment().hours(0).minutes(0).format('HH:mm');
-    this._bookingSession.workpackage = this._workpackage;
-    this._bookingSessionService.create(this._bookingSession).subscribe((bookingSession: BookingSession) => {
+    let newBookingSession: BookingSession = new BookingSession();
+    newBookingSession.workpackage = this._workpackage;
+
+    this._bookingSessionService.create(newBookingSession).subscribe(() => {
       this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_STARTED));
       this._navigateToBookingOverview();
     });
