@@ -28,7 +28,6 @@ import {CreateBookingComponent} from "../create/create-booking.component";
 })
 
 export class BookingComponent {
-  // Moment object, but behaves like a String("HH:mm") after set by DateTimePicker via Gui
   private _pickedEffort: string;
   // undefined until user has changed effort
   private _bookingEffort: number;
@@ -76,17 +75,13 @@ export class BookingComponent {
     this._presentDeleteConfirm(this.booking);
   }
 
-  private _timeStampToDuration(stamp: number): string {
-    let start = new Date(stamp * 1000);
-    let until = new Date();
-    let d = until.getDay() - start.getDay();
-    let h = until.getHours() - start.getHours();
-    let mins = until.getMinutes() - start.getMinutes();
-    if (d > 0) {
-      h = h + 24 * d;
-    }
-    let formattedTime = h + ' h ' + mins + ' min';
-    return formattedTime;
+  private _timeStampToDuration(timestamp: number): string {
+    let startMoment: Moment = moment.unix(timestamp).utc();
+    let now: Moment = moment().utc();
+    let hours: number = now.diff(startMoment, 'hours');
+    let minutes: number = (now.diff(startMoment, 'minutes'))%60;
+    let effortMoment: Moment = now.hours(hours).minutes(minutes);
+    return effortMoment.format('HH:mm');
   }
 
   private _checkoutLivebooking(): void {

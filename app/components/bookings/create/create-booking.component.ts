@@ -32,9 +32,9 @@ export class CreateBookingComponent {
   private _newEtcControl: AbstractControl;
   private _authForm: ControlGroup;
   private _translations: typeof Translations = Translations;
-  private _maxDate = moment().startOf('day').format('YYYY-MM-DD');
-  private _date = moment().startOf('day').format('YYYY-MM-DD');
-  private _effort = moment().startOf('day').format('HH:mm');
+  private _maxDate: string = moment().startOf('day').format('YYYY-MM-DD');
+  private _date: string = moment().startOf('day').format('YYYY-MM-DD');
+  private _effort: string = moment().startOf('day').format('HH:mm');
   private _newEtc: number;
   private _hideLiveBookingButton: boolean;
 
@@ -64,7 +64,7 @@ export class CreateBookingComponent {
 
     if(this._bookingSession) {
       this._date = moment(this._bookingSession.startTime * 1000).startOf('day').format('YYYY-MM-DD');
-      this._calcEffortForSession(this._bookingSession.startTime * 1000);
+      this._calcEffortForSession(this._bookingSession.startTime);
       this._refreshEtc();
     }
   }
@@ -127,8 +127,8 @@ export class CreateBookingComponent {
     return hoursPerDay + minutesPerDay;
   }
 
-  private _calcEffortForSession(start: number):void  {
-    let startMoment: Moment = moment(start).utc();
+  private _calcEffortForSession(timestamp: number):void  {
+    let startMoment: Moment = moment.unix(timestamp).utc();
     let now: Moment = moment().utc();
     let hours: number = now.diff(startMoment, 'hours');
     let minutes: number = (now.diff(startMoment, 'minutes'))%60;
