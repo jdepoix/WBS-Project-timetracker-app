@@ -114,22 +114,23 @@ export class CreateBookingComponent {
   }
 
   private _stringToWorkday(_effortControl: string): number {
-    let timeStrings = _effortControl.split(':');
-    let hoursPerDay = parseInt(timeStrings[0])/8;
-    let minutesPerDay = (parseInt(timeStrings[1])/60) /8;
-    return hoursPerDay+minutesPerDay;
+    let timeStrings: string = _effortControl.split(':');
+    let hoursPerDay: number = parseInt(timeStrings[0])/8;
+    let minutesPerDay: number = (parseInt(timeStrings[1])/60) /8;
+    return hoursPerDay + minutesPerDay;
   }
 
   private _calcEffortForSession(start: number):void  {
-    let startMoment = moment(start);
-    let hours = moment().diff(startMoment, 'hours')-2;
-    let minutes = (moment().diff(startMoment, 'minutes'))%60;
-    let effortMoment = moment().hours(hours).minutes(minutes);
+    let startMoment: Moment = moment(start).utc();
+    let now: Moment = moment().utc();
+    let hours: number = now.diff(startMoment, 'hours');
+    let minutes: number = (now.diff(startMoment, 'minutes'))%60;
+    let effortMoment: Moment = now.hours(hours).minutes(minutes);
     this._effort = effortMoment.format('HH:mm');
   }
 
   private _showToast(msg: string): void {
-    let toast = Toast.create({
+    let toast: Toast = Toast.create({
       message: msg,
       duration: 1800,
       position: 'bottom'
