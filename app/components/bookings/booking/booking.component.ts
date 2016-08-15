@@ -73,7 +73,6 @@ export class BookingComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): any {
     if (this._liveBookingIntervallTimerId) {
-      console.log("destroy");
       clearInterval(this._liveBookingIntervallTimerId);
     }
   }
