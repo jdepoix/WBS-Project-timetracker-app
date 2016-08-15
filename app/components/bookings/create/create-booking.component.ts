@@ -78,8 +78,8 @@ export class CreateBookingComponent {
             } else {
               this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_ERROR));
             }
+            this._navigateToBookingOverview();
           });
-          this._navigateToBookingOverview();
         } else {
           //if the booking was successful (without session) show Toast
           this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_NOTIFY));
