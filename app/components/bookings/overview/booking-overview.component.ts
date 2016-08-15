@@ -30,10 +30,8 @@ export class BookingOverviewComponent {
   private _bookings: Array<Booking> = null;
   private _bookingSession: BookingSession;
   private _pickedDate: string = moment().format("YYYY-MM-DD");
-  private _pickedDateString: String = "";
 
   constructor(private _bookingService: BookingService, private _navController: NavController, private _bookingSessionService: BookingSessionService, private _sessionService: SessionService) {
-    this._pickedDateString = moment(this._pickedDate).format("DD.MM.YYYY");
     this._loadBookingSession();
     this._loadBookings();
     this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
@@ -52,7 +50,6 @@ export class BookingOverviewComponent {
   }
 
   private _dateChanged(): void {
-    this._pickedDateString = moment(this._pickedDate).format("DD.MM.YYYY");// format('YYYY-MM-DD');
     this._loadBookings();
   }
 

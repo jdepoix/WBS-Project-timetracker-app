@@ -4,10 +4,10 @@
     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title >{{ _pickedDateString}}</ion-title>
+    <ion-title >{{ _pickedDate | date: 'dd.MM.yyyy'}}</ion-title>
     <ion-buttons end id="ionButtons">
       <div>
-        <ion-datetime (ionChange)="_dateChanged()" id="datetime" displayFormat="MMM DD, YYYY" [(ngModel)]="_pickedDate"></ion-datetime>
+        <ion-datetime (ionChange)="_dateChanged()" id="datetime" displayFormat="DD MMM, YYYY" [(ngModel)]="_pickedDate"></ion-datetime>
         <ion-icon item-right name="calendar" id="calicon"></ion-icon>
       </div>
     </ion-buttons>
