@@ -4,9 +4,10 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-searchbar [(ngModel)]="_workpackagesSearchString"
-                       debounce="0"
-                       [placeholder]="_context === _contextEnum.BOOKING_WORKPACKAGE_SELECTION ?
-                       'Select Workpackage for Booking' : 'Search for Workpackage'">
+                        debounce="0"
+                        [placeholder]="_context === _contextEnum.BOOKING_WORKPACKAGE_SELECTION ?
+                        (_translations.WORKPACKAGE_SELECTION_SEARCH | translate) :
+                        (_translations.WORKPACKAGE_OVERVIEW_SEARCH | translate)">
         </ion-searchbar>
     </ion-navbar>
 </ion-header>

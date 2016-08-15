@@ -7,6 +7,8 @@ import {TranslatePipe} from 'ng2-translate/ng2-translate';
 import moment = require("moment/moment");
 import Moment = moment.Moment;
 
+import {Translations} from '../../../multilanguage/translations';
+
 import {Booking, BookingSession} from "../../../models/booking/booking";
 
 import {SessionService} from "../../../services/session/session.service";
@@ -24,6 +26,7 @@ import {
   pipes: [TranslatePipe]
 })
 export class BookingOverviewComponent {
+  private _translations: typeof Translations = Translations;
   private _bookings: Array<Booking> = [];
   private _bookingSession: BookingSession;
   private _pickedDate: string = moment().format("YYYY-MM-DD");
