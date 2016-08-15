@@ -1,16 +1,23 @@
 import {Component} from '@angular/core';
-import {Workpackage} from "../../../models/workpackage/workpackage";
-import {NavParams, NavController, Toast} from "ionic-angular/index";
-import {BookingService} from "../../../services/bookings/booking.service";
-import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
-import moment = require("moment/moment");
-import {BookingSessionService} from "../../../services/bookings/booking-session.service";
-import {BookingSession, Booking} from "../../../models/booking/booking";
-import Moment = moment.Moment;
 import {Response} from "@angular/http";
-import {BookingOverviewComponent} from "../overview/booking-overview.component";
+import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
+
+import {NavParams, NavController, Toast} from "ionic-angular/index";
+
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+
+import moment = require("moment/moment");
+import Moment = moment.Moment;
+
 import {Translations} from "../../../multilanguage/translations";
+
+import {Workpackage} from "../../../models/workpackage/workpackage";
+import {BookingSession, Booking} from "../../../models/booking/booking";
+
+import {BookingService} from "../../../services/bookings/booking.service";
+import {BookingSessionService} from "../../../services/bookings/booking-session.service";
+
+import {BookingOverviewComponent} from "../overview/booking-overview.component";
 
 @Component({
   templateUrl: 'build/components/bookings/create/create-booking.component.html',
