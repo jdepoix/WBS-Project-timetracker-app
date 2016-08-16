@@ -28,6 +28,8 @@ import {CreateBookingComponent} from "../create/create-booking.component";
 })
 
 export class BookingComponent implements OnInit, OnDestroy {
+
+  private _translations: typeof Translations = Translations;
   private _pickedEffort: string;
   // undefined until user has changed effort
   private _bookingEffort: number;
