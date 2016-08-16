@@ -29,5 +29,6 @@
   "DELETE": "löschen",
   "CANCEL": "abbrechen",
   "BOOKING_DELETE_SUCCESS": "Buchung gelöscht",
-  "BOOKING_DELETE_ERROR": "Fehler beim löschen"
+  "BOOKING_DELETE_ERROR": "Fehler beim löschen",
+  "BOOKING_CHANGE_EFFORT": "Zeit ändern"
 }

@@ -154,7 +154,7 @@ export class BookingComponent implements OnInit, OnDestroy {
       this._toastService.showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR));
     });
   }
-  
+
   /**
    * booking effort in workdays (float, 8 h per day)
    * is transformed to a moment Object to work as a model for the booking effort time picker
