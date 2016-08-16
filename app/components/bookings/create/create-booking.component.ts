@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {Response} from "@angular/http";
-import {AbstractControl, ControlGroup, FormBuilder, Validators} from "@angular/common";
 
-import {NavParams, NavController, Toast} from "ionic-angular/index";
+import {AbstractControl, FormGroup, FormBuilder, Validators} from "@angular/forms";
+
+import {NavParams, NavController, Toast, ToastController} from "ionic-angular/index";
 
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
@@ -30,7 +31,7 @@ export class CreateBookingComponent {
   private _descriptionControl: AbstractControl;
   private _dateControl: AbstractControl;
   private _newEtcControl: AbstractControl;
-  private _authForm: ControlGroup;
+  private _authForm: FormGroup;
   private _translations: typeof Translations = Translations;
   private _maxDate: string = moment().startOf('day').format('YYYY-MM-DD');
   private _date: string = moment().startOf('day').format('YYYY-MM-DD');
@@ -43,7 +44,8 @@ export class CreateBookingComponent {
               private _bookingSessionService: BookingSessionService,
               private _formBuilder: FormBuilder,
               private _navController: NavController,
-              private _translate: TranslateService) {
+              private _toastController: ToastController,
+              private _translateService: TranslateService) {
 
     this._loadHideLiveBooking();
     this._workpackage = navParams.get('workpackage');
@@ -81,20 +83,20 @@ export class CreateBookingComponent {
           //if there is a bookingsession, delete it when the booking was successful and show Toast
           this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
             if(response['ok']) {
-              this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_NOTIFY));
+              this._showToast(this._translateService.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_NOTIFY));
             } else {
-              this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_ERROR));
+              this._showToast(this._translateService.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_ERROR));
             }
             this._navigateToBookingOverview();
           });
         } else {
           //if the booking was successful (without session) show Toast
-          this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_NOTIFY));
+          this._showToast(this._translateService.instant(this._translations.BOOKING_CREATE_NOTIFY));
           this._navigateToBookingOverview();
         }
       },
         error => {
-          this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_ERROR));
+          this._showToast(this._translateService.instant(this._translations.BOOKING_CREATE_ERROR));
         }
       );
     }
@@ -105,7 +107,7 @@ export class CreateBookingComponent {
     newBookingSession.workpackage = this._workpackage;
 
     this._bookingSessionService.create(newBookingSession).subscribe(() => {
-      this._showToast(this._translate.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_STARTED));
+      this._showToast(this._translateService.instant(this._translations.BOOKING_CREATE_LIVEBOOKING_STARTED));
       this._navigateToBookingOverview();
     });
   }
@@ -137,12 +139,12 @@ export class CreateBookingComponent {
   }
 
   private _showToast(msg: string): void {
-    let toast: Toast = Toast.create({
+    let toast: Toast = this._toastController.create({
       message: msg,
       duration: 1800,
       position: 'bottom'
     });
-    this._navController.present(toast);
+    toast.present();
   }
 
   private _loadHideLiveBooking(): void {

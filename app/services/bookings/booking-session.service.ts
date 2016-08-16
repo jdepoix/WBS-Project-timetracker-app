@@ -20,6 +20,7 @@ export class BookingSessionService implements
   DeleteOperation<BookingSession>
 {
   private _endpointPath: string;
+
   constructor(private _timetrackerApiService: TimetrackerApiReuqestService) {
     this._endpointPath = 'booking-sessions';
   }

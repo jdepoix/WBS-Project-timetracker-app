@@ -1,4 +1,6 @@
 import {HTTP_PROVIDERS, Http} from '@angular/http';
+import {provide} from '@angular/core';
+// import {} from '@angular/forms';
 
 import {ionicBootstrap} from 'ionic-angular';
 
@@ -11,7 +13,6 @@ import {BookingService} from './services/bookings/booking.service';
 import {SessionAuthenticationService} from './services/session/session-authentication.service';
 import {BookingSessionService} from './services/bookings/booking-session.service';
 import {TranslateLoader, TranslateStaticLoader, TranslateService} from "ng2-translate/ng2-translate";
-import {provide} from "@angular/core";
 
 ionicBootstrap(
   AppComponent, [
@@ -28,4 +29,5 @@ ionicBootstrap(
       ProjectService,
       BookingSessionService,
       TranslateService
-  ]);
+  ]
+);

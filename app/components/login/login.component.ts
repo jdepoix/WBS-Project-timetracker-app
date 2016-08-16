@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {FormBuilder, ControlGroup, Validators, AbstractControl} from '@angular/common';
+import {FormBuilder, FormGroup, Validators, AbstractControl} from '@angular/forms';
 
-import {NavController, Alert, Loading, Toast} from "ionic-angular/index";
+import {Loading, Toast, ToastController, LoadingController} from "ionic-angular/index";
 
 import {Url} from "../../core/url/url";
 
@@ -10,16 +10,15 @@ import {SessionService} from "../../services/session/session.service";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Translations} from "../../multilanguage/translations";
 
-
 @Component({
   templateUrl: 'build/components/login/login.component.html',
-  pipes: [TranslatePipe]
+  pipes: [TranslatePipe],
 })
 export class LoginComponent {
   serverAddress: AbstractControl;
   username: AbstractControl;
   password: AbstractControl;
-  authForm: ControlGroup;
+  authForm: FormGroup;
   serverColor: string;
   usernameColor: string;
   passwordColor: string;
@@ -28,10 +27,11 @@ export class LoginComponent {
   constructor(private _formBuilder: FormBuilder,
               private _authenticationSerivce: SessionAuthenticationService,
               private _sessionSerivce: SessionService,
-              private _nav: NavController,
+              private _toastController: ToastController,
+              private _loadingController: LoadingController,
               private _translate: TranslateService) {
     this.authForm = _formBuilder.group({
-      "serverAddress": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+      'serverAddress': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'username': ['', Validators.required],
       'password': ['', Validators.required]
     });
@@ -43,11 +43,11 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.checkFieldsSet()) {
-      let loading = Loading.create({
+      let loading: Loading = this._loadingController.create({
         content: "Please wait..."
       });
 
-      this._nav.present(loading);
+      loading.present();
 
       this._sessionSerivce.apiUrl = new Url(this.authForm.value.serverAddress);
 
@@ -55,14 +55,13 @@ export class LoginComponent {
         loading.destroy();
 
         if (!authToken) {
-          let toast = Toast.create({
+          let toast: Toast = this._toastController.create({
             message: this._translate.instant(this._translations.USER_PASSWORD_ERROR),
             duration: 1800,
             position: 'bottom'
           });
-          toast.onDismiss(() => {
-          });
-          this._nav.present(toast);
+
+          toast.present();
         }
       });
     }

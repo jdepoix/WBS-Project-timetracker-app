@@ -11,7 +11,7 @@
   <ion-label *ngIf="_bookingSession" align="center">
     <h4>{{ _translations.BOOKING_CREATE_LIVEBOOKING_CHECKOUT | translate }}</h4>
   </ion-label>
-  <form [ngFormModel]="_authForm" (ngSubmit)="_onSubmit(authForm)">
+  <form [formGroup]="_authForm" (ngSubmit)="_onSubmit(authForm)">
     <ion-list>
     <ion-item class="item">
       <ion-label>{{ _translations.DATE | translate }}</ion-label>
@@ -19,7 +19,8 @@
                     pickerFormat="DD MM YYYY"
                     max="{{_maxDate}}"
                     [(ngModel)]="_date"
-                    [ngFormControl]="_dateControl"
+                    [ngModelOptions]="{standalone: true}"
+                    [formControl]="_dateControl"
                     required>
       </ion-datetime>
     </ion-item>
@@ -28,14 +29,15 @@
       <ion-datetime displayFormat="HH:mm"
                     pickerFormat="HH mm"
                     [(ngModel)]="_effort"
-                    [ngFormControl]="_effortControl"
+                    [ngModelOptions]="{standalone: true}"
+                    [formControl]="_effortControl"
                     (ionChange)="_refreshEtc()"
                     required>
       </ion-datetime>
     </ion-item>
     <ion-item class="item">
       <ion-label floating >{{ _translations.DESCRIPTION | translate }}</ion-label>
-      <ion-textarea type="text" [ngFormControl]="_descriptionControl" rows="3" required></ion-textarea>
+      <ion-textarea type="text" [formControl]="_descriptionControl" rows="3" required></ion-textarea>
     </ion-item>
     <ion-item class="item">
       <ion-label color="grey">{{ _translations.BOOKING_CREATE_ETC_ACTUAL | translate }}:</ion-label>
@@ -43,7 +45,7 @@
     </ion-item>
     <ion-item class="item">
       <ion-label text->{{ _translations.BOOKING_CREATE_ETC_NEW | translate }}:</ion-label>
-      <ion-input type="text" [(ngModel)]="_newEtc" text-right="right"></ion-input>
+      <ion-input type="text" [(ngModel)]="_newEtc" [ngModelOptions]="{standalone: true}" text-right="right"></ion-input>
     </ion-item>
     <button floating block full>{{ _translations.BOOKING_CREATE_SEND | translate }}</button>
       </ion-list>

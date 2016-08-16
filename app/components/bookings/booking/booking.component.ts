@@ -1,8 +1,7 @@
 import {Component, Input, Output, OnInit, OnDestroy} from '@angular/core';
-import {Response} from "@angular/http";
 import {EventEmitter} from "@angular/common/src/facade/async";
 
-import {Alert, NavController, Toast} from "ionic-angular/index";
+import {ToastController, AlertController, Toast, Alert, NavController} from 'ionic-angular/index';
 
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 
@@ -60,8 +59,10 @@ export class BookingComponent implements OnInit, OnDestroy {
 
   constructor(
     private _bookingService: BookingService,
-    private _nav: NavController,
-    private _translateService: TranslateService
+    private _translateService: TranslateService,
+    private _navController: NavController,
+    private _toastController: ToastController,
+    private _alertController: AlertController
   ) {}
 
   public ngOnInit(): any {
@@ -110,13 +111,13 @@ export class BookingComponent implements OnInit, OnDestroy {
   }
 
   private _checkoutLivebooking(): void {
-    this._nav.push(CreateBookingComponent, {
+    this._navController.push(CreateBookingComponent, {
       workpackage: this.bookingSession.workpackage, bookingSession: this.bookingSession
     });
   }
 
   private _presentDeleteConfirm(booking: Booking): void {
-    let alert = Alert.create({
+    let alert: Alert = this._alertController.create({
       title: this._translateService.instant(Translations.BOOKING_DELETE_DIALOG),
       message: booking.description + " (" + new WorkdaysToHoursPipe().transform(booking.effort) + ")",
       buttons: [{
@@ -133,7 +134,8 @@ export class BookingComponent implements OnInit, OnDestroy {
         }
       }]
     });
-    this._nav.present(alert);
+
+    alert.present();
   }
 
   private _updateBooking(bookingDescriptionChange: RevertableChange<string>): void {
@@ -148,12 +150,13 @@ export class BookingComponent implements OnInit, OnDestroy {
   }
 
   private _showToast(msg: string) {
-    let toast = Toast.create({
+    let toast: Toast = this._toastController.create({
       message: msg,
       duration: 1800,
       position: 'bottom'
     });
-    this._nav.present(toast);
+
+    toast.present();
   }
 }
 
