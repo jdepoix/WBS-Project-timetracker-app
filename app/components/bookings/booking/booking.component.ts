@@ -63,7 +63,10 @@ export class BookingComponent implements OnInit, OnDestroy {
     private _navController: NavController,
     private _toastController: ToastController,
     private _alertController: AlertController
-  ) {}
+  ) {
+
+  }
+
 
   public ngOnInit(): any {
     if (this.bookingSession) {
@@ -72,6 +75,8 @@ export class BookingComponent implements OnInit, OnDestroy {
         this._calulateLiveBookingRuntime();
       }, 1000);
     }
+    if(!this.isLive)
+      this._pickedEffort = this._workdaysEffortToMomentEffort(this.booking.effort);
   }
 
   public ngOnDestroy(): any {
@@ -158,6 +163,22 @@ export class BookingComponent implements OnInit, OnDestroy {
 
     toast.present();
   }
+
+
+  /**
+   * booking effort in workdays (float, 8 h per day)
+   * is transformed to a moment Object to work as a model for the booking effort time picker
+   * */
+  private _workdaysEffortToMomentEffort(workdays: number): string {
+    let workdaysInHours: number = workdays * 8;
+    let hours: number = parseInt(workdaysInHours.toString());
+    let minutes: number = parseInt((Math.abs(workdaysInHours - hours) * 60).toString());
+    let mom:Moment = moment();
+    let effortMoment: Moment = mom.hours(hours).minutes(minutes);
+
+    return effortMoment.format('HH:mm');
+  }
+
 }
 
 
