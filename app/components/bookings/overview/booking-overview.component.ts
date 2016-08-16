@@ -34,7 +34,11 @@ export class BookingOverviewComponent {
               private _sessionService:SessionService) {
     this._pickedDateString = moment(this._pickedDate).format("DD.MM.YYYY");
     this._loadBookingSession();
-    this._loadBookings();
+
+    if (this._sessionService.selectedProject != null) {
+      this._loadBookings();
+    }
+
     this._sessionService.onProjectSelected.subscribe(() => this._loadBookings());
   }
 
