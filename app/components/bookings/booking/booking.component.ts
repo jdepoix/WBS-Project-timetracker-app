@@ -1,7 +1,7 @@
 import {Component, Input, Output, OnInit, OnDestroy} from '@angular/core';
 import {EventEmitter} from "@angular/common/src/facade/async";
 
-import {AlertController, Alert, NavController, Toast} from 'ionic-angular/index';
+import {AlertController, Alert, NavController} from 'ionic-angular/index';
 
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 
@@ -67,9 +67,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     private _toastService: ToastService,
     private _alertController: AlertController
   ) {
-
   }
-
 
   public ngOnInit(): any {
     if (this.bookingSession) {
@@ -78,8 +76,9 @@ export class BookingComponent implements OnInit, OnDestroy {
         this._calulateLiveBookingRuntime();
       }, 1000);
     }
-    if(!this.isLive)
+    if (!this.isLive) {
       this._pickedEffort = this._workdaysEffortToMomentEffort(this.booking.effort);
+    }
   }
 
   public ngOnDestroy(): any {

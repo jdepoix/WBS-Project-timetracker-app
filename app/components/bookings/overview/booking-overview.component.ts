@@ -29,7 +29,7 @@ import {
 export class BookingOverviewComponent {
   private _translations: typeof Translations = Translations;
   private _pickedDate: string = moment().format("YYYY-MM-DD");
-  private _bookings: Array<Booking> = [];
+  private _bookings: Array<Booking> = null;
   private _bookingSession: BookingSession;
   private _pickedDateString: string = "";
 
@@ -42,8 +42,6 @@ export class BookingOverviewComponent {
   ) {
     this._pickedDateString = moment(this._pickedDate).format("DD.MM.YYYY");
     this._loadBookingSession();
-
-
 
     if (this._sessionService.selectedProject != null) {
       this._loadBookings();

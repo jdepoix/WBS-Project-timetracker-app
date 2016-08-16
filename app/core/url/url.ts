@@ -130,7 +130,7 @@ export class Url {
   }
 
   public equals(other: Object): boolean {
-    if (!(other instanceof Url)) {
+    if (other == null || !(other instanceof Url)) {
       return false;
     }
     return this.toString() === (<Url> other).toString();

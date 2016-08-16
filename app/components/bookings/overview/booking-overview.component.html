@@ -15,10 +15,10 @@
 </ion-header>
 <ion-content>
   <ion-list class="slide-in">
-    <booking *ngIf="_bookingSession != null" [withWpName]="true" [bookingSession]="_bookingSession" [isLive]="true"></booking>
+    <booking *ngIf="_bookingSession != null && _bookingSession.getProjectUrl().equals(_sessionService.selectedProject.self)" [withWpName]="true" [bookingSession]="_bookingSession" [isLive]="true"></booking>
     <booking *ngFor="let booking of _bookings" (deletedBooking)="_deletedBooking($event)" [booking]="booking" [withWpName]="true" [isLive]="false"></booking>
   </ion-list>
-  <ion-label padding *ngIf="_bookings?.length === 0 && _bookingSession == null" id="hint">{{ _translations.BOOKING_OVERVIEW_NO_BOOKINGS | translate }}</ion-label>
+  <ion-label padding *ngIf="_bookings?.length === 0 && (_bookingSession == null || !_bookingSession.getProjectUrl().equals(_sessionService.selectedProject.self))" id="hint">{{ _translations.BOOKING_OVERVIEW_NO_BOOKINGS | translate }}</ion-label>
 </ion-content>
 
 <button fab fab-bottom fab-right (click)="_add()" calm>

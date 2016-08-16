@@ -4,6 +4,7 @@ import Moment = moment.Moment;
 import {RestModel} from '../core/rest-model/rest-model';
 import {Updateable, Createable} from '../core/rest-model/model-operations';
 
+import {Url} from '../../core/url/url';
 import {Workpackage} from '../workpackage/workpackage';
 
 /**
@@ -15,10 +16,9 @@ export class Booking extends RestModel implements Updateable, Createable{
   public date: Moment;
   public workpackage: Workpackage;
 
-
   public getUpdateRequestData(): Object {
-  return this._getRelevantData();
-}
+    return this._getRelevantData();
+  }
 
   public getCreateRequestData(): Object {
     return this._getRelevantData();
@@ -43,6 +43,10 @@ export class BookingSession extends RestModel implements Createable {
    */
   public startTime: number;
   public workpackage: Workpackage;
+
+  public getProjectUrl(): Url {
+    return this.workpackage.getProjectUrl();
+  }
 
   public getCreateRequestData(): Object {
     return {
