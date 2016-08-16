@@ -22,7 +22,7 @@ export class BookingOverviewComponent {
   private _bookings:Array<Booking> = [];
   private _bookingSession:BookingSession;
   private _pickedDate:string = moment().format("YYYY-MM-DD");
-  private _pickedDateString:String = "";
+  private _pickedDateString:string = "";
 
   constructor(private _bookingService:BookingService,
               private _navController:NavController,
@@ -68,7 +68,6 @@ export class BookingOverviewComponent {
 
   // Delete one Booking out of local List after child component (booking.component) emitted Event
   private _deletedBooking(b:Booking) {
-
     var index = this._bookings.indexOf(b, 0);
     if (index > -1) {
       this._bookings.splice(index, 1);
