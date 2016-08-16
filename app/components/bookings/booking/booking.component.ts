@@ -1,7 +1,7 @@
 import {Component, Input, Output, OnInit, OnDestroy} from '@angular/core';
 import {EventEmitter} from "@angular/common/src/facade/async";
 
-import {AlertController, Alert, NavController} from 'ionic-angular/index';
+import {AlertController, Alert, NavController, Toast} from 'ionic-angular/index';
 
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 
@@ -66,7 +66,10 @@ export class BookingComponent implements OnInit, OnDestroy {
     private _navController: NavController,
     private _toastService: ToastService,
     private _alertController: AlertController
-  ) {}
+  ) {
+
+  }
+
 
   public ngOnInit(): any {
     if (this.bookingSession) {
@@ -75,6 +78,8 @@ export class BookingComponent implements OnInit, OnDestroy {
         this._calulateLiveBookingRuntime();
       }, 1000);
     }
+    if(!this.isLive)
+      this._pickedEffort = this._workdaysEffortToMomentEffort(this.booking.effort);
   }
 
   public ngOnDestroy(): any {
@@ -146,6 +151,22 @@ export class BookingComponent implements OnInit, OnDestroy {
       this._toastService.showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR));
     });
   }
+
+  /**
+   * booking effort in workdays (float, 8 h per day)
+   * is transformed to a moment Object to work as a model for the booking effort time picker
+   * */
+  private _workdaysEffortToMomentEffort(workdays: number): string {
+    let workdaysInHours: number = workdays * 8;
+    let hours: number = parseInt(workdaysInHours.toString());
+    let minutes: number = parseInt((Math.abs(workdaysInHours - hours) * 60).toString());
+    let mom:Moment = moment();
+    let effortMoment: Moment = mom.hours(hours).minutes(minutes);
+
+    return effortMoment.format('HH:mm');
+  }
+
+
 }
 
 

@@ -18,7 +18,7 @@
         <ion-col width-20>
           <ion-buttons item-left class="effortPick" *ngIf="!isLive">
             <div>
-              <ion-datetime (click)="_toastService.dismiss()" doneText="Change Effort" (ionChange)="_changedEffortLabel()" class="tp" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="_pickedEffort"></ion-datetime>
+              <ion-datetime (click)="_toastService.dismiss()" cancelText="{{ _translations.CANCEL | translate }}" doneText="{{ _translations.BOOKING_CHANGE_EFFORT | translate }}" (ionChange)="_changedEffortLabel()" class="tp" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="_pickedEffort"></ion-datetime>
               <ion-label id="timelab">{{booking.effort | workdaysToHours}}</ion-label>
             </div>
           </ion-buttons>
@@ -40,7 +40,7 @@
       <!--<hr style="border: 5px; color: darkgrey;">-->
       <button width-100 class="checkoutButton" (click)="_checkoutLivebooking()">
         <ion-icon round id="closeicon" name="log-out"></ion-icon>
-        <ion-label id="checkoutButtonLabel">AUSCHECKEN</ion-label>
+        <ion-label id="checkoutButtonLabel">{{ _translations.BOOKING_CREATE_LIVEBOOKING_CHECKOUT | translate }}</ion-label>
       </button>
     </div>
   </ion-card-content>

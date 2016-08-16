@@ -29,5 +29,6 @@
   "DELETE": "delete",
   "CANCEL": "cancel",
   "BOOKING_DELETE_SUCCESS": "Booking deleted",
-  "BOOKING_DELETE_ERROR": "deleting Booking failed"
+  "BOOKING_DELETE_ERROR": "deleting Booking failed",
+  "BOOKING_CHANGE_EFFORT": "change effort"
 }
