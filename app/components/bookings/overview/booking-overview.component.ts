@@ -6,11 +6,16 @@ import {TranslatePipe} from 'ng2-translate/ng2-translate';
 
 import moment = require("moment/moment");
 import Moment = moment.Moment;
+
 import {Translations} from '../../../multilanguage/translations';
+
 import {Booking, BookingSession} from "../../../models/booking/booking";
+
 import {SessionService} from "../../../services/session/session.service";
+import {ToastService} from '../../../services/toasts/toast.service';
 import {BookingService} from "../../../services/bookings/booking.service";
 import {BookingSessionService} from "../../../services/bookings/booking-session.service";
+
 import {BookingComponent} from "../../../components/bookings/booking/booking.component";
 import {
   WorkpackageOverviewComponent, WorkpackageOverviewContext
@@ -24,14 +29,17 @@ import {
 export class BookingOverviewComponent {
   private _translations: typeof Translations = Translations;
   private _pickedDate: string = moment().format("YYYY-MM-DD");
-  private _bookings:Array<Booking> = [];
-  private _bookingSession:BookingSession;
-  private _pickedDateString:string = "";
+  private _bookings: Array<Booking> = [];
+  private _bookingSession: BookingSession;
+  private _pickedDateString: string = "";
 
-  constructor(private _bookingService:BookingService,
-              private _navController:NavController,
-              private _bookingSessionService:BookingSessionService,
-              private _sessionService:SessionService) {
+  constructor(
+    private _bookingService: BookingService,
+    private _navController: NavController,
+    private _bookingSessionService: BookingSessionService,
+    private _sessionService: SessionService,
+    private _toastService: ToastService
+  ) {
     this._pickedDateString = moment(this._pickedDate).format("DD.MM.YYYY");
     this._loadBookingSession();
 

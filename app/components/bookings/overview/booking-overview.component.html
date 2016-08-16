@@ -7,7 +7,7 @@
     <ion-title >{{ _pickedDate | date: 'dd.MM.yyyy'}}</ion-title>
     <ion-buttons end id="ionButtons">
       <div>
-        <ion-datetime (ionChange)="_dateChanged()" id="datetime" displayFormat="DD MMM YYYY" [(ngModel)]="_pickedDate"></ion-datetime>
+        <ion-datetime (click)="_toastService.dismiss()" (ionChange)="_dateChanged()" id="datetime" displayFormat="DD MMM YYYY" [(ngModel)]="_pickedDate"></ion-datetime>
         <ion-icon item-right name="calendar" id="calicon"></ion-icon>
       </div>
     </ion-buttons>

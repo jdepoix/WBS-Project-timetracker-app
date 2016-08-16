@@ -15,7 +15,8 @@
     <ion-list>
     <ion-item class="item">
       <ion-label>{{ _translations.DATE | translate }}</ion-label>
-      <ion-datetime displayFormat="DD.MM.YYYY"
+      <ion-datetime (click)="_toastService.dismiss()"
+                    displayFormat="DD.MM.YYYY"
                     pickerFormat="DD MM YYYY"
                     max="{{_maxDate}}"
                     [(ngModel)]="_date"
@@ -26,7 +27,8 @@
     </ion-item>
     <ion-item>
       <ion-label>{{ _translations.EFFORT | translate }}</ion-label>
-      <ion-datetime displayFormat="HH:mm"
+      <ion-datetime (click)="_toastService.dismiss()"
+                    displayFormat="HH:mm"
                     pickerFormat="HH mm"
                     [(ngModel)]="_effort"
                     [ngModelOptions]="{standalone: true}"
