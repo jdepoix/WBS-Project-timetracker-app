@@ -13,21 +13,23 @@ import {BookingService} from './services/bookings/booking.service';
 import {SessionAuthenticationService} from './services/session/session-authentication.service';
 import {BookingSessionService} from './services/bookings/booking-session.service';
 import {TranslateLoader, TranslateStaticLoader, TranslateService} from "ng2-translate/ng2-translate";
+import {ToastService} from './services/toasts/toast.service';
 
 ionicBootstrap(
   AppComponent, [
-      HTTP_PROVIDERS,
-      provide(TranslateLoader, {
-          useFactory: (http:Http) => new TranslateStaticLoader(http, 'assets/translations', '.json'),
-          deps: [Http]
-      }),
-      SessionService,
-      TimetrackerApiReuqestService,
-      SessionAuthenticationService,
-      BookingService,
-      WorkpackageService,
-      ProjectService,
-      BookingSessionService,
-      TranslateService
+    HTTP_PROVIDERS,
+    provide(TranslateLoader, {
+        useFactory: (http:Http) => new TranslateStaticLoader(http, 'assets/translations', '.json'),
+        deps: [Http]
+    }),
+    SessionService,
+    TimetrackerApiReuqestService,
+    SessionAuthenticationService,
+    BookingService,
+    WorkpackageService,
+    ProjectService,
+    BookingSessionService,
+    TranslateService,
+    ToastService
   ]
 );

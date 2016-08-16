@@ -1,14 +1,17 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, AbstractControl} from '@angular/forms';
 
-import {Loading, Toast, ToastController, LoadingController} from "ionic-angular/index";
+import {Loading, LoadingController} from "ionic-angular/index";
+
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 import {Url} from "../../core/url/url";
 
+import {Translations} from "../../multilanguage/translations";
+
 import {SessionAuthenticationService} from "../../services/session/session-authentication.service";
 import {SessionService} from "../../services/session/session.service";
-import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
-import {Translations} from "../../multilanguage/translations";
+import {ToastService} from '../../services/toasts/toast.service';
 
 @Component({
   templateUrl: 'build/components/login/login.component.html',
@@ -27,7 +30,7 @@ export class LoginComponent {
   constructor(private _formBuilder: FormBuilder,
               private _authenticationSerivce: SessionAuthenticationService,
               private _sessionSerivce: SessionService,
-              private _toastController: ToastController,
+              private _toastService: ToastService,
               private _loadingController: LoadingController,
               private _translate: TranslateService) {
     this.authForm = _formBuilder.group({
@@ -55,13 +58,7 @@ export class LoginComponent {
         loading.dismiss();
 
         if (!authToken) {
-          let toast: Toast = this._toastController.create({
-            message: this._translate.instant(this._translations.USER_PASSWORD_ERROR),
-            duration: 1800,
-            position: 'bottom'
-          });
-
-          toast.present();
+          this._toastService.showToast(this._translate.instant(this._translations.USER_PASSWORD_ERROR));
         }
       });
     }

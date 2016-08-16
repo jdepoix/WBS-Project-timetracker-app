@@ -1,7 +1,7 @@
 import {Component, Input, Output, OnInit, OnDestroy} from '@angular/core';
 import {EventEmitter} from "@angular/common/src/facade/async";
 
-import {ToastController, AlertController, Toast, Alert, NavController} from 'ionic-angular/index';
+import {AlertController, Alert, NavController, Toast} from 'ionic-angular/index';
 
 import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 
@@ -14,6 +14,7 @@ import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
 
 import {Booking, BookingSession} from '../../../models/booking/booking';
 
+import {ToastService} from '../../../services/toasts/toast.service';
 import {BookingService} from "../../../services/bookings/booking.service";
 
 import {EditLabelComponent, RevertableChange} from "../../edit/edit-label.component";
@@ -61,7 +62,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     private _bookingService: BookingService,
     private _translateService: TranslateService,
     private _navController: NavController,
-    private _toastController: ToastController,
+    private _toastService: ToastService,
     private _alertController: AlertController
   ) {
 
@@ -93,8 +94,8 @@ export class BookingComponent implements OnInit, OnDestroy {
     this._bookingEffort = this._momentEffortToWorkdays(this._pickedEffort.toString());
     this.booking.effort = this._bookingEffort;
     this._bookingService.update(this.booking).subscribe(
-      () => this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_SUCCESS)),
-      () => this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR))
+      () => this._toastService.showToast(this._translateService.instant(Translations.BOOKING_UPDATE_SUCCESS)),
+      () => this._toastService.showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR))
     );
   }
 
@@ -132,7 +133,7 @@ export class BookingComponent implements OnInit, OnDestroy {
         text: this._translateService.instant(Translations.DELETE), handler: () => {
           this._bookingService.delete(this.booking).subscribe(
             () => {
-              this._showToast(this._translateService.instant(Translations.BOOKING_DELETE_SUCCESS));
+              this._toastService.showToast(this._translateService.instant(Translations.BOOKING_DELETE_SUCCESS));
               this.deletedBooking.emit(this.booking);
             }, () => this._translateService.instant(Translations.BOOKING_DELETE_ERROR)
           );
@@ -147,12 +148,13 @@ export class BookingComponent implements OnInit, OnDestroy {
     this.booking.description = bookingDescriptionChange.getChange();
 
     this._bookingService.update(this.booking).subscribe(() => {
-      this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_SUCCESS));
+      this._toastService.showToast(this._translateService.instant(Translations.BOOKING_UPDATE_SUCCESS));
     }, () => {
       bookingDescriptionChange.revert();
-      this._showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR));
+      this._toastService.showToast(this._translateService.instant(Translations.BOOKING_UPDATE_ERROR));
     });
   }
+
 
   private _showToast(msg: string) {
     let toast: Toast = this._toastController.create({
@@ -178,6 +180,7 @@ export class BookingComponent implements OnInit, OnDestroy {
 
     return effortMoment.format('HH:mm');
   }
+
 
 }
 
