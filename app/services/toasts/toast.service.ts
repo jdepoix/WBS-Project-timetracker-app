@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 
 import {Toast, ToastController} from 'ionic-angular/index';
 
+/**
+ * Manages Toasts to make sure there is only one instance of a Toast alive at any given time, which can be dismissed.
+ * This is needed to avoid the bug which occurs, when the ion-datetime is opened while a Toast is still displayed.
+ */
 @Injectable()
 export class ToastService {
   private _toast: Toast = null;
