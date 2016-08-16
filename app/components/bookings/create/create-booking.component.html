@@ -5,15 +5,16 @@
 </ion-header>
 
 <ion-content>
-  <button accent floating block full *ngIf="!_bookingSession" (click)="_createBookingSession()" >
-    <ion-icon name="ios-stopwatch-outline"></ion-icon>Livebuchung starten
+  <button accent floating block full *ngIf="_hideLiveBookingButton" (click)="_createBookingSession()" >
+    <ion-icon name="ios-stopwatch-outline"></ion-icon>{{ _translations.BOOKING_CREATE_LIVEBOOKING | translate }}
   </button>
   <ion-label *ngIf="_bookingSession" align="center">
-    <h4>Checkout Session</h4>
+    <h4>{{ _translations.BOOKING_CREATE_LIVEBOOKING_CHECKOUT | translate }}</h4>
   </ion-label>
   <form [ngFormModel]="_authForm" (ngSubmit)="_onSubmit(authForm)">
-    <ion-item>
-      <ion-label>Datum</ion-label>
+    <ion-list>
+    <ion-item class="item">
+      <ion-label>{{ _translations.DATE | translate }}</ion-label>
       <ion-datetime displayFormat="DD.MM.YYYY"
                     pickerFormat="DD MM YYYY"
                     max="{{_maxDate}}"
@@ -23,7 +24,7 @@
       </ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>Aufwand</ion-label>
+      <ion-label>{{ _translations.EFFORT | translate }}</ion-label>
       <ion-datetime displayFormat="HH:mm"
                     pickerFormat="HH mm"
                     [(ngModel)]="_effort"
@@ -33,18 +34,19 @@
       </ion-datetime>
     </ion-item>
     <ion-item class="item">
-      <ion-label floating >Beschreibung</ion-label>
-      <ion-textarea type="text" [ngFormControl]="_descriptionControl" required></ion-textarea>
+      <ion-label floating >{{ _translations.DESCRIPTION | translate }}</ion-label>
+      <ion-textarea type="text" [ngFormControl]="_descriptionControl" rows="3" required></ion-textarea>
     </ion-item>
-    <ion-item>
-      <ion-label>ETC-aktuell:</ion-label>
-      <ion-label>{{ _workpackage.etc}}</ion-label>
+    <ion-item class="item">
+      <ion-label color="grey">{{ _translations.BOOKING_CREATE_ETC_ACTUAL | translate }}:</ion-label>
+      <ion-input value="{{ _workpackage.etc}}" text-right="right" readonly></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label>ETC-neu:</ion-label>
-      <ion-input type="text" [(ngModel)]="_etc" ></ion-input>
+    <ion-item class="item">
+      <ion-label text->{{ _translations.BOOKING_CREATE_ETC_NEW | translate }}:</ion-label>
+      <ion-input type="text" [(ngModel)]="_newEtc" text-right="right"></ion-input>
     </ion-item>
-    <button floating block full>Buchung abschicken</button>
+    <button floating block full>{{ _translations.BOOKING_CREATE_SEND | translate }}</button>
+      </ion-list>
   </form>
 </ion-content>
 

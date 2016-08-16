@@ -27,7 +27,7 @@
         <ion-col width-80 *ngIf="isLive">
           <span class="liveDuration">
             <ion-icon name="clock"></ion-icon><span>{{" "}}</span>
-              {{"  "+_timeStampToDuration(bookingSession.startTime)}}
+              {{ _liveBookingRuntime }}
           </span>
         </ion-col>
         <ion-col width-80 *ngIf="!isLive">

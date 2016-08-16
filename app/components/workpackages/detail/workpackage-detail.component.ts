@@ -45,7 +45,7 @@ export class WorkpackageDetailComponent {
     this._sortedDateGroups = sortedDateGroups;
   }
 
-  public createBooking(workpackage: Workpackage):void {
+  private _createBooking(workpackage: Workpackage):void {
     this._navController.push(CreateBookingComponent, {
       workpackage: this._workpackage
     });
