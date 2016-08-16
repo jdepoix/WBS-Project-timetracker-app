@@ -76,8 +76,10 @@ export class AppComponent {
     this._platform.ready().then(() => {
       StatusBar.styleDefault();
 
-      // TODO find a more generic way to do this, using the variables specified in app.vairables.scss
-      StatusBar.backgroundColorByHexString('#00796B');
+      if (this._platform.is('android')) {
+        // TODO find a more generic way to do this, using the variables specified in app.vairables.scss
+        StatusBar.backgroundColorByHexString('#00796B');
+      }
     });
   }
 

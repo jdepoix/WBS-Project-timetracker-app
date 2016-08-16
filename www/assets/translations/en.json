@@ -23,11 +23,11 @@
   "BOOKING_OVERVIEW_NO_BOOKINGS": "There are no bookings for the selected date",
   "WORKPACKAGE_OVERVIEW_SEARCH": "Search Workpackages...",
   "WORKPACKAGE_SELECTION_SEARCH": "Select Workpackage...",
-  "BOOKING_UPDATE_SUCCESS": "Buchung erfolgreich geupdated",
-  "BOOKING_UPDATE_ERROR": "Fehler beim updated der Buchung",
-  "BOOKING_DELETE_DIALOG": "Buchung löschen?",
-  "DELETE": "löschen",
-  "CANCEL": "abbrechen",
-  "BOOKING_DELETE_SUCCESS": "Buchung gelöscht",
-  "BOOKING_DELETE_ERROR": "Fehler beim löschen"
+  "BOOKING_UPDATE_SUCCESS": "Booking updated successfully",
+  "BOOKING_UPDATE_ERROR": "updating Booking failed",
+  "BOOKING_DELETE_DIALOG": "Delete Booking?",
+  "DELETE": "delete",
+  "CANCEL": "cancel",
+  "BOOKING_DELETE_SUCCESS": "Booking deleted",
+  "BOOKING_DELETE_ERROR": "deleting Booking failed"
 }
