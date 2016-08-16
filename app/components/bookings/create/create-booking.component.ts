@@ -10,6 +10,8 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import moment = require("moment/moment");
 import Moment = moment.Moment;
 
+import {TimestampUtils} from '../../../core/datetime/timestamp';
+
 import {Translations} from "../../../multilanguage/translations";
 
 import {Workpackage} from "../../../models/workpackage/workpackage";
@@ -66,7 +68,7 @@ export class CreateBookingComponent {
     this._newEtc = this._workpackage.etc;
 
     if(this._bookingSession) {
-      this._date = moment(this._bookingSession.startTime * 1000).startOf('day').format('YYYY-MM-DD');
+      this._date = moment.unix(this._bookingSession.startTime).startOf('day').format('YYYY-MM-DD');
       this._calcEffortForSession(this._bookingSession.startTime);
       this._refreshEtc();
     }
@@ -136,13 +138,8 @@ export class CreateBookingComponent {
     return hoursPerDay + minutesPerDay;
   }
 
-  private _calcEffortForSession(timestamp: number):void  {
-    let startMoment: Moment = moment.unix(timestamp).utc();
-    let now: Moment = moment().utc();
-    let hours: number = now.diff(startMoment, 'hours');
-    let minutes: number = (now.diff(startMoment, 'minutes'))%60;
-    let effortMoment: Moment = now.hours(hours).minutes(minutes);
-    this._effort = effortMoment.format('HH:mm');
+  private _calcEffortForSession(timestamp: number): void {
+    this._effort = TimestampUtils.getTimestampLifetime(timestamp).toString();
   }
 
   private _loadHideLiveBooking(): void {

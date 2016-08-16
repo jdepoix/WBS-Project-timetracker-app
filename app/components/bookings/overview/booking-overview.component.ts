@@ -66,7 +66,6 @@ export class BookingOverviewComponent {
     this._loadBookings();
   }
 
-
   private _add(): void {
     this._navController.push(WorkpackageOverviewComponent, {
       context: WorkpackageOverviewContext.BOOKING_WORKPACKAGE_SELECTION
@@ -74,12 +73,10 @@ export class BookingOverviewComponent {
   }
 
   // Delete one Booking out of local List after child component (booking.component) emitted Event
-
-  private _deletedBooking(b: Booking) {
-    let index = this._bookings.indexOf(b, 0);
+  private _deletedBooking(booking: Booking) {
+    let index = this._bookings.indexOf(booking, 0);
     if (index > -1) {
       this._bookings.splice(index, 1);
     }
   }
-
 }

@@ -8,6 +8,8 @@ import {TranslatePipe, TranslateService} from 'ng2-translate/ng2-translate';
 import Moment = moment.Moment;
 import moment = require("moment/moment");
 
+import {TimestampUtils} from '../../../core/datetime/timestamp';
+
 import {Translations} from '../../../multilanguage/translations';
 
 import {WorkdaysToHoursPipe} from '../../../pipes/workdays-to-hours.pipe';
@@ -103,12 +105,7 @@ export class BookingComponent implements OnInit, OnDestroy {
   }
 
   private _timeStampToDuration(timestamp: number): string {
-    let startMoment: Moment = moment.unix(timestamp).utc();
-    let now: Moment = moment().utc();
-    let hours: number = now.diff(startMoment, 'hours');
-    let minutes: number = (now.diff(startMoment, 'minutes'))%60;
-    let effortMoment: Moment = now.hours(hours).minutes(minutes);
-    return effortMoment.format('HH:mm');
+    return TimestampUtils.getTimestampLifetime(timestamp).toString();;
   }
 
   private _checkoutLivebooking(): void {
