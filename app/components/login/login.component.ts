@@ -52,7 +52,7 @@ export class LoginComponent {
       this._sessionSerivce.apiUrl = new Url(this.authForm.value.serverAddress);
 
       this._authenticationSerivce.login(this.authForm.value.username, this.authForm.value.password).subscribe((authToken: string) => {
-        loading.destroy();
+        loading.dismiss();
 
         if (!authToken) {
           let toast: Toast = this._toastController.create({
