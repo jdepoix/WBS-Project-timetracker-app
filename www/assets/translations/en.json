@@ -14,6 +14,7 @@
   "BOOKING_CREATE_ETC_ACTUAL": "ETC - actual",
   "BOOKING_CREATE_ETC_NEW": "ETC - new",
   "BOOKING_CREATE_SEND": "Send booking",
+  "BOOKING_CREATE_NEWETC_ERROR": "New ETC can not be <0 !",
   "BOOKING_CREATE_LIVEBOOKING_CHECKOUT": "Checkout livebooking",
   "BOOKING_CREATE_LIVEBOOKING_STARTED": "Livebooking started!",
   "BOOKING_CREATE_LIVEBOOKING_NOTIFY": "Livebooking successfully closed",

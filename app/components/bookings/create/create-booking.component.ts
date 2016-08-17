@@ -126,9 +126,11 @@ export class CreateBookingComponent {
   }
 
   private _checkFieldsSet(): boolean {
-    return  (this._authForm.value._descriptionControl != '' &&
-            !isNaN(Number(this._newEtc))) &&
-            Number(this._newEtc) >= 0;
+    if(isNaN(Number(this._newEtc)) || Number(this._newEtc) < 0.0) {
+      this._toastService.showToast(this._translateService.instant(this._translations.BOOKING_CREATE_NEWETC_ERROR));
+      return false;
+    }
+    return this._authForm.value._descriptionControl != '';
   }
 
   private _stringToWorkday(_effortControl: string): number {
