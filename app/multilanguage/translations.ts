@@ -26,7 +26,6 @@ export class Translations{
   public static BOOKING_OVERVIEW_NO_BOOKINGS: string = 'BOOKING_OVERVIEW_NO_BOOKINGS';
   public static WORKPACKAGE_OVERVIEW_SEARCH: string = 'WORKPACKAGE_OVERVIEW_SEARCH';
   public static WORKPACKAGE_SELECTION_SEARCH: string = 'WORKPACKAGE_SELECTION_SEARCH';
-
   public static BOOKING_UPDATE_SUCCESS: string = 'BOOKING_UPDATE_SUCCESS';
   public static BOOKING_UPDATE_ERROR: string = 'BOOKING_UPDATE_ERROR';
   public static BOOKING_DELETE_DIALOG: string = 'BOOKING_DELETE_DIALOG';
@@ -34,4 +33,5 @@ export class Translations{
   public static CANCEL: string = 'CANCEL';
   public static BOOKING_DELETE_SUCCESS: string = 'BOOKING_DELETE_SUCCESS';
   public static BOOKING_DELETE_ERROR: string = 'BOOKING_DELETE_ERROR';
+  public static BOOKING_SESSION_IN_ANOTHER_PROJECT: string = 'BOOKING_SESSION_IN_ANOTHER_PROJECT';
 }
