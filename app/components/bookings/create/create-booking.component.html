@@ -43,11 +43,13 @@
     </ion-item>
     <ion-item class="item">
       <ion-label color="grey">{{ _translations.BOOKING_CREATE_ETC_ACTUAL | translate }}:</ion-label>
-      <ion-input value="{{ _workpackage.etc}}" text-right="right" readonly></ion-input>
+      <ion-input value="{{ _workpackage.etc | workdaysToHours }}" text-right="right" readonly></ion-input>
     </ion-item>
     <ion-item class="item">
       <ion-label text->{{ _translations.BOOKING_CREATE_ETC_NEW | translate }}:</ion-label>
-      <ion-input type="text" [(ngModel)]="_newEtc" [ngModelOptions]="{standalone: true}" text-right="right"></ion-input>
+      <ion-input type="text" [(ngModel)]="_newEtc"
+                 [ngModelOptions]="{standalone: true}"
+                 text-right="right"></ion-input>
     </ion-item>
     <button floating block full>{{ _translations.BOOKING_CREATE_SEND | translate }}</button>
       </ion-list>

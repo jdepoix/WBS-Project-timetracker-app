@@ -22,10 +22,12 @@ import {BookingService} from "../../../services/bookings/booking.service";
 import {BookingSessionService} from "../../../services/bookings/booking-session.service";
 
 import {BookingOverviewComponent} from "../overview/booking-overview.component";
+import {WorkdaysToHoursPipe} from "../../../pipes/workdays-to-hours.pipe";
+import {HoursToWorkdaysPipe} from "../../../pipes/hours-to-workdays.pipe";
 
 @Component({
   templateUrl: 'build/components/bookings/create/create-booking.component.html',
-  pipes: [TranslatePipe]
+  pipes: [TranslatePipe, HoursToWorkdaysPipe, WorkdaysToHoursPipe]
 })
 export class CreateBookingComponent {
   private _workpackage: Workpackage;
@@ -39,7 +41,7 @@ export class CreateBookingComponent {
   private _maxDate: string = moment().startOf('day').format('YYYY-MM-DD');
   private _date: string = moment().startOf('day').format('YYYY-MM-DD');
   private _effort: string = moment().startOf('day').format('HH:mm');
-  private _newEtc: number;
+  private _newEtc: string;
   private _hideLiveBookingButton: boolean;
 
   constructor(navParams: NavParams,
@@ -65,7 +67,7 @@ export class CreateBookingComponent {
     this._effortControl = this._authForm.controls['_effortControl'];
     this._descriptionControl = this._authForm.controls['_descriptionControl'];
     this._dateControl = this._authForm.controls['_dateControl'];
-    this._newEtc = this._workpackage.etc;
+    this._newEtc = this._workdayToString(this._workpackage.etc);
 
     if(this._bookingSession) {
       this._date = moment.unix(this._bookingSession.startTime).startOf('day').format('YYYY-MM-DD');
@@ -81,7 +83,7 @@ export class CreateBookingComponent {
       booking.description = this._descriptionControl.value;
       booking.effort = this._stringToWorkday(this._effortControl.value);
       booking.workpackage = this._workpackage;
-      this._bookingsService.create(booking, this._newEtc.valueOf()).subscribe((booking: Booking) => {
+      this._bookingsService.create(booking, this._stringToWorkday(this._newEtc)).subscribe((booking: Booking) => {
         if(this._bookingSession) {
           //if there is a bookingsession, delete it when the booking was successful and show Toast
           this._bookingSessionService.delete(this._bookingSession).subscribe((response: Response) => {
@@ -122,19 +124,26 @@ export class CreateBookingComponent {
   }
 
   private _refreshEtc(): void {
-    this._newEtc = this._workpackage.etc - this._stringToWorkday(this._effort);
+    if(this._checkEtc()) {
+      let newEtc = this._workpackage.etc - this._stringToWorkday(this._effort);
+      if(newEtc < 0) {
+        this._toastService.showToast(this._translateService.instant(this._translations.BOOKING_CREATE_NEWETC_ERROR));
+      } else {
+        this._newEtc = this._workdayToString(newEtc);
+      }
+    }
   }
 
   private _checkFieldsSet(): boolean {
-    if(isNaN(Number(this._newEtc)) || Number(this._newEtc) < 0.0) {
+    if(!this._checkEtc()) {
       this._toastService.showToast(this._translateService.instant(this._translations.BOOKING_CREATE_NEWETC_ERROR));
       return false;
     }
     return this._authForm.value._descriptionControl != '';
   }
 
-  private _stringToWorkday(_effortControl: string): number {
-    let timeStrings: Array<string> = _effortControl.split(':');
+  private _stringToWorkday(effort: string): number {
+    let timeStrings: Array<string> = effort.split(':');
     let hoursPerDay: number = parseInt(timeStrings[0])/8;
     let minutesPerDay: number = (parseInt(timeStrings[1])/60) /8;
     return hoursPerDay + minutesPerDay;
@@ -155,5 +164,25 @@ export class CreateBookingComponent {
 
   private _navigateToBookingOverview(): void {
     this._navController.setRoot(BookingOverviewComponent);
+  }
+
+  private _workdayToString(workdays: number): string {
+    let workdaysInHours: number = workdays * 8;
+    let hours: number = parseInt(workdaysInHours.toString());
+    let minutesString: string = parseInt((Math.abs(workdaysInHours - hours) * 60).toString()).toString();
+
+    while (minutesString.length < 2) {
+      minutesString = '0' + minutesString;
+    }
+    return hours.toString() + ':' + minutesString;
+  }
+
+  private _checkEtc(): boolean {
+    let newEtc = this._stringToWorkday(this._newEtc);
+    if(isNaN(newEtc)) {
+      return false;
+    }
+    let regex = /[0-9]+:[0-5][0-9]/;
+    return regex.test(this._newEtc);
   }
 }
