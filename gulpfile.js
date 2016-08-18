@@ -74,7 +74,6 @@ gulp.task('sass', function () {
 });
 gulp.task('html', copyHTML);
 gulp.task('fonts', copyFonts);
-gulp.task('scripts', copyScripts);
 gulp.task('clean', function(){
   return del('www/build');
 });
@@ -100,4 +99,18 @@ gulp.task('remove-proxy', function() {
         recursive: false,
         silent: false
     });
+});
+
+gulp.task('scripts', function(){ //new
+    return copyScripts({
+        src: [
+            'node_modules/es6-shim/es6-shim.min.js',
+            'node_modules/es6-shim/es6-shim.map',
+            'node_modules/zone.js/dist/zone.js',
+            'node_modules/reflect-metadata/Reflect.js',
+            'node_modules/reflect-metadata/Reflect.js.map',
+            'node_modules/intl/dist/Intl.min.js',
+            'node_modules/intl/locale-data/complete.js'
+        ]
+    })
 });
